@@ -1,0 +1,53 @@
+{
+  "name": "Creator Co-Op",
+  "short_name": "CreatorLoop",
+  "description": "Zero-waste engagement network for West African creators. Boost your Facebook content organically.",
+  "start_url": "/landing.html",
+  "display": "standalone",
+  "theme_color": "#2563EB",
+  "background_color": "#f4f6f9",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "icons/icon-72.png",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/icon-96.png",
+      "sizes": "96x96",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/icon-100.png",
+      "sizes": "100x100",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/icon-125.png",
+      "sizes": "125x125",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/icon-150.png",
+      "sizes": "150x150",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/icon-200.png",
+      "sizes": "200x200",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/icon-256.png",
+      "sizes": "256x256",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/icon-400.png",
+      "sizes": "400x400",
+      "type": "image/png"
+    }
+  ]
+}

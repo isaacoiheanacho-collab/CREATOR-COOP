@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Creator Co-Op | Contact Support – Get in Touch</title>
+    
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#2563EB">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Creator Co-Op">
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icons/icon-200.png">
+    <meta name="msapplication-TileImage" content="icons/icon-150.png">
+    <meta name="msapplication-TileColor" content="#2563EB">
+    
+    <!-- Tailwind + Fonts -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0,1" />
+    <style>
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            padding-top: env(safe-area-inset-top, 0);
+        }
+        /* Sticky header that covers notch area */
+        .sticky-header {
+            position: sticky;
+            top: 0;
+            z-index: 30;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+            padding-top: env(safe-area-inset-top, 0);
+        }
+        /* Mobile navigation */
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            top: calc(env(safe-area-inset-top, 0) + 64px);
+            left: 0;
+            right: 0;
+            background: white;
+            border-bottom: 1px solid #e4e4e7;
+            z-index: 40;
+            flex-direction: column;
+            padding: 1rem;
+            gap: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+        .mobile-nav a {
+            padding: 0.5rem 0;
+            font-weight: 500;
+            color: #3f3f46;
+            text-decoration: none;
+        }
+        .mobile-nav a:hover {
+            color: #2563eb;
+        }
+        @media (max-width: 767px) {
+            .desktop-nav {
+                display: none;
+            }
+            .mobile-menu-btn {
+                display: block;
+            }
+            .mobile-nav.show {
+                display: flex;
+            }
+        }
+        @media (min-width: 768px) {
+            .desktop-nav {
+                display: flex;
+                gap: 1.5rem;
+            }
+            .mobile-menu-btn {
+                display: none;
+            }
+        }
+        /* Footer safe area */
+        footer {
+            padding-bottom: env(safe-area-inset-bottom, 1rem);
+        }
+    </style>
+</head>
+<body class="bg-[#f4f6f9] text-zinc-800 antialiased">
+
+    <!-- ========== NAVIGATION ========== -->
+    <header class="sticky-header">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8 py-4 flex flex-wrap items-center justify-between gap-4">
+            <div class="flex items-center gap-2">
+                <span class="material-symbols-outlined text-3xl text-blue-600">group</span>
+                <span class="font-black text-2xl tracking-tight text-zinc-800">Creator<span class="text-blue-600"> Co-Op</span></span>
+            </div>
+            
+            <!-- Desktop navigation -->
+            <nav class="desktop-nav text-sm font-medium">
+                <a href="landing.html" class="text-zinc-600 hover:text-blue-600 transition">Home</a>
+                <a href="about.html" class="text-zinc-600 hover:text-blue-600 transition">About</a>
+                <a href="landing.html" class="bg-blue-50 text-blue-700 px-4 py-1.5 rounded-full text-sm font-semibold hover:bg-blue-100 transition">Login / Join</a>
+            </nav>
+            
+            <!-- Mobile menu button -->
+            <button class="mobile-menu-btn text-zinc-700 focus:outline-none" id="mobileMenuBtn">
+                <span class="material-symbols-outlined text-2xl">menu</span>
+            </button>
+        </div>
+        
+        <!-- Mobile navigation panel -->
+        <div class="mobile-nav" id="mobileNav">
+            <a href="landing.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="landing.html" class="bg-blue-50 text-blue-700 px-4 py-2 rounded-full text-center">Login / Join</a>
+        </div>
+    </header>
+
+    <main class="max-w-5xl mx-auto px-6 lg:px-8 py-12 md:py-16">
+        <!-- Header -->
+        <div class="text-center mb-12">
+            <span class="material-symbols-outlined text-5xl text-blue-500 mb-3">contact_support</span>
+            <h1 class="text-4xl md:text-5xl font-extrabold text-zinc-900 tracking-tight">Contact Support</h1>
+            <p class="text-zinc-500 mt-3 max-w-2xl mx-auto">Have a question, issue, or feedback? Our team is here to help. We typically respond within 24 hours (Monday–Friday).</p>
+        </div>
+
+        <div class="grid lg:grid-cols-3 gap-8">
+            <!-- Left cards (unchanged) -->
+            <div class="lg:col-span-1 space-y-5">
+                <div class="bg-white rounded-2xl border border-zinc-200 p-6 shadow-sm">
+                    <div class="flex items-center gap-3 mb-4"><span class="material-symbols-outlined text-blue-500 text-2xl">email</span><h3 class="font-bold text-lg">Email Us</h3></div>
+                    <p class="text-sm text-zinc-600 mb-2">For general inquiries, account issues, or partnership requests:</p>
+                    <a href="mailto:support@creatorcoop.ng" class="text-blue-600 hover:underline break-all">support@creatorcoop.ng</a>
+                    <p class="text-xs text-zinc-400 mt-3">For urgent matters, include "URGENT" in the subject line.</p>
+                </div>
+                <div class="bg-white rounded-2xl border border-zinc-200 p-6 shadow-sm">
+                    <div class="flex items-center gap-3 mb-4"><span class="material-symbols-outlined text-blue-500 text-2xl">chat</span><h3 class="font-bold text-lg">Live Chat</h3></div>
+                    <p class="text-sm text-zinc-600">Coming soon (Q3 2026). In the meantime, please email us.</p>
+                    <div class="mt-3 h-2 w-20 bg-gray-200 rounded-full overflow-hidden"><div class="h-full w-1/3 bg-blue-400 rounded-full"></div></div>
+                    <p class="text-xs text-zinc-400 mt-2">Feature under development</p>
+                </div>
+                <div class="bg-white rounded-2xl border border-zinc-200 p-6 shadow-sm">
+                    <div class="flex items-center gap-3 mb-4"><span class="material-symbols-outlined text-blue-500 text-2xl">whatsapp</span><h3 class="font-bold text-lg">WhatsApp</h3></div>
+                    <p class="text-sm text-zinc-600">Message us for quick assistance:</p>
+                    <a href="https://wa.me/2348123456789" class="text-blue-600 hover:underline">+234 (0) 812 345 6789</a>
+                    <p class="text-xs text-zinc-400 mt-3">Available 10am–6pm WAT, Monday–Friday</p>
+                </div>
+                <div class="bg-white rounded-2xl border border-zinc-200 p-6 shadow-sm">
+                    <div class="flex items-center gap-3 mb-4"><span class="material-symbols-outlined text-blue-500 text-2xl">location_on</span><h3 class="font-bold text-lg">Office Address</h3></div>
+                    <p class="text-sm text-zinc-600">Creator Co-Op Headquarters</p>
+                    <p class="text-sm text-zinc-600">42 Allen Avenue, Ikeja,</p>
+                    <p class="text-sm text-zinc-600">Lagos, Nigeria</p>
+                    <p class="text-xs text-zinc-400 mt-2">By appointment only</p>
+                </div>
+            </div>
+            <!-- Contact Form -->
+            <div class="lg:col-span-2">
+                <div class="bg-white rounded-2xl border border-zinc-200 p-6 md:p-8 shadow-sm">
+                    <h2 class="text-2xl font-bold mb-6 flex items-center gap-2"><span class="material-symbols-outlined text-blue-500">edit_note</span> Send us a message</h2>
+                    <form id="contact-form" class="space-y-5">
+                        <div class="grid md:grid-cols-2 gap-5">
+                            <div><label class="block text-sm font-semibold text-zinc-700 mb-1">Full Name *</label><input type="text" id="contact-name" required class="w-full rounded-xl border-zinc-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 px-4 py-2.5"></div>
+                            <div><label class="block text-sm font-semibold text-zinc-700 mb-1">Email Address *</label><input type="email" id="contact-email" required class="w-full rounded-xl border-zinc-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 px-4 py-2.5"></div>
+                        </div>
+                        <div><label class="block text-sm font-semibold text-zinc-700 mb-1">Subject *</label><select id="contact-subject" required class="w-full rounded-xl border-zinc-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 px-4 py-2.5 bg-white">
+                            <option value="">-- Select a topic --</option>
+                            <option value="account">Account & Login Issues</option><option value="billing">Billing & Payments</option><option value="loop">Loop / Engagement Problems</option>
+                            <option value="feature">Feature Request</option><option value="report">Report a Member / Violation</option><option value="other">Other</option>
+                        </select></div>
+                        <div><label class="block text-sm font-semibold text-zinc-700 mb-1">Message *</label><textarea id="contact-message" rows="5" required placeholder="Please provide as much detail as possible (e.g., your username, issue description, screenshots if applicable)..." class="w-full rounded-xl border-zinc-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 px-4 py-2.5"></textarea></div>
+                        <div class="flex items-center gap-2"><input type="checkbox" id="contact-urgency" class="rounded border-zinc-300 text-blue-600 focus:ring-blue-500"><label class="text-sm text-zinc-600">This is urgent (response within 12 hours)</label></div>
+                        <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-xl transition shadow-md flex items-center gap-2">Send Message <span class="material-symbols-outlined text-lg">send</span></button>
+                        <p class="text-xs text-zinc-400 mt-3">By submitting, you agree to our <a href="privacy.html" class="text-blue-600 hover:underline">Privacy Policy</a>. We never share your information.</p>
+                    </form>
+                    <div id="form-success" class="hidden mt-6 p-4 bg-green-50 border border-green-200 rounded-xl text-green-700 text-sm">✓ Thank you! Your message has been sent. Our team will respond within 24 hours (or faster for urgent requests).</div>
+                    <div id="form-error" class="hidden mt-6 p-4 bg-red-50 border border-red-200 rounded-xl text-red-700 text-sm">⚠️ Sorry, there was an error sending your message. Please try again or email us directly at support@creatorcoop.ng</div>
+                </div>
+                <div class="mt-6 bg-blue-50/40 rounded-xl p-4 border border-blue-100">
+                    <div class="flex items-center gap-2 text-blue-700"><span class="material-symbols-outlined">help</span><span class="font-semibold text-sm">Before contacting support, check our <a href="help.html" class="underline hover:text-blue-800">Help Center</a> for instant answers.</span></div>
+                    <div class="flex flex-wrap gap-3 mt-2 text-xs"><a href="help.html#loop-rules" class="text-blue-600 hover:underline">Loop rules</a><span>•</span><a href="help.html#billing" class="text-blue-600 hover:underline">Refund policy</a><span>•</span><a href="help.html" class="text-blue-600 hover:underline">Troubleshooting</a></div>
+                </div>
+            </div>
+        </div>
+        <div class="mt-12 text-center border-t pt-8">
+            <div class="flex flex-wrap justify-center gap-6 text-sm text-zinc-500">
+                <div class="flex items-center gap-1"><span class="material-symbols-outlined text-green-600 text-base">schedule</span> Response within 24h (weekdays)</div>
+                <div class="flex items-center gap-1"><span class="material-symbols-outlined text-blue-600 text-base">verified</span> All messages are confidential</div>
+                <div class="flex items-center gap-1"><span class="material-symbols-outlined text-amber-600 text-base">support_agent</span> Real humans, no bots</div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="w-full bg-white border-t border-zinc-200 py-8 mt-6">
+        <div class="max-w-7xl mx-auto px-6 flex flex-wrap items-center justify-between text-xs text-zinc-500 gap-4">
+            <div class="flex flex-wrap gap-x-6 gap-y-2">
+                <a href="about.html" class="hover:text-blue-600 transition">About Us</a>
+                <a href="privacy.html" class="hover:text-blue-600 transition">Privacy Policy</a>
+                <a href="terms.html" class="hover:text-blue-600 transition">Terms of Service</a>
+                <a href="help.html" class="hover:text-blue-600 transition">Help Center</a>
+                <a href="contact.html" class="text-blue-600 font-medium hover:underline">Contact Support</a>
+            </div>
+            <div class="flex items-center gap-1"><span class="material-symbols-outlined text-sm text-zinc-400">copyright</span><span>Meta © 2026 • Creator Co-Op Engine • All engagements organic</span></div>
+        </div>
+        <div class="text-center text-[11px] text-zinc-400 mt-4 max-w-7xl mx-auto px-6">*Referrer cloaking active • No artificial metrics • Built for West African independent creators</div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const menuBtn = document.getElementById('mobileMenuBtn');
+        const mobileNav = document.getElementById('mobileNav');
+        if (menuBtn && mobileNav) {
+            menuBtn.addEventListener('click', () => {
+                mobileNav.classList.toggle('show');
+            });
+            mobileNav.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileNav.classList.remove('show');
+                });
+            });
+        }
+        
+        // Contact form handler (unchanged)
+        const contactForm = document.getElementById('contact-form');
+        const successDiv = document.getElementById('form-success');
+        const errorDiv = document.getElementById('form-error');
+        contactForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const name = document.getElementById('contact-name').value.trim();
+            const email = document.getElementById('contact-email').value.trim();
+            const subject = document.getElementById('contact-subject').value;
+            const message = document.getElementById('contact-message').value.trim();
+            if (!name || !email || !subject || !message) { alert('Please fill in all required fields.'); return; }
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) { alert('Please enter a valid email address.'); return; }
+            const submitBtn = contactForm.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<span class="material-symbols-outlined text-lg animate-spin">progress_activity</span> Sending...';
+            setTimeout(() => {
+                successDiv.classList.remove('hidden');
+                errorDiv.classList.add('hidden');
+                contactForm.reset();
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalText;
+                successDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                setTimeout(() => successDiv.classList.add('hidden'), 6000);
+            }, 800);
+        });
+        
+        // PWA Service Worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js').then(reg => console.log('Service Worker registered:', reg.scope)).catch(err => console.error('Service Worker registration failed:', err));
+            });
+        }
+    </script>
+</body>
+</html>

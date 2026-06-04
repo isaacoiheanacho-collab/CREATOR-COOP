@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Creator Co-Op Nigeria - Boost Content Organically</title>
+    
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#2563EB">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Creator Co-Op">
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icons/icon-200.png">
+    <meta name="msapplication-TileImage" content="icons/icon-150.png">
+    <meta name="msapplication-TileColor" content="#2563EB">
+    
+    <!-- Tailwind + Fonts -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0,1" />
+    <meta name="referrer" content="no-referrer">
+    <style>
+        body { font-family: 'Inter', system-ui, sans-serif; }
+        .install-btn { transition: all 0.2s ease; }
+        .install-btn:hover { transform: translateY(-2px); }
+    </style>
+</head>
+<body class="bg-[#f4f6f9] text-zinc-900 font-sans">
+
+    <!-- SAFE AREA WRAPPER: prevents notch overlap -->
+    <div style="padding-top: env(safe-area-inset-top, 20px);" class="min-h-screen flex flex-col">
+        <main class="flex-1 flex items-center">
+            <div class="max-w-[1200px] mx-auto w-full flex flex-col md:flex-row items-center justify-between px-6 py-8 md:py-12 gap-8 md:gap-12">
+                
+                <!-- LEFT PANEL -->
+                <section class="flex-1 max-w-[580px]">
+                    <div class="flex items-center gap-3 text-blue-600 font-black text-4xl tracking-tighter mb-5">
+                        <span class="material-symbols-outlined text-4xl">group</span>
+                        <span>Creators Co-Op</span>
+                    </div>
+                    <h1 class="text-3xl md:text-5xl font-extrabold text-zinc-900 leading-tight mb-4">
+                        Explore organic growth with the Creator Loop.
+                    </h1>
+                    <p class="text-zinc-600 text-lg md:text-xl mb-6 leading-relaxed">
+                        A closed-loop, zero-waste network built exclusively for content creators. No bots, no fake engagement. Pure organic — real peers boosting each other past generic platform’s algorithm gatekeepers.
+                    </p>
+                    <div class="bg-white border border-zinc-200 p-4 rounded-xl shadow-sm flex items-center gap-4 max-w-sm">
+                        <div class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-bold">🇳🇬</div>
+                        <div>
+                            <h4 class="font-bold text-sm">Affordable Local Access</h4>
+                            <p class="text-xs text-zinc-500">Only ₦5,000 yearly token fee</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- RIGHT PANEL: LOGIN / REGISTER + INSTALL BUTTON -->
+                <section class="w-full max-w-[400px] space-y-4">
+                    <button id="installAppBtn" class="install-btn w-full bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-bold py-3 rounded-xl shadow-md flex items-center justify-center gap-2 transition-all">
+                        <span class="material-symbols-outlined">download</span>
+                        Install App (PWA)
+                    </button>
+
+                    <div class="bg-white border border-zinc-200 rounded-xl p-6 md:p-8 shadow-md">
+                        <!-- LOGIN VIEW -->
+                        <div id="login-view">
+                            <h2 class="text-xl font-bold mb-5 text-zinc-800">Log In to Dashboard</h2>
+                            <form id="login-form" class="space-y-4">
+                                <div>
+                                    <label class="block text-xs font-bold uppercase tracking-wider text-zinc-500 mb-1">Email Address</label>
+                                    <input type="email" id="login-email" required class="w-full rounded-lg border-zinc-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 px-3 py-2">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold uppercase tracking-wider text-zinc-500 mb-1">Password</label>
+                                    <input type="password" id="login-password" required class="w-full rounded-lg border-zinc-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 px-3 py-2">
+                                </div>
+                                <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 rounded-lg transition duration-150">
+                                    Log In
+                                </button>
+                            </form>
+                            <div class="text-center mt-5 text-sm text-zinc-500">
+                                New to the loop? <span onclick="toggleAuth(false)" class="text-blue-600 cursor-pointer font-bold hover:underline">Create new account</span>
+                            </div>
+                        </div>
+
+                        <!-- REGISTER VIEW -->
+                        <div id="register-view" class="hidden">
+                            <h2 class="text-xl font-bold mb-5 text-zinc-800">Create New Account</h2>
+                            <form id="register-form" class="space-y-3">
+                                <div>
+                                    <label class="block text-xs font-bold uppercase tracking-wider text-zinc-500 mb-1">Username / Hub Name</label>
+                                    <input type="text" id="reg-username" required placeholder="e.g., Nosa_Creative" class="w-full rounded-lg border-zinc-300 shadow-sm focus:border-blue-500 px-3 py-2">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold uppercase tracking-wider text-zinc-500 mb-1">Email Address</label>
+                                    <input type="email" id="reg-email" required class="w-full rounded-lg border-zinc-300 shadow-sm focus:border-blue-500 px-3 py-2">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold uppercase tracking-wider text-zinc-500 mb-1">Password</label>
+                                    <input type="password" id="reg-password" minlength="6" required placeholder="Min 6 characters" class="w-full rounded-lg border-zinc-300 shadow-sm focus:border-blue-500 px-3 py-2">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold uppercase tracking-wider text-zinc-500 mb-1">Facebook Profile Link (Mandatory)</label>
+                                    <input type="url" id="reg-facebook" required placeholder="https://facebook.com/yourpage" class="w-full rounded-lg border-zinc-300 shadow-sm focus:border-blue-500 px-3 py-2">
+                                </div>
+                                <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 rounded-lg transition duration-150">
+                                    Join Cooperative
+                                </button>
+                            </form>
+                            <div class="text-center mt-5 text-sm text-zinc-500">
+                                Already a member? <span onclick="toggleAuth(true)" class="text-blue-600 cursor-pointer font-bold hover:underline">Log In here</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+
+        <footer class="w-full bg-white border-t border-zinc-200 py-5 mt-0">
+            <div class="max-w-[1200px] mx-auto px-6 flex flex-wrap items-center justify-between text-xs text-zinc-500 gap-3">
+                <div class="flex flex-wrap gap-x-5 gap-y-1">
+                    <a href="about.html" class="hover:underline">About Us</a>
+                    <a href="privacy.html" class="hover:underline">Privacy Policy</a>
+                    <a href="terms.html" class="hover:underline">Terms of Service</a>
+                    <a href="help.html" class="hover:underline">Help Center</a>
+                    <a href="contact.html" class="hover:underline">Contact Support</a>
+                </div>
+                <div>Meta © 2026 • Creator Co-Op Engine</div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // ==================== API BASE (DYNAMIC) ====================
+        const API_BASE = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+            ? 'http://localhost:5000/api'
+            : 'https://creator-coop-backend.onrender.com/api';
+
+        let deferredPrompt;
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            document.getElementById('installAppBtn').style.display = 'flex';
+        });
+        document.getElementById('installAppBtn').addEventListener('click', async () => {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                const { outcome } = await deferredPrompt.userChoice;
+                console.log(`User ${outcome} installation`);
+                deferredPrompt = null;
+                document.getElementById('installAppBtn').style.display = 'none';
+            } else {
+                alert('To install this app:\n\nAndroid/Chrome: Tap menu → "Install app"\n\niOS/Safari: Share → "Add to Home Screen"');
+            }
+        });
+        if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true) {
+            document.getElementById('installAppBtn').style.display = 'none';
+        }
+
+        function toggleAuth(showLogin) {
+            const loginView = document.getElementById('login-view');
+            const registerView = document.getElementById('register-view');
+            if (showLogin) {
+                loginView.classList.remove('hidden');
+                registerView.classList.add('hidden');
+            } else {
+                loginView.classList.add('hidden');
+                registerView.classList.remove('hidden');
+            }
+        }
+
+        // Registration
+        document.getElementById('register-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const payload = {
+                username: document.getElementById('reg-username').value.trim(),
+                email: document.getElementById('reg-email').value.trim(),
+                password: document.getElementById('reg-password').value,
+                facebook_profile_url: document.getElementById('reg-facebook').value.trim()
+            };
+            if (!payload.username || !payload.email || !payload.password || !payload.facebook_profile_url) {
+                alert('Please fill all fields.');
+                return;
+            }
+            try {
+                const res = await fetch(`${API_BASE}/auth/register`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                const data = await res.json();
+                if (res.ok) {
+                    alert('Registration successful! Please log in.');
+                    toggleAuth(true);
+                    document.getElementById('reg-username').value = '';
+                    document.getElementById('reg-email').value = '';
+                    document.getElementById('reg-password').value = '';
+                    document.getElementById('reg-facebook').value = '';
+                } else {
+                    alert(data.error || 'Registration failed.');
+                }
+            } catch (err) {
+                alert('Backend connection offline. Please ensure server is running.');
+            }
+        });
+
+        // Login
+        document.getElementById('login-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('login-email').value.trim();
+            const password = document.getElementById('login-password').value;
+            if (!email || !password) {
+                alert('Please enter email and password.');
+                return;
+            }
+            try {
+                const res = await fetch(`${API_BASE}/auth/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+                const data = await res.json();
+                if (res.ok) {
+                    localStorage.setItem('coop_token', data.token);
+                    localStorage.setItem('coop_user', JSON.stringify(data.user));
+                    window.location.href = 'dashboard.html';
+                } else {
+                    alert(data.error || 'Login failed.');
+                }
+            } catch (err) {
+                alert('Backend connection offline.');
+            }
+        });
+
+        // Service Worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js').then(reg => console.log('SW registered:', reg.scope)).catch(err => console.error('SW failed:', err));
+            });
+        }
+    </script>
+</body>
+</html>

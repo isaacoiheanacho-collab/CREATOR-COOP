@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Creator Co-Op | Profile Settings</title>
+  <meta name="theme-color" content="#0b1326">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="manifest" href="manifest.json">
+  <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #0a0a0c; font-family: 'Inter', sans-serif; color: #e5e7eb; }
+    .glass-card { background: rgba(17, 17, 20, 0.9); backdrop-filter: blur(12px); border: 1px solid rgba(133, 147, 151, 0.1); transition: all 0.2s; }
+    .sidebar-item { transition: all 0.2s; cursor: pointer; border-left: 3px solid transparent; }
+    .sidebar-item:hover { background: #1e293b; color: #2fd9f4; }
+    .sidebar-active { border-left-color: #2fd9f4; background: rgba(47, 217, 244, 0.1); color: #2fd9f4; }
+    .btn-primary { background: #2fd9f4; color: #0a0a0c; font-weight: 800; transition: all 0.2s; }
+    .btn-primary:hover { background: #22d3ee; transform: translateY(-1px); }
+    .stat-value { font-size: 1.5rem; font-weight: 800; }
+    .progress-bar { height: 6px; background: #2d2d33; border-radius: 3px; overflow: hidden; }
+    .progress-fill { height: 100%; background: #2fd9f4; width: 0%; transition: width 0.3s; }
+    .app-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: rgba(10, 10, 12, 0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(133, 147, 151, 0.2);
+      z-index: 50;
+      padding-top: env(safe-area-inset-top, 20px);
+    }
+    .bottom-tab-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(10, 10, 12, 0.95);
+      backdrop-filter: blur(12px);
+      border-top: 1px solid rgba(133, 147, 151, 0.2);
+      display: none;
+      justify-content: space-around;
+      padding: 8px 16px;
+      padding-bottom: max(8px, env(safe-area-inset-bottom, 8px));
+      z-index: 50;
+    }
+    .tab-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      transition: color 0.2s;
+    }
+    .tab-item span:first-child { font-size: 24px; }
+    .tab-item span:last-child { font-size: 10px; font-weight: 500; }
+    @media (max-width: 767px) {
+      .bottom-tab-bar { display: flex; }
+      .desktop-sidebar { display: none; }
+      main { margin-top: calc(env(safe-area-inset-top, 20px) + 56px); margin-bottom: calc(env(safe-area-inset-bottom, 0) + 70px); padding: 1rem; }
+    }
+    @media (min-width: 768px) {
+      .desktop-sidebar { display: flex; flex-direction: column; width: 260px; background: #0a0a0c; border-right: 1px solid #2d2d33; position: fixed; top: calc(env(safe-area-inset-top, 0) + 64px); left: 0; bottom: 0; z-index: 40; }
+      main { margin-left: 260px; margin-top: calc(env(safe-area-inset-top, 0) + 64px); padding: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="app-header">
+    <div class="flex justify-between items-center px-4 h-14">
+      <div class="flex items-center gap-2">
+        <span class="material-symbols-outlined text-cyan-400 text-2xl">group</span>
+        <span class="font-black text-lg text-cyan-400 tracking-tight">Creator Co-Op</span>
+      </div>
+      <div class="flex items-center gap-3">
+        <img id="topbarAvatar" src="https://ui-avatars.com/api/?background=2fd9f4&color=000&name=User" class="w-8 h-8 rounded-full object-cover border border-gray-600">
+        <button id="logoutBtn" class="material-symbols-outlined text-gray-400 hover:text-red-400 text-xl">logout</button>
+      </div>
+    </div>
+  </header>
+
+  <aside class="desktop-sidebar">
+    <nav class="flex-1 py-6 space-y-1">
+      <a href="dashboard.html" class="sidebar-item flex items-center gap-3 px-6 py-3 text-gray-400 hover:text-primary transition"><span class="material-symbols-outlined">dashboard</span><span>Dashboard</span></a>
+      <a href="profile.html" class="sidebar-active flex items-center gap-3 px-6 py-3 text-primary border-l-4 border-primary bg-gray-800/50"><span class="material-symbols-outlined">person</span><span>Profile</span></a>
+      <a href="queue.html" class="sidebar-item flex items-center gap-3 px-6 py-3 text-gray-400 hover:text-primary transition"><span class="material-symbols-outlined">dynamic_feed</span><span>Boost Queue</span></a>
+      <a href="settings.html" class="sidebar-item flex items-center gap-3 px-6 py-3 text-gray-400 hover:text-primary transition"><span class="material-symbols-outlined">settings</span><span>Settings</span></a>
+    </nav>
+    <div class="px-4 pb-6"><a href="new-project.html" class="w-full py-3 bg-gradient-to-r from-blue-600 to-blue-700 rounded-lg font-bold text-white flex items-center justify-center gap-2 hover:scale-105 transition-transform"><span class="material-symbols-outlined">add</span> New Project</a></div>
+  </aside>
+
+  <main>
+    <div class="flex flex-col xl:flex-row gap-6">
+      <div class="flex-grow space-y-6">
+        <div><h2 class="text-2xl md:text-3xl font-bold">Profile Settings</h2><p class="text-gray-400 text-sm">Manage your identity across the collective.</p></div>
+        <div class="glass-card rounded-xl p-6 md:p-8">
+          <div class="flex flex-col sm:flex-row items-start sm:items-center gap-6 mb-8">
+            <div class="relative group">
+              <div class="w-20 h-20 md:w-24 md:h-24 rounded-2xl overflow-hidden border-2 border-gray-700 group-hover:border-primary transition-colors">
+                <img id="profileAvatar" src="https://ui-avatars.com/api/?background=2fd9f4&color=000&name=User" class="w-full h-full object-cover">
+              </div>
+              <button id="uploadAvatarBtn" class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity rounded-2xl"><span class="material-symbols-outlined text-primary">edit</span></button>
+              <input type="file" id="avatarFile" accept="image/jpeg,image/png,image/webp" class="hidden">
+            </div>
+            <div><h3 class="text-xl md:text-2xl font-bold" id="profileDisplayName">Loading...</h3><p class="text-gray-500 text-sm" id="memberSince">Account created --</p></div>
+          </div>
+          <form id="profileForm" class="grid grid-cols-1 gap-5">
+            <div><label class="text-[11px] font-bold uppercase text-gray-500 ml-1">USERNAME</label><div class="relative"><span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[18px] text-gray-500">alternate_email</span><input type="text" id="profileUsername" class="w-full bg-gray-900 border border-gray-700 rounded-lg pl-10 pr-4 py-3 focus:outline-none focus:border-primary text-white"></div></div>
+            <div><label class="text-[11px] font-bold uppercase text-gray-500 ml-1">EMAIL (READONLY)</label><div class="relative opacity-60"><span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[18px] text-gray-500">mail</span><input type="email" id="profileEmail" class="w-full bg-gray-800 border border-gray-700 rounded-lg pl-10 pr-4 py-3 cursor-not-allowed text-white" readonly></div></div>
+            <div><label class="text-[11px] font-bold uppercase text-gray-500 ml-1">FACEBOOK PROFILE URL</label><div class="relative"><span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[18px] text-gray-500">link</span><input type="url" id="profileFacebook" class="w-full bg-gray-900 border border-gray-700 rounded-lg pl-10 pr-4 py-3 focus:outline-none focus:border-primary text-white"></div></div>
+            <div><label class="text-[11px] font-bold uppercase text-gray-500 ml-1">PHONE NUMBER</label><div class="relative"><span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[18px] text-gray-500">call</span><input type="tel" id="profilePhone" class="w-full bg-gray-900 border border-gray-700 rounded-lg pl-10 pr-4 py-3 focus:outline-none focus:border-primary text-white"></div></div>
+            <div><label class="text-[11px] font-bold uppercase text-gray-500 ml-1">COUNTRY / REGION</label><div class="relative"><span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[18px] text-gray-500">public</span><select id="profileCountry" class="w-full bg-gray-900 border border-gray-700 rounded-lg pl-10 pr-4 py-3 focus:outline-none focus:border-primary text-white"><option value="NG">Nigeria</option><option value="GH">Ghana</option><option value="US">United States</option><option value="GB">United Kingdom</option><option value="CA">Canada</option></select></div></div>
+            <div class="pt-4 flex justify-end"><button type="submit" class="bg-gradient-to-r from-blue-600 to-blue-700 text-white text-sm font-bold px-6 py-3 rounded-lg flex items-center gap-2 group">SAVE CHANGES <span class="material-symbols-outlined text-base group-hover:translate-x-1 transition-transform">send</span></button></div>
+          </form>
+        </div>
+      </div>
+      <div class="w-full md:w-80 flex-shrink-0 space-y-6">
+        <div class="glass-card rounded-xl p-6 border-l-4 border-green-400"><p class="text-[11px] font-bold uppercase text-gray-500 mb-4">ACCOUNT STATUS</p><div class="flex items-end justify-between"><div><span id="reputationScore" class="stat-value text-green-400">0%</span><p class="text-xs text-gray-500 mt-1">Reputation Score</p></div><span class="material-symbols-outlined text-green-400 text-3xl">verified_user</span></div></div>
+        <div class="glass-card rounded-xl p-6"><p class="text-[11px] font-bold uppercase text-gray-500 mb-6">QUICK STATS</p><div class="space-y-6"><div class="flex items-center gap-4"><div class="w-10 h-10 rounded-lg bg-gray-800 flex items-center justify-center"><span class="material-symbols-outlined text-primary">rocket_launch</span></div><div><p class="stat-value" id="completedMissions">0</p><p class="text-xs text-gray-500 uppercase">Completed Missions</p></div></div><div class="flex items-center gap-4"><div class="w-10 h-10 rounded-lg bg-gray-800 flex items-center justify-center"><span class="material-symbols-outlined text-blue-500">account_balance_wallet</span></div><div><p class="stat-value" id="totalEarnings">0</p><p class="text-xs text-gray-500 uppercase">Total Engagements</p></div></div><div class="flex items-center gap-4"><div class="w-10 h-10 rounded-lg bg-gray-800 flex items-center justify-center"><span class="material-symbols-outlined text-gray-400">timer</span></div><div><p class="stat-value" id="hoursActive">0</p><p class="text-xs text-gray-500 uppercase">Days Active</p></div></div></div></div>
+        <div class="glass-card rounded-xl p-6 relative overflow-hidden group"><div class="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div><p class="text-[11px] font-bold uppercase text-gray-500 mb-2">NEXT TIER PROGRESS</p><div class="flex justify-between items-end mb-2"><span class="text-sm font-bold text-primary">Vanguard</span><span class="text-xs text-gray-500"><span id="currentXP">0</span> / <span id="targetXP">10,000</span> XP</span></div><div class="progress-bar"><div id="xpProgressBar" class="progress-fill"></div></div></div>
+      </div>
+    </div>
+  </main>
+
+  <div class="bottom-tab-bar">
+    <a href="dashboard.html" class="tab-item text-gray-500"><span class="material-symbols-outlined">dashboard</span><span>Home</span></a>
+    <a href="profile.html" class="tab-item text-cyan-400"><span class="material-symbols-outlined">person</span><span>Profile</span></a>
+    <a href="queue.html" class="tab-item text-gray-500"><span class="material-symbols-outlined">dynamic_feed</span><span>Queue</span></a>
+    <a href="settings.html" class="tab-item text-gray-500"><span class="material-symbols-outlined">settings</span><span>Settings</span></a>
+    <a href="new-project.html" class="tab-item text-gray-500"><span class="material-symbols-outlined">add_circle</span><span>Boost</span></a>
+  </div>
+
+  <script>
+    const API_BASE = location.hostname === 'localhost' ? 'http://localhost:5000/api' : 'https://creator-coop-backend.onrender.com/api';
+    function getToken() { return localStorage.getItem('coop_token'); }
+    async function authFetch(endpoint, opts={}) {
+      const token = getToken();
+      if (!token) throw new Error('No token');
+      const res = await fetch(`${API_BASE}${endpoint}`, { ...opts, headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}`, ...opts.headers } });
+      if (res.status === 401) { localStorage.clear(); location.href = 'landing.html'; throw new Error('Session expired'); }
+      return res;
+    }
+    async function loadProfileData() {
+      try {
+        const me = await (await authFetch('/auth/me')).json();
+        document.getElementById('profileDisplayName').innerText = me.user.username;
+        document.getElementById('profileUsername').value = me.user.username;
+        document.getElementById('profileEmail').value = me.user.email;
+        document.getElementById('profileFacebook').value = me.user.facebook_profile_url || '';
+        document.getElementById('topbarAvatar').src = `https://ui-avatars.com/api/?background=2fd9f4&color=000&name=${encodeURIComponent(me.user.username)}`;
+        document.getElementById('profileAvatar').src = `https://ui-avatars.com/api/?background=2fd9f4&color=000&name=${encodeURIComponent(me.user.username)}`;
+        document.getElementById('memberSince').innerText = `Account created ${new Date().toLocaleDateString()}`;
+        try {
+          const profile = await (await authFetch('/profile')).json();
+          const prof = profile.profile || {};
+          document.getElementById('profilePhone').value = prof.phone || '';
+          if (prof.country) { const sel = document.getElementById('profileCountry'); if ([...sel.options].some(o=>o.value===prof.country)) sel.value = prof.country; }
+        } catch(e) {}
+        const boosts = await (await authFetch('/boosts?limit=100')).json();
+        const totalEng = (boosts.boosts || []).reduce((s,b)=>s+(b.engagement_count||0),0);
+        const totalBoosts = (boosts.boosts || []).length;
+        document.getElementById('completedMissions').innerText = totalBoosts;
+        document.getElementById('totalEarnings').innerText = totalEng;
+        document.getElementById('hoursActive').innerText = '1';
+        const rep = Math.min(100, Math.floor(totalEng/10));
+        document.getElementById('reputationScore').innerText = `${rep}%`;
+        const xp = Math.min(10000, totalEng*10);
+        document.getElementById('currentXP').innerText = xp;
+        document.getElementById('xpProgressBar').style.width = `${(xp/10000)*100}%`;
+      } catch(e){ console.error(e); }
+    }
+    document.getElementById('profileForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const username = document.getElementById('profileUsername').value.trim();
+      const fbUrl = document.getElementById('profileFacebook').value.trim();
+      const phone = document.getElementById('profilePhone').value.trim();
+      const country = document.getElementById('profileCountry').value;
+      try {
+        await authFetch('/auth/update-profile', { method: 'POST', body: JSON.stringify({ username, facebook_profile_url: fbUrl, phone, country }) });
+        alert('Profile updated');
+        loadProfileData();
+        document.getElementById('topbarAvatar').src = `https://ui-avatars.com/api/?background=2fd9f4&color=000&name=${encodeURIComponent(username)}`;
+        document.getElementById('profileAvatar').src = `https://ui-avatars.com/api/?background=2fd9f4&color=000&name=${encodeURIComponent(username)}`;
+      } catch(err){ alert('Update failed: '+err.message); }
+    });
+    document.getElementById('uploadAvatarBtn').addEventListener('click', ()=>document.getElementById('avatarFile').click());
+    document.getElementById('avatarFile').addEventListener('change', async (e) => {
+      const file = e.target.files[0]; if(!file) return;
+      const formData = new FormData(); formData.append('avatar', file);
+      try {
+        const res = await fetch(`${API_BASE}/profile/upload-avatar`, { method: 'POST', headers: { 'Authorization': `Bearer ${getToken()}` }, body: formData });
+        if(!res.ok) throw new Error('Upload failed');
+        const data = await res.json();
+        const newUrl = data.avatar_url + '?t='+Date.now();
+        document.getElementById('topbarAvatar').src = newUrl;
+        document.getElementById('profileAvatar').src = newUrl;
+        alert('Avatar updated');
+      } catch(err){ alert('Upload failed: '+err.message); }
+    });
+    document.getElementById('logoutBtn').onclick = () => { localStorage.clear(); location.href='landing.html'; };
+    (async()=>{ if(!getToken()) location.href='landing.html'; await loadProfileData(); })();
+  </script>
+</body>
+</html>

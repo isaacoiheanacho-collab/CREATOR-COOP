@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creator Co-Op</title>
+    <style>
+        body { font-family: system-ui; background: #0a0a0c; color: white; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; text-align: center; }
+        .loader { border: 3px solid #1f2937; border-top: 3px solid #2fd9f4; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin: 0 auto 20px; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    </style>
+</head>
+<body>
+    <div>
+        <div class="loader"></div>
+        <p>Loading...</p>
+    </div>
+    <script>
+        const token = localStorage.getItem('coop_token');
+        if (token) {
+            window.location.replace('/dashboard.html');
+        } else {
+            window.location.replace('/landing.html');
+        }
+    </script>
+</body>
+</html>

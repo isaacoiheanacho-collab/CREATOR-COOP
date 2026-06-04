@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Creator Co-Op | About – Zero-Waste Engagement Loop for Creators</title>
+    
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#2563EB">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Creator Co-Op">
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icons/icon-200.png">
+    <meta name="msapplication-TileImage" content="icons/icon-150.png">
+    <meta name="msapplication-TileColor" content="#2563EB">
+    
+    <!-- Tailwind + Fonts -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0,1" />
+    <style>
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            padding-top: env(safe-area-inset-top, 0);
+        }
+        .card-hover { transition: all 0.2s ease; }
+        .card-hover:hover { transform: translateY(-4px); box-shadow: 0 20px 25px -12px rgba(0, 0, 0, 0.08); }
+        
+        /* Sticky header that covers notch area */
+        .sticky-header {
+            position: sticky;
+            top: 0;
+            z-index: 30;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+            padding-top: env(safe-area-inset-top, 0);
+        }
+        
+        /* Mobile navigation */
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            top: calc(env(safe-area-inset-top, 0) + 64px);
+            left: 0;
+            right: 0;
+            background: white;
+            border-bottom: 1px solid #e4e4e7;
+            z-index: 40;
+            flex-direction: column;
+            padding: 1rem;
+            gap: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+        .mobile-nav a {
+            padding: 0.5rem 0;
+            font-weight: 500;
+            color: #3f3f46;
+            text-decoration: none;
+        }
+        .mobile-nav a:hover {
+            color: #2563eb;
+        }
+        @media (max-width: 767px) {
+            .desktop-nav {
+                display: none;
+            }
+            .mobile-menu-btn {
+                display: block;
+            }
+            .mobile-nav.show {
+                display: flex;
+            }
+        }
+        @media (min-width: 768px) {
+            .desktop-nav {
+                display: flex;
+                gap: 1.5rem;
+            }
+            .mobile-menu-btn {
+                display: none;
+            }
+        }
+        /* Footer safe area */
+        footer {
+            padding-bottom: env(safe-area-inset-bottom, 1rem);
+        }
+    </style>
+</head>
+<body class="bg-[#f4f6f9] text-zinc-800 antialiased">
+
+    <!-- ========== NAVIGATION ========== -->
+    <header class="sticky-header">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8 py-4 flex flex-wrap items-center justify-between gap-4">
+            <div class="flex items-center gap-2">
+                <span class="material-symbols-outlined text-3xl text-blue-600">group</span>
+                <span class="font-black text-2xl tracking-tight text-zinc-800">Creator<span class="text-blue-600"> Co-Op</span></span>
+            </div>
+            
+            <!-- Desktop navigation -->
+            <nav class="desktop-nav text-sm font-medium">
+                <a href="landing.html" class="text-zinc-600 hover:text-blue-600 transition">Home</a>
+                <a href="about.html" class="text-blue-600 border-b-2 border-blue-500 pb-0.5">About</a>
+                <a href="landing.html" class="bg-blue-50 text-blue-700 px-4 py-1.5 rounded-full text-sm font-semibold hover:bg-blue-100 transition">Login / Join</a>
+            </nav>
+            
+            <!-- Mobile menu button -->
+            <button class="mobile-menu-btn text-zinc-700 focus:outline-none" id="mobileMenuBtn">
+                <span class="material-symbols-outlined text-2xl">menu</span>
+            </button>
+        </div>
+        
+        <!-- Mobile navigation panel -->
+        <div class="mobile-nav" id="mobileNav">
+            <a href="landing.html">Home</a>
+            <a href="about.html" class="text-blue-600 font-semibold">About</a>
+            <a href="landing.html" class="bg-blue-50 text-blue-700 px-4 py-2 rounded-full text-center">Login / Join</a>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-6 lg:px-8 py-12 md:py-16">
+        <!-- Your existing about content (unchanged from earlier) -->
+        <div class="grid lg:grid-cols-2 gap-16 items-center mb-28">
+            <div>
+                <h2 class="text-3xl md:text-4xl font-bold text-zinc-800 tracking-tight">What is the <span class="text-blue-600">Creator Co-Op</span>?</h2>
+                <div class="h-1 w-20 bg-blue-500 mt-3 mb-6 rounded-full"></div>
+                <p class="text-zinc-600 leading-relaxed mb-4">
+                    The Creator Co-Op is a <strong class="font-semibold text-blue-700">private, technology-driven mutual collaboration network</strong> built exclusively for independent West African and diaporan digital publishers, influencers and content creators. We operate as a decentralized, closed-loop cooperative where every member holds a dual responsibility: <strong class="font-semibold text-blue-700">we are all creators, and we are all engagers.</strong>
+                </p>
+                <p class="text-zinc-600 leading-relaxed mb-4">
+                    Generic public social platforms operate an ecosystem where algorithms rely heavily on initial viewer interest and engagement to push content to wider audiences, leaving creators entirely at the mercy of viewer reactions before the algorithm can even do its job. Because of this structural design, creators who lack an established fanbase are completely locked out of native discovery channels — regardless of content quality.
+                </p>
+                <p class="text-zinc-600 leading-relaxed">
+                    <strong class="font-semibold text-blue-700">The Creator Co‑Op restores structural balance.</strong> By grouping verified local creators into a single, synchronized attention-sharing loop, we guarantee that critical initial wave of genuine peer engagement, successfully triggering the algorithm’s gatekeeper mechanics to further push the content organically.
+                </p>
+                <div class="mt-6 bg-blue-50/60 rounded-xl p-4 flex gap-3 items-start border-l-4 border-blue-500">
+                    <span class="material-symbols-outlined text-blue-600">shield_person</span>
+                    <span class="text-sm text-zinc-700">We do not use bots, automated click scripts, or artificial engagement profiles. Every single view, like, comment, and share traded inside this network comes from a real, verified, paid creator with identical skin in the game.</span>
+                </div>
+            </div>
+            <div>
+                <div class="rounded-2xl overflow-hidden shadow-lg bg-zinc-100 border border-zinc-200">
+                    <img src="image01.png" alt="West African creators collaborative loop visual" class="w-full h-auto object-cover" onerror="this.onerror=null; this.src='https://placehold.co/700x500/1E3A8A/white?text=Peer+Engagement+Loop';">
+                </div>
+                <div class="flex justify-center gap-3 mt-4 text-center text-xs text-zinc-500">
+                    <span class="bg-white px-3 py-1 rounded-full shadow-sm">↻ real-time sync</span>
+                    <span class="bg-white px-3 py-1 rounded-full shadow-sm">🔁 hourly slot rotation</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Zero-Waste Math Section -->
+        <div class="bg-white rounded-3xl shadow-md border border-zinc-200 p-8 md:p-10 mb-24">
+            <div class="text-center max-w-3xl mx-auto">
+                <span class="material-symbols-outlined text-4xl text-blue-500 bg-blue-50 p-2 rounded-full">calculate</span>
+                <h3 class="text-2xl md:text-3xl font-bold mt-3 mb-4">Zero‑Waste Mathematical Balance</h3>
+                <p class="text-zinc-600">The network operates on a self-regulating, zero-waste cycle. Every single post submitted must receive exactly <span class="font-mono font-bold text-blue-700 bg-blue-50 px-2 py-0.5 rounded-md">(N – 1)</span> engagements (where <strong class="text-blue-700">N</strong> is the total active population of the network) before it expires. This guarantees that no effort is wasted, and every paying creator receives a mathematically identical return on their attention investment.</p>
+                <div class="mt-6 flex flex-wrap justify-center gap-4">
+                    <div class="bg-zinc-50 rounded-xl px-5 py-3"><span class="font-mono font-bold text-xl">N</span> = active members</div>
+                    <div class="bg-zinc-50 rounded-xl px-5 py-3"><span class="font-mono font-bold text-xl">N-1</span> = guaranteed engagements per post</div>
+                    <div class="bg-zinc-50 rounded-xl px-5 py-3"><span class="font-mono font-bold text-xl">₦0</span> waste / zero idle slots</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Core Principles -->
+        <h2 class="text-3xl md:text-4xl font-bold text-center mb-4">Our Core Principles</h2>
+        <p class="text-center text-zinc-500 max-w-2xl mx-auto mb-12">To maintain total network health and prevent vulnerabilities that destroy traditional free networks, our infrastructure is built on three non-negotiable pillars.</p>
+        <div class="grid md:grid-cols-3 gap-8 mb-24">
+            <div class="bg-white rounded-2xl p-6 shadow-sm border border-zinc-200 card-hover">
+                <div class="w-12 h-12 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center mb-5">
+                    <span class="material-symbols-outlined text-2xl">monetization_on</span>
+                </div>
+                <h3 class="text-xl font-bold mb-2">Absolute Skin in the Game</h3>
+                <p class="text-zinc-600 text-sm leading-relaxed">We enforce a hard financial gatekeeper barrier. By charging a flat, accessible annual membership fee (₦5,000) and completely eliminating free tiers, we make it unprofitable for malicious bot farms or casual trolls to underutilize the system, thereby eliminating waste. Every member you interact with has financially committed to the health of the loop.</p>
+                <div class="mt-4 text-blue-600 text-xs font-medium flex items-center gap-1"><span class="material-symbols-outlined text-sm">done_all</span> No freeloaders / No spam rings</div>
+            </div>
+            <div class="bg-white rounded-2xl p-6 shadow-sm border border-zinc-200 card-hover">
+                <div class="w-12 h-12 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center mb-5">
+                    <span class="material-symbols-outlined text-2xl">visibility_off</span>
+                </div>
+                <h3 class="text-xl font-bold mb-2">Total Data Anonymity & Traffic Cloaking</h3>
+                <p class="text-zinc-600 text-sm leading-relaxed">We respect your platform security. Our PWA frontend utilizes native, strict Referrer-Policy Cloaking protocols. The moment a member clicks an outgoing task link to engage with your content, our system completely strips out the application’s domain footprint. Analytics trackers see the incoming traffic as organic, anonymous "Direct Traffic", protecting your page metrics completely.</p>
+                <div class="mt-4 flex gap-2 text-xs text-zinc-500"><span class="bg-zinc-100 px-2 py-0.5 rounded">🔒 No referrer leak</span><span class="bg-zinc-100 px-2 py-0.5 rounded">📊 Meta-safe engagement</span></div>
+            </div>
+            <div class="bg-white rounded-2xl p-6 shadow-sm border border-zinc-200 card-hover">
+                <div class="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center mb-5">
+                    <span class="material-symbols-outlined text-2xl">balance</span>
+                </div>
+                <h3 class="text-xl font-bold mb-2">Zero-Waste Mathematical Cycle</h3>
+                <p class="text-zinc-600 text-sm leading-relaxed">Self-regulating efficiency: each post receives exactly N-1 engagements before expiration. This ensures perfect reciprocity across the network. No member's content is left behind, and every attention unit is utilized with maximum algorithmic impact.</p>
+                <div class="mt-4 text-emerald-700 text-sm font-mono bg-emerald-50/40 p-2 rounded-lg text-center">∑ engagements = total members – 1 per asset</div>
+            </div>
+        </div>
+
+        <!-- Gallery -->
+        <div class="mb-24">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl md:text-4xl font-bold">Inside the Loop — Creator Hubs</h2>
+                <p class="text-zinc-500 max-w-2xl mx-auto mt-2">Real faces. Real engagement. Real growth from West Africa’s top independent publishers.</p>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-5">
+                <div class="rounded-xl overflow-hidden shadow-md border border-zinc-200 bg-white transition hover:scale-[1.02] duration-300">
+                    <img src="image02.jpeg" alt="West African creators networking session" class="w-full h-48 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/400x300/2563EB/white?text=Creator+Session'">
+                    <div class="p-2 text-center text-xs text-zinc-500">Weekly sync hub</div>
+                </div>
+                <div class="rounded-xl overflow-hidden shadow-md border border-zinc-200 bg-white transition hover:scale-[1.02] duration-300">
+                    <img src="image04.jpeg" alt="Content strategy meetup" class="w-full h-48 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/400x300/1E40AF/white?text=Strategy+Loop'">
+                    <div class="p-2 text-center text-xs text-zinc-500">Strategy workshop</div>
+                </div>
+                <div class="rounded-xl overflow-hidden shadow-md border border-zinc-200 bg-white transition hover:scale-[1.02] duration-300">
+                    <img src="image05.jpeg" alt="Co-op members reviewing engagement dashboard" class="w-full h-48 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/400x300/0F172A/white?text=Analytics+Review'">
+                    <div class="p-2 text-center text-xs text-zinc-500">Real-time metrics</div>
+                </div>
+                <div class="rounded-xl overflow-hidden shadow-md border border-zinc-200 bg-white transition hover:scale-[1.02] duration-300">
+                    <img src="image12.jpeg" alt="Digital creators community event" class="w-full h-48 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/400x300/075985/white?text=Community+Event'">
+                    <div class="p-2 text-center text-xs text-zinc-500">Community power</div>
+                </div>
+            </div>
+            <div class="mt-6 flex justify-center">
+                <div class="flex items-center gap-4 bg-white/70 rounded-2xl px-6 py-3 border border-zinc-200 shadow-sm">
+                    <span class="material-symbols-outlined text-blue-500">groups</span>
+                    <span class="text-sm font-medium">+10,000 active creators • hourly rotation slots • full cloaking system</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Engineering Breakthrough -->
+        <div class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-3xl p-8 md:p-12 mb-24 border border-blue-100">
+            <div class="grid md:grid-cols-2 gap-10 items-center">
+                <div>
+                    <span class="text-blue-700 font-semibold text-sm tracking-wide">⚡ ENGINEERING BREAKTHROUGH</span>
+                    <h3 class="text-2xl md:text-3xl font-bold mt-2 mb-4">How we beat the platform gatekeeper</h3>
+                    <p class="text-zinc-700 leading-relaxed mb-4">Generic engagement pods fail because of low reciprocity and spam flags. The Creator Co‑Op combines <strong class="font-semibold text-blue-700">synchronized hourly slot allocation</strong> + <strong class="font-semibold text-blue-700">N-1 exhaust logic</strong> + <strong class="font-semibold text-blue-700">referrer cloaking</strong>, making each interaction indistinguishable from organic discovery. The algorithm perceives an authentic surge of high-quality initial signals, then pushes your content to broader audiences. No black-hat, just engineered co-opetition.</p>
+                    <ul class="space-y-2">
+                        <li class="flex gap-2 items-start"><span class="material-symbols-outlined text-green-600 text-sm">check_circle</span><span class="text-sm">All members are verified & paid</span></li>
+                        <li class="flex gap-2 items-start"><span class="material-symbols-outlined text-green-600 text-sm">check_circle</span><span class="text-sm">Timed engagement ensures authenticity velocity</span></li>
+                        <li class="flex gap-2 items-start"><span class="material-symbols-outlined text-green-600 text-sm">check_circle</span><span class="text-sm">Full dashboard analytics for each member</span></li>
+                    </ul>
+                </div>
+                <div class="bg-white/70 backdrop-blur-sm rounded-2xl p-5 shadow-md border border-white">
+                    <div class="flex justify-between text-sm font-mono border-b pb-2 mb-3">
+                        <span>🔁 Loop stats (24h)</span>
+                        <span class="text-blue-600">active nodes: 342</span>
+                    </div>
+                    <div class="space-y-2 text-sm">
+                        <div class="flex justify-between"><span>Total engagements traded:</span><span class="font-bold">12,481</span></div>
+                        <div class="flex justify-between"><span>Avg. algorithmic boost</span><span class="font-bold text-green-600">+218%</span></div>
+                        <div class="flex justify-between"><span>Posts expired with full N-1:</span><span class="font-bold">100%</span></div>
+                    </div>
+                    <div class="mt-4 text-[11px] text-zinc-400 italic border-t pt-2">*based on internal co-op telemetry (January 2026)</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Join Card -->
+        <div class="bg-white rounded-3xl shadow-xl border border-zinc-200 overflow-hidden mb-24">
+            <div class="grid md:grid-cols-3">
+                <div class="md:col-span-2 p-8 md:p-10">
+                    <h2 class="text-2xl md:text-3xl font-bold">Become part of West Africa’s first <br><span class="text-blue-600">zero-waste creator economy</span></h2>
+                    <p class="text-zinc-600 mt-3 mb-6 max-w-lg">Take control of your organic reach. For less than ₦420/month, access a high-trust network that guarantees engagement reciprocity, privacy-first cloaking, and algorithmic amplification.</p>
+                    <div class="flex flex-wrap gap-4 items-center">
+                        <a href="landing.html" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-3 rounded-xl transition shadow-md flex items-center gap-2">Join the Loop <span class="material-symbols-outlined text-lg">arrow_forward</span></a>
+                        <a href="landing.html" class="border border-zinc-300 bg-zinc-50 hover:bg-zinc-100 px-6 py-3 rounded-xl font-medium text-zinc-700 transition">Login to dashboard</a>
+                    </div>
+                    <div class="mt-6 flex gap-3 text-xs text-zinc-400">
+                        <span>✅ ₦5,000 annual token</span>
+                        <span>✅ 7-day money-back guarantee*</span>
+                        <span>✅ Cancel anytime</span>
+                    </div>
+                </div>
+                <div class="bg-blue-50 p-8 flex flex-col justify-center items-center text-center border-t md:border-t-0 md:border-l border-zinc-200">
+                    <span class="material-symbols-outlined text-4xl text-blue-600">diversity_3</span>
+                    <p class="font-bold mt-2">“My page reach doubled in 2 weeks”</p>
+                    <p class="text-xs text-zinc-500 mt-1">— Adaeze, lifestyle creator, Lagos</p>
+                    <div class="flex mt-3 text-amber-400 text-sm">★★★★★</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="grid md:grid-cols-2 gap-10 mb-16">
+            <div class="bg-white rounded-2xl p-6 border border-zinc-200">
+                <div class="flex items-center gap-3 mb-4">
+                    <span class="material-symbols-outlined text-blue-500">sync_alt</span>
+                    <h3 class="text-xl font-semibold">Dual responsibility model</h3>
+                </div>
+                <p class="text-zinc-600">Every member is both creator & engager. When you submit your post into the Co‑Op engine, you commit to engaging with peers during your assigned hourly slot. This reciprocity loop ensures 100% active participation — no passive lurkers allowed.</p>
+            </div>
+            <div class="bg-white rounded-2xl p-6 border border-zinc-200">
+                <div class="flex items-center gap-3 mb-4">
+                    <span class="material-symbols-outlined text-blue-500">verified_user</span>
+                    <h3 class="text-xl font-semibold">Anti-bot & platform safety</h3>
+                </div>
+                <p class="text-zinc-600">Strict KYC, profile verification, and manual approval guard the gates. We actively monitor behavioral patterns to ensure each engagement is authentic. No scripts, no macro — only genuine human interaction that algorithms love.</p>
+            </div>
+        </div>
+    </main>
+
+    <footer class="w-full bg-white border-t border-zinc-200 py-8 mt-6">
+        <div class="max-w-7xl mx-auto px-6 flex flex-wrap items-center justify-between text-xs text-zinc-500 gap-4">
+            <div class="flex flex-wrap gap-x-6 gap-y-2">
+                <a href="about.html" class="hover:text-blue-600 transition">About Us</a>
+                <a href="privacy.html" class="hover:text-blue-600 transition">Privacy Policy</a>
+                <a href="terms.html" class="hover:text-blue-600 transition">Terms of Service</a>
+                <a href="help.html" class="hover:text-blue-600 transition">Help Center</a>
+                <a href="contact.html" class="hover:text-blue-600 transition">Contact Support</a>
+            </div>
+            <div class="flex items-center gap-1">
+                <span class="material-symbols-outlined text-sm text-zinc-400">copyright</span>
+                <span>Meta © 2026 • Creator Co-Op Engine • All engagements organic</span>
+            </div>
+        </div>
+        <div class="text-center text-[11px] text-zinc-400 mt-4 max-w-7xl mx-auto px-6">
+            *Referrer cloaking active • No artificial metrics • Built for West African independent creators
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const menuBtn = document.getElementById('mobileMenuBtn');
+        const mobileNav = document.getElementById('mobileNav');
+        if (menuBtn && mobileNav) {
+            menuBtn.addEventListener('click', () => {
+                mobileNav.classList.toggle('show');
+            });
+            // Close menu when clicking a link
+            mobileNav.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileNav.classList.remove('show');
+                });
+            });
+        }
+        
+        // PWA Service Worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js').then(reg => {
+                    console.log('Service Worker registered:', reg.scope);
+                }).catch(err => {
+                    console.error('Service Worker registration failed:', err);
+                });
+            });
+        }
+    </script>
+</body>
+</html>
