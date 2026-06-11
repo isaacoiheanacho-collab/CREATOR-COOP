@@ -25,6 +25,33 @@
         body { font-family: 'Inter', system-ui, sans-serif; }
         .install-btn { transition: all 0.2s ease; }
         .install-btn:hover { transform: translateY(-2px); }
+        .password-wrapper {
+            position: relative;
+        }
+        .password-toggle {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #9ca3af;
+            transition: color 0.2s;
+        }
+        .password-toggle:hover {
+            color: #2563eb;
+        }
+        .forgot-password {
+            font-size: 0.75rem;
+            text-align: right;
+            margin-top: 0.25rem;
+        }
+        .forgot-password a {
+            color: #2563eb;
+            text-decoration: none;
+        }
+        .forgot-password a:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body class="bg-[#f4f6f9] text-zinc-900 font-sans">
@@ -73,7 +100,13 @@
                                 </div>
                                 <div>
                                     <label class="block text-xs font-bold uppercase tracking-wider text-zinc-500 mb-1">Password</label>
-                                    <input type="password" id="login-password" required class="w-full rounded-lg border-zinc-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 px-3 py-2">
+                                    <div class="password-wrapper">
+                                        <input type="password" id="login-password" required class="w-full rounded-lg border-zinc-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 px-3 py-2 pr-10">
+                                        <span class="password-toggle material-symbols-outlined" onclick="togglePassword('login-password', this)">visibility_off</span>
+                                    </div>
+                                </div>
+                                <div class="forgot-password">
+                                    <a href="#" onclick="showForgotPassword()">Forgot password?</a>
                                 </div>
                                 <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 rounded-lg transition duration-150">
                                     Log In
@@ -98,7 +131,10 @@
                                 </div>
                                 <div>
                                     <label class="block text-xs font-bold uppercase tracking-wider text-zinc-500 mb-1">Password</label>
-                                    <input type="password" id="reg-password" minlength="6" required placeholder="Min 6 characters" class="w-full rounded-lg border-zinc-300 shadow-sm focus:border-blue-500 px-3 py-2">
+                                    <div class="password-wrapper">
+                                        <input type="password" id="reg-password" minlength="6" required placeholder="Min 6 characters" class="w-full rounded-lg border-zinc-300 shadow-sm focus:border-blue-500 px-3 py-2 pr-10">
+                                        <span class="password-toggle material-symbols-outlined" onclick="togglePassword('reg-password', this)">visibility_off</span>
+                                    </div>
                                 </div>
                                 <div>
                                     <label class="block text-xs font-bold uppercase tracking-wider text-zinc-500 mb-1">Facebook Profile Link (Mandatory)</label>
@@ -116,6 +152,26 @@
                 </section>
             </div>
         </main>
+
+        <!-- FORGOT PASSWORD MODAL -->
+        <div id="forgotPasswordModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 hidden">
+            <div class="bg-white rounded-2xl p-6 max-w-md w-full mx-4 shadow-xl">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-xl font-bold text-zinc-800">Reset Password</h3>
+                    <button onclick="closeForgotPassword()" class="text-zinc-400 hover:text-zinc-600">
+                        <span class="material-symbols-outlined">close</span>
+                    </button>
+                </div>
+                <p class="text-zinc-600 text-sm mb-4">Enter your email address and we'll send you a link to reset your password.</p>
+                <form id="forgot-password-form">
+                    <input type="email" id="reset-email" placeholder="Your email address" required class="w-full rounded-lg border-zinc-300 shadow-sm focus:border-blue-500 px-3 py-2 mb-4">
+                    <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 rounded-lg transition duration-150">
+                        Send Reset Link
+                    </button>
+                </form>
+                <div id="resetMessage" class="text-sm text-center mt-3 hidden"></div>
+            </div>
+        </div>
 
         <footer class="w-full bg-white border-t border-zinc-200 py-5 mt-0">
             <div class="max-w-[1200px] mx-auto px-6 flex flex-wrap items-center justify-between text-xs text-zinc-500 gap-3">
@@ -137,6 +193,65 @@
             ? 'http://localhost:5000/api'
             : 'https://creator-coop-backend.onrender.com/api';
 
+        // ==================== PASSWORD TOGGLE FUNCTION ====================
+        function togglePassword(inputId, iconElement) {
+            const input = document.getElementById(inputId);
+            if (input.type === 'password') {
+                input.type = 'text';
+                iconElement.textContent = 'visibility';
+            } else {
+                input.type = 'password';
+                iconElement.textContent = 'visibility_off';
+            }
+        }
+
+        // ==================== FORGOT PASSWORD MODAL ====================
+        function showForgotPassword() {
+            document.getElementById('forgotPasswordModal').classList.remove('hidden');
+        }
+
+        function closeForgotPassword() {
+            document.getElementById('forgotPasswordModal').classList.add('hidden');
+            document.getElementById('resetMessage').classList.add('hidden');
+            document.getElementById('reset-email').value = '';
+        }
+
+        document.getElementById('forgot-password-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('reset-email').value.trim();
+            const messageDiv = document.getElementById('resetMessage');
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = 'Sending...';
+            messageDiv.classList.add('hidden');
+            
+            try {
+                const res = await fetch(`${API_BASE}/auth/forgot-password`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email })
+                });
+                const data = await res.json();
+                
+                messageDiv.classList.remove('hidden');
+                if (res.ok) {
+                    messageDiv.innerHTML = '<span class="text-green-600">✓ ' + data.message + '</span>';
+                    setTimeout(() => closeForgotPassword(), 3000);
+                } else {
+                    messageDiv.innerHTML = '<span class="text-red-600">⚠️ ' + (data.error || 'Something went wrong') + '</span>';
+                }
+            } catch (err) {
+                messageDiv.classList.remove('hidden');
+                messageDiv.innerHTML = '<span class="text-red-600">⚠️ Cannot connect to server. Please try again later.</span>';
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalText;
+            }
+        });
+
+        // ==================== PWA INSTALL ====================
         let deferredPrompt;
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
