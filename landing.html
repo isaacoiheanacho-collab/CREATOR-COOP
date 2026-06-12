@@ -12,8 +12,17 @@
     <meta name="apple-mobile-web-app-title" content="Creator Co-Op">
     <meta name="mobile-web-app-capable" content="yes">
     <link rel="manifest" href="manifest.json">
+    
+    <!-- Primary Icon - Your New Logo (try first) -->
     <link rel="apple-touch-icon" href="icons/co-creators.png">
-    <meta name="msapplication-TileImage" content="icons/co-creators.png">
+    
+    <!-- Fallback to old working icons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="icons/icon-200.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="icons/icon-150.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="icons/icon-100.png">
+    
+    <!-- Windows / Android -->
+    <meta name="msapplication-TileImage" content="icons/icon-150.png">
     <meta name="msapplication-TileColor" content="#2563EB">
     
     <!-- Tailwind + Fonts -->
@@ -56,12 +65,10 @@
 </head>
 <body class="bg-[#f4f6f9] text-zinc-900 font-sans">
 
-    <!-- SAFE AREA WRAPPER: prevents notch overlap -->
     <div style="padding-top: env(safe-area-inset-top, 20px);" class="min-h-screen flex flex-col">
         <main class="flex-1 flex items-center">
             <div class="max-w-[1200px] mx-auto w-full flex flex-col md:flex-row items-center justify-between px-6 py-8 md:py-12 gap-8 md:gap-12">
                 
-                <!-- LEFT PANEL -->
                 <section class="flex-1 max-w-[580px]">
                     <div class="flex items-center gap-3 text-blue-600 font-black text-4xl tracking-tighter mb-5">
                         <span class="material-symbols-outlined text-4xl">group</span>
@@ -82,7 +89,6 @@
                     </div>
                 </section>
 
-                <!-- RIGHT PANEL: LOGIN / REGISTER + INSTALL BUTTON -->
                 <section class="w-full max-w-[400px] space-y-4">
                     <button id="installAppBtn" class="install-btn w-full bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-bold py-3 rounded-xl shadow-md flex items-center justify-center gap-2 transition-all">
                         <span class="material-symbols-outlined">download</span>
@@ -90,7 +96,6 @@
                     </button>
 
                     <div class="bg-white border border-zinc-200 rounded-xl p-6 md:p-8 shadow-md">
-                        <!-- LOGIN VIEW -->
                         <div id="login-view">
                             <h2 class="text-xl font-bold mb-5 text-zinc-800">Log In to Dashboard</h2>
                             <form id="login-form" class="space-y-4">
@@ -117,7 +122,6 @@
                             </div>
                         </div>
 
-                        <!-- REGISTER VIEW -->
                         <div id="register-view" class="hidden">
                             <h2 class="text-xl font-bold mb-5 text-zinc-800">Create New Account</h2>
                             <form id="register-form" class="space-y-3">
@@ -153,7 +157,6 @@
             </div>
         </main>
 
-        <!-- FORGOT PASSWORD MODAL -->
         <div id="forgotPasswordModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 hidden">
             <div class="bg-white rounded-2xl p-6 max-w-md w-full mx-4 shadow-xl">
                 <div class="flex justify-between items-center mb-4">
@@ -188,12 +191,10 @@
     </div>
 
     <script>
-        // ==================== API BASE (DYNAMIC) ====================
         const API_BASE = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
             ? 'http://localhost:5000/api'
             : 'https://creator-coop-backend.onrender.com/api';
 
-        // ==================== PASSWORD TOGGLE FUNCTION ====================
         function togglePassword(inputId, iconElement) {
             const input = document.getElementById(inputId);
             if (input.type === 'password') {
@@ -205,7 +206,6 @@
             }
         }
 
-        // ==================== FORGOT PASSWORD MODAL ====================
         function showForgotPassword() {
             document.getElementById('forgotPasswordModal').classList.remove('hidden');
         }
@@ -251,7 +251,6 @@
             }
         });
 
-        // ==================== PWA INSTALL ====================
         let deferredPrompt;
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
@@ -285,7 +284,6 @@
             }
         }
 
-        // Registration
         document.getElementById('register-form').addEventListener('submit', async (e) => {
             e.preventDefault();
             const payload = {
@@ -320,7 +318,6 @@
             }
         });
 
-        // Login
         document.getElementById('login-form').addEventListener('submit', async (e) => {
             e.preventDefault();
             const email = document.getElementById('login-email').value.trim();
@@ -348,7 +345,6 @@
             }
         });
 
-        // Service Worker
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('/sw.js').then(reg => console.log('SW registered:', reg.scope)).catch(err => console.error('SW failed:', err));

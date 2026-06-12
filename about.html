@@ -12,8 +12,17 @@
     <meta name="apple-mobile-web-app-title" content="Creator Co-Op">
     <meta name="mobile-web-app-capable" content="yes">
     <link rel="manifest" href="manifest.json">
+    
+    <!-- Primary Icon - Your New Logo (try first) -->
     <link rel="apple-touch-icon" href="icons/co-creators.png">
-    <meta name="msapplication-TileImage" content="icons/co-creators.png">
+    
+    <!-- Fallback to old working icons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="icons/icon-200.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="icons/icon-150.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="icons/icon-100.png">
+    
+    <!-- Windows / Android -->
+    <meta name="msapplication-TileImage" content="icons/icon-150.png">
     <meta name="msapplication-TileColor" content="#2563EB">
     
     <!-- Tailwind + Fonts -->
@@ -121,7 +130,7 @@
     </header>
 
     <main class="max-w-7xl mx-auto px-6 lg:px-8 py-12 md:py-16">
-        <!-- Your existing about content (unchanged) -->
+        <!-- Your existing about content -->
         <div class="grid lg:grid-cols-2 gap-16 items-center mb-28">
             <div>
                 <h2 class="text-3xl md:text-4xl font-bold text-zinc-800 tracking-tight">What is the <span class="text-blue-600">Creator Co-Op</span>?</h2>
@@ -318,22 +327,18 @@
     </footer>
 
     <script>
-        // Mobile menu toggle
         const menuBtn = document.getElementById('mobileMenuBtn');
         const mobileNav = document.getElementById('mobileNav');
         if (menuBtn && mobileNav) {
             menuBtn.addEventListener('click', () => {
                 mobileNav.classList.toggle('show');
             });
-            // Close menu when clicking a link
             mobileNav.querySelectorAll('a').forEach(link => {
                 link.addEventListener('click', () => {
                     mobileNav.classList.remove('show');
                 });
             });
         }
-        
-        // PWA Service Worker
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('/sw.js').then(reg => {

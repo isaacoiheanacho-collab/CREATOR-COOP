@@ -12,8 +12,17 @@
   <meta name="apple-mobile-web-app-title" content="Creator Co-Op">
   <meta name="mobile-web-app-capable" content="yes">
   <link rel="manifest" href="manifest.json">
+  
+  <!-- Primary Icon - Your New Logo (try first) -->
   <link rel="apple-touch-icon" href="icons/co-creators.png">
-  <meta name="msapplication-TileImage" content="icons/co-creators.png">
+  
+  <!-- Fallback to old working icons -->
+  <link rel="apple-touch-icon" sizes="180x180" href="icons/icon-200.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="icons/icon-150.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="icons/icon-100.png">
+  
+  <!-- Windows / Android -->
+  <meta name="msapplication-TileImage" content="icons/icon-150.png">
   <meta name="msapplication-TileColor" content="#0b1326">
   
   <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
@@ -135,9 +144,9 @@
       tbody.innerHTML = '<tr><td colspan="4" class="py-4 text-center">Loading...</td></tr>';
       try {
         const invoices = await (await authFetch('/payments/history')).json();
-        if(invoices && invoices.length) { tbody.innerHTML = invoices.map(inv => `<td>${inv.id}</td><td>${new Date(inv.date).toLocaleDateString()}</td><td>₦${inv.amount/100}</td><td class="text-green-400">SUCCESS</td>`).join(''); }
-        else { tbody.innerHTML = '<tr><td colspan="4" class="py-4 text-center">No payment history found.</td></tr>'; }
-      } catch(e){ tbody.innerHTML = '<tr><td colspan="4" class="py-4 text-center">Payment history not available.</td></tr>'; }
+        if(invoices && invoices.length) { tbody.innerHTML = invoices.map(inv => `<tr><td class="py-1">${inv.id}</td><td class="py-1">${new Date(inv.date).toLocaleDateString()}</td><td class="py-1">₦${inv.amount/100}</td><td class="text-green-400">SUCCESS</td>`).join(''); }
+        else { tbody.innerHTML = '<tr><td colspan="4" class="py-4 text-center">No payment history found.柵</td></tr>'; }
+      } catch(e){ tbody.innerHTML = '<tr><td colspan="4" class="py-4 text-center">Payment history not available.柵</td></tr>'; }
     }
     document.getElementById('renewBtn').addEventListener('click', async () => {
       try {

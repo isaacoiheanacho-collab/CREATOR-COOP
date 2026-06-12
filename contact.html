@@ -12,8 +12,17 @@
     <meta name="apple-mobile-web-app-title" content="Creator Co-Op">
     <meta name="mobile-web-app-capable" content="yes">
     <link rel="manifest" href="manifest.json">
+    
+    <!-- Primary Icon - Your New Logo (try first) -->
     <link rel="apple-touch-icon" href="icons/co-creators.png">
-    <meta name="msapplication-TileImage" content="icons/co-creators.png">
+    
+    <!-- Fallback to old working icons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="icons/icon-200.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="icons/icon-150.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="icons/icon-100.png">
+    
+    <!-- Windows / Android -->
+    <meta name="msapplication-TileImage" content="icons/icon-150.png">
     <meta name="msapplication-TileColor" content="#2563EB">
     
     <!-- Tailwind + Fonts -->
@@ -25,7 +34,6 @@
             font-family: 'Inter', system-ui, sans-serif;
             padding-top: env(safe-area-inset-top, 0);
         }
-        /* Sticky header that covers notch area */
         .sticky-header {
             position: sticky;
             top: 0;
@@ -35,7 +43,6 @@
             border-bottom: 1px solid rgba(0, 0, 0, 0.08);
             padding-top: env(safe-area-inset-top, 0);
         }
-        /* Mobile navigation */
         .mobile-nav {
             display: none;
             position: fixed;
@@ -60,55 +67,34 @@
             color: #2563eb;
         }
         @media (max-width: 767px) {
-            .desktop-nav {
-                display: none;
-            }
-            .mobile-menu-btn {
-                display: block;
-            }
-            .mobile-nav.show {
-                display: flex;
-            }
+            .desktop-nav { display: none; }
+            .mobile-menu-btn { display: block; }
+            .mobile-nav.show { display: flex; }
         }
         @media (min-width: 768px) {
-            .desktop-nav {
-                display: flex;
-                gap: 1.5rem;
-            }
-            .mobile-menu-btn {
-                display: none;
-            }
+            .desktop-nav { display: flex; gap: 1.5rem; }
+            .mobile-menu-btn { display: none; }
         }
-        /* Footer safe area */
-        footer {
-            padding-bottom: env(safe-area-inset-bottom, 1rem);
-        }
+        footer { padding-bottom: env(safe-area-inset-bottom, 1rem); }
     </style>
 </head>
 <body class="bg-[#f4f6f9] text-zinc-800 antialiased">
 
-    <!-- ========== NAVIGATION ========== -->
     <header class="sticky-header">
         <div class="max-w-7xl mx-auto px-6 lg:px-8 py-4 flex flex-wrap items-center justify-between gap-4">
             <div class="flex items-center gap-2">
                 <span class="material-symbols-outlined text-3xl text-blue-600">group</span>
                 <span class="font-black text-2xl tracking-tight text-zinc-800">Creator<span class="text-blue-600"> Co-Op</span></span>
             </div>
-            
-            <!-- Desktop navigation -->
             <nav class="desktop-nav text-sm font-medium">
                 <a href="landing.html" class="text-zinc-600 hover:text-blue-600 transition">Home</a>
                 <a href="about.html" class="text-zinc-600 hover:text-blue-600 transition">About</a>
                 <a href="landing.html" class="bg-blue-50 text-blue-700 px-4 py-1.5 rounded-full text-sm font-semibold hover:bg-blue-100 transition">Login / Join</a>
             </nav>
-            
-            <!-- Mobile menu button -->
             <button class="mobile-menu-btn text-zinc-700 focus:outline-none" id="mobileMenuBtn">
                 <span class="material-symbols-outlined text-2xl">menu</span>
             </button>
         </div>
-        
-        <!-- Mobile navigation panel -->
         <div class="mobile-nav" id="mobileNav">
             <a href="landing.html">Home</a>
             <a href="about.html">About</a>
@@ -117,7 +103,6 @@
     </header>
 
     <main class="max-w-5xl mx-auto px-6 lg:px-8 py-12 md:py-16">
-        <!-- Header -->
         <div class="text-center mb-12">
             <span class="material-symbols-outlined text-5xl text-blue-500 mb-3">contact_support</span>
             <h1 class="text-4xl md:text-5xl font-extrabold text-zinc-900 tracking-tight">Contact Support</h1>
@@ -125,7 +110,6 @@
         </div>
 
         <div class="grid lg:grid-cols-3 gap-8">
-            <!-- Left cards -->
             <div class="lg:col-span-1 space-y-5">
                 <div class="bg-white rounded-2xl border border-zinc-200 p-6 shadow-sm">
                     <div class="flex items-center gap-3 mb-4"><span class="material-symbols-outlined text-blue-500 text-2xl">email</span><h3 class="font-bold text-lg">Email Us</h3></div>
@@ -153,7 +137,6 @@
                     <p class="text-xs text-zinc-400 mt-2">By appointment only</p>
                 </div>
             </div>
-            <!-- Contact Form -->
             <div class="lg:col-span-2">
                 <div class="bg-white rounded-2xl border border-zinc-200 p-6 md:p-8 shadow-sm">
                     <h2 class="text-2xl font-bold mb-6 flex items-center gap-2"><span class="material-symbols-outlined text-blue-500">edit_note</span> Send us a message</h2>
@@ -205,7 +188,6 @@
     </footer>
 
     <script>
-        // Mobile menu toggle
         const menuBtn = document.getElementById('mobileMenuBtn');
         const mobileNav = document.getElementById('mobileNav');
         if (menuBtn && mobileNav) {
@@ -219,7 +201,6 @@
             });
         }
         
-        // Contact form handler (unchanged)
         const contactForm = document.getElementById('contact-form');
         const successDiv = document.getElementById('form-success');
         const errorDiv = document.getElementById('form-error');
@@ -247,7 +228,6 @@
             }, 800);
         });
         
-        // PWA Service Worker
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('/sw.js').then(reg => console.log('Service Worker registered:', reg.scope)).catch(err => console.error('Service Worker registration failed:', err));

@@ -12,8 +12,17 @@
   <meta name="apple-mobile-web-app-title" content="Creator Co-Op">
   <meta name="mobile-web-app-capable" content="yes">
   <link rel="manifest" href="manifest.json">
+  
+  <!-- Primary Icon - Your New Logo (try first) -->
   <link rel="apple-touch-icon" href="icons/co-creators.png">
-  <meta name="msapplication-TileImage" content="icons/co-creators.png">
+  
+  <!-- Fallback to old working icons -->
+  <link rel="apple-touch-icon" sizes="180x180" href="icons/icon-200.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="icons/icon-150.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="icons/icon-100.png">
+  
+  <!-- Windows / Android -->
+  <meta name="msapplication-TileImage" content="icons/icon-150.png">
   <meta name="msapplication-TileColor" content="#0b1326">
   
   <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
@@ -34,7 +43,6 @@
     .status-queued { background: rgba(251, 191, 36, 0.2); color: #fbbf24; }
     .status-completed { background: rgba(107, 114, 128, 0.2); color: #9ca3af; }
 
-    /* Safe area & header */
     .app-header {
       position: fixed;
       top: 0;
@@ -86,7 +94,6 @@
 </head>
 <body>
 
-  <!-- HEADER with safe area -->
   <header class="app-header">
     <div class="flex justify-between items-center px-4 h-14">
       <div class="flex items-center gap-2">
@@ -100,7 +107,6 @@
     </div>
   </header>
 
-  <!-- DESKTOP SIDEBAR (hidden on mobile) -->
   <aside class="desktop-sidebar">
     <nav class="flex-1 py-6 space-y-1">
       <a href="dashboard.html" class="sidebar-active flex items-center gap-3 px-6 py-3 text-primary border-l-4 border-primary bg-gray-800/50">
@@ -123,10 +129,8 @@
     </div>
   </aside>
 
-  <!-- MAIN CONTENT -->
   <main>
     <div class="space-y-6">
-      <!-- Welcome Hero -->
       <div class="glass-card rounded-xl p-6 md:p-8 relative overflow-hidden">
         <div class="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-primary/10 to-transparent"></div>
         <div class="relative flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
@@ -146,7 +150,6 @@
         </div>
       </div>
 
-      <!-- Stats Row -->
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <div class="glass-card rounded-lg p-4"><p class="text-gray-400 text-[11px] font-bold uppercase">BOOSTS USED</p><p class="text-2xl md:text-3xl font-black"><span id="boostsUsed">0</span> <span class="text-gray-500">/ 1</span></p><div class="mt-4 h-1 w-full bg-gray-800 rounded-full overflow-hidden"><div id="boostsProgress" class="h-full bg-primary w-0 transition-all"></div></div></div>
         <div class="glass-card rounded-lg p-4 border-l-2 border-blue-500"><p class="text-gray-400 text-[11px] font-bold uppercase">NEXT BOOST</p><p class="text-2xl md:text-3xl font-black text-blue-400" id="nextBoostTime">Ready</p><p class="text-xs text-gray-500 mt-2">Available for immediate deployment.</p></div>
@@ -154,7 +157,6 @@
         <div class="glass-card rounded-lg p-4 border-l-2 border-green-400"><p class="text-gray-400 text-[11px] font-bold uppercase">MEMBERSHIP STATUS</p><p class="text-2xl md:text-3xl font-black" id="membershipStatus">Inactive</p><p class="text-xs text-gray-500 mt-2" id="expiryInfo">No active subscription</p></div>
       </div>
 
-      <!-- My Boosts Table -->
       <div class="glass-card rounded-xl p-4 md:p-6">
         <div class="flex items-center justify-between mb-4 flex-wrap gap-2">
           <div class="flex items-center gap-3"><span class="material-symbols-outlined text-primary text-2xl">rocket_launch</span><h3 class="text-lg md:text-xl font-bold text-white">My Boosts</h3><span id="myBoostsCount" class="bg-gray-800 px-2 py-0.5 rounded text-[10px] font-bold text-primary">0</span></div>
@@ -163,21 +165,20 @@
         <div class="overflow-x-auto">
           <table class="min-w-[500px]">
             <thead><tr><th>Target Link / Source</th><th>Submission</th><th>Status</th><th>Engagement</th><th>Actions</th></tr></thead>
-            <tbody id="myBoostsList"><tr><td colspan="5" class="text-center text-gray-500 py-10">Loading...</td></tr></tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-  </main>
+            <tbody id="myBoostsList"><td><td colspan="5" class="text-center text-gray-500 py-10">Loading...<\/td><\/tr><\/tbody>
+          <\/table>
+        <\/div>
+      <\/div>
+    <\/div>
+  <\/main>
 
-  <!-- BOTTOM TAB BAR (mobile only) -->
   <div class="bottom-tab-bar">
-    <a href="dashboard.html" class="tab-item text-cyan-400"><span class="material-symbols-outlined">dashboard</span><span>Home</span></a>
-    <a href="profile.html" class="tab-item text-gray-500"><span class="material-symbols-outlined">person</span><span>Profile</span></a>
-    <a href="queue.html" class="tab-item text-gray-500"><span class="material-symbols-outlined">dynamic_feed</span><span>Queue</span></a>
-    <a href="settings.html" class="tab-item text-gray-500"><span class="material-symbols-outlined">settings</span><span>Settings</span></a>
-    <a href="new-project.html" class="tab-item text-gray-500"><span class="material-symbols-outlined">add_circle</span><span>Boost</span></a>
-  </div>
+    <a href="dashboard.html" class="tab-item text-cyan-400"><span class="material-symbols-outlined">dashboard</span><span>Home</span><\/a>
+    <a href="profile.html" class="tab-item text-gray-500"><span class="material-symbols-outlined">person</span><span>Profile</span><\/a>
+    <a href="queue.html" class="tab-item text-gray-500"><span class="material-symbols-outlined">dynamic_feed</span><span>Queue</span><\/a>
+    <a href="settings.html" class="tab-item text-gray-500"><span class="material-symbols-outlined">settings</span><span>Settings</span><\/a>
+    <a href="new-project.html" class="tab-item text-gray-500"><span class="material-symbols-outlined">add_circle</span><span>Boost</span><\/a>
+  <\/div>
 
   <script>
     const API_BASE = location.hostname === 'localhost' ? 'http://localhost:5000/api' : 'https://creator-coop-backend.onrender.com/api';
@@ -216,7 +217,7 @@
         const data = await (await authFetch('/boosts?limit=100')).json();
         const boosts = data.boosts || [];
         document.getElementById('myBoostsCount').innerText = boosts.length;
-        if(boosts.length===0){ tbody.innerHTML='<tr><td colspan="5" class="text-center text-gray-500 py-10">No boosts yet. Click "New Project".</td>'; return; }
+        if(boosts.length===0){ tbody.innerHTML='<tr><td colspan="5" class="text-center text-gray-500 py-10">No boosts yet. Click "New Project".</td></tr>'; return; }
         tbody.innerHTML = boosts.map(b => `<tr><td class="max-w-xs truncate"><a href="${b.original_url}" target="_blank" class="text-cyan-400 hover:underline text-sm">${b.original_url}</a><div class="text-xs text-gray-500">${b.category||'General'}</div></td><td class="text-sm">${new Date(b.submitted_at).toLocaleString()}</td><td><span class="status-badge ${b.status==='active'?'status-active':(b.status==='queued'?'status-queued':'status-completed')}">${b.status?.toUpperCase()||'UNKNOWN'}</span></td><td class="text-sm font-mono">${(b.engagement_count||0).toLocaleString()}</td><td><button class="text-primary hover:text-cyan-300 text-sm" onclick="window.open('${b.original_url}','_blank')">View</button></td></tr>`).join('');
       } catch(e){ tbody.innerHTML='<tr><td colspan="5" class="text-center text-red-400 py-10">Failed to load.</td></tr>'; }
     }

@@ -12,8 +12,17 @@
     <meta name="apple-mobile-web-app-title" content="Creator Co-Op">
     <meta name="mobile-web-app-capable" content="yes">
     <link rel="manifest" href="manifest.json">
+    
+    <!-- Primary Icon - Your New Logo (try first) -->
     <link rel="apple-touch-icon" href="icons/co-creators.png">
-    <meta name="msapplication-TileImage" content="icons/co-creators.png">
+    
+    <!-- Fallback to old working icons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="icons/icon-200.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="icons/icon-150.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="icons/icon-100.png">
+    
+    <!-- Windows / Android -->
+    <meta name="msapplication-TileImage" content="icons/icon-150.png">
     <meta name="msapplication-TileColor" content="#2563EB">
     
     <!-- Tailwind + Fonts -->
@@ -97,30 +106,25 @@
     </header>
 
     <main class="max-w-4xl mx-auto px-6 lg:px-8 py-12 md:py-16">
-        <!-- Header -->
         <div class="text-center mb-12"><span class="material-symbols-outlined text-5xl text-blue-500 mb-3">help_center</span><h1 class="text-4xl md:text-5xl font-extrabold text-zinc-900 tracking-tight">Help Center</h1><p class="text-zinc-500 mt-3 max-w-2xl mx-auto">Everything you need to know about the Creator Loop — from getting started to troubleshooting.</p></div>
         
-        <!-- Quick topics -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-12">
             <div class="bg-white rounded-xl p-5 border border-zinc-200 text-center hover:shadow-md transition"><span class="material-symbols-outlined text-3xl text-blue-500">rocket_launch</span><h3 class="font-bold mt-2">Getting Started</h3><p class="text-xs text-zinc-500 mt-1">Onboarding, account setup, first loop</p></div>
             <div class="bg-white rounded-xl p-5 border border-zinc-200 text-center hover:shadow-md transition"><span class="material-symbols-outlined text-3xl text-blue-500">sync_alt</span><h3 class="font-bold mt-2">Loop Rules & Slots</h3><p class="text-xs text-zinc-500 mt-1">N-1 guarantee, hourly schedule</p></div>
             <div class="bg-white rounded-xl p-5 border border-zinc-200 text-center hover:shadow-md transition"><span class="material-symbols-outlined text-3xl text-blue-500">payments</span><h3 class="font-bold mt-2">Billing & Membership</h3><p class="text-xs text-zinc-500 mt-1">Fees, renewal, refund policy</p></div>
         </div>
         
-        <!-- FAQ Accordion -->
         <h2 class="text-2xl font-bold mb-6 flex items-center gap-2"><span class="material-symbols-outlined text-blue-500">quiz</span> Frequently Asked Questions</h2>
         <div class="space-y-4 mb-12">
             <details class="faq-item bg-white rounded-xl border border-zinc-200 p-5"><summary class="font-semibold text-zinc-800 flex justify-between items-center cursor-pointer"><span>What is the Creator Co-Op and how does it work?</span><span class="material-symbols-outlined text-blue-500 text-xl">expand_more</span></summary><p class="text-zinc-600 mt-3 pl-0 border-t border-zinc-100 pt-3">The Creator Co-Op is a private, closed-loop engagement network for West African creators. Members submit their Facebook posts, are assigned hourly slots, and must engage with peers' content. Each post receives exactly (N-1) engagements (N = active members), triggering organic algorithm boosts. No bots, no fake engagement — just real creators helping each other.</p></details>
         </div>
         
-        <!-- Troubleshooting & Tips -->
         <h2 class="text-2xl font-bold mb-6 flex items-center gap-2"><span class="material-symbols-outlined text-blue-500">build</span> Troubleshooting & Tips</h2>
         <div class="grid md:grid-cols-2 gap-6 mb-12">
             <div class="bg-white rounded-xl border border-zinc-200 p-5"><div class="flex items-center gap-2 mb-3"><span class="material-symbols-outlined text-green-600">task_alt</span><h3 class="font-bold">How to complete your slot efficiently</h3></div><ul class="list-disc pl-5 text-sm text-zinc-600 space-y-1"><li>Log in 5 minutes before your slot begins.</li><li>Open each engagement link in a new tab (right‑click > open link).</li><li>Spend at least 15–30 seconds on each post; scroll, like, and leave a genuine comment.</li><li>Do not close tabs immediately — mimic organic behaviour.</li><li>After engaging, click "Mark as Completed" on your dashboard for each task.</li></ul></div>
             <div class="bg-white rounded-xl border border-zinc-200 p-5"><div class="flex items-center gap-2 mb-3"><span class="material-symbols-outlined text-amber-600">warning</span><h3 class="font-bold">Common mistakes to avoid</h3></div><ul class="list-disc pl-5 text-sm text-zinc-600 space-y-1"><li>Using the same comment repeatedly (e.g., "Nice post!" on every link).</li><li>Clicking links but not scrolling or engaging meaningfully.</li><li>Attempting to use browser automation or macros.</li><li>Sharing your dashboard password with others.</li><li>Submitting posts that violate Facebook’s guidelines (spam, offensive content).</li></ul></div>
         </div>
         
-        <!-- Contact Support -->
         <div class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl p-8 border border-blue-100 mb-10">
             <div class="text-center max-w-2xl mx-auto"><span class="material-symbols-outlined text-4xl text-blue-600">support_agent</span><h2 class="text-2xl font-bold mt-2 mb-3">Still have questions?</h2><p class="text-zinc-600 mb-6">Our support team typically responds within 24 hours (Monday–Friday).</p>
             <div class="flex flex-wrap justify-center gap-5"><div class="bg-white rounded-xl p-4 shadow-sm min-w-[200px]"><span class="material-symbols-outlined text-blue-500">email</span><p class="font-semibold mt-1">Email Support</p><a href="mailto:support@creatorcoop.ng" class="text-sm text-blue-600 hover:underline">support@creatorcoop.ng</a></div>
