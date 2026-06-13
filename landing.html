@@ -157,6 +157,7 @@
             </div>
         </main>
 
+        <!-- FORGOT PASSWORD MODAL -->
         <div id="forgotPasswordModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 hidden">
             <div class="bg-white rounded-2xl p-6 max-w-md w-full mx-4 shadow-xl">
                 <div class="flex justify-between items-center mb-4">
@@ -173,6 +174,35 @@
                     </button>
                 </form>
                 <div id="resetMessage" class="text-sm text-center mt-3 hidden"></div>
+            </div>
+        </div>
+
+        <!-- OTP VERIFICATION MODAL -->
+        <div id="otpModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 hidden">
+            <div class="bg-white rounded-2xl p-6 max-w-md w-full mx-4 shadow-xl">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-xl font-bold text-zinc-800">Verify Your Email</h3>
+                    <button onclick="closeOtpModal()" class="text-zinc-400 hover:text-zinc-600">
+                        <span class="material-symbols-outlined">close</span>
+                    </button>
+                </div>
+                <p class="text-zinc-600 text-sm mb-4">
+                    We've sent a verification code to <strong id="otpEmailDisplay"></strong>
+                </p>
+                <form id="otp-form">
+                    <div>
+                        <label class="block text-xs font-bold uppercase tracking-wider text-zinc-500 mb-1">Verification Code</label>
+                        <input type="text" id="otp-code" required placeholder="Enter 6-digit code" maxlength="6" 
+                               class="w-full rounded-lg border-zinc-300 shadow-sm focus:border-blue-500 px-3 py-2 text-center text-2xl tracking-widest">
+                    </div>
+                    <div class="text-center mt-3">
+                        <button type="button" onclick="resendOtp()" class="text-blue-600 text-sm hover:underline">Resend Code</button>
+                    </div>
+                    <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 rounded-lg mt-4">
+                        Verify Email
+                    </button>
+                </form>
+                <div id="otpMessage" class="text-sm text-center mt-3 hidden"></div>
             </div>
         </div>
 
@@ -195,6 +225,7 @@
             ? 'http://localhost:5000/api'
             : 'https://creator-coop-backend.onrender.com/api';
 
+        // ==================== PASSWORD TOGGLE ====================
         function togglePassword(inputId, iconElement) {
             const input = document.getElementById(inputId);
             if (input.type === 'password') {
@@ -206,6 +237,7 @@
             }
         }
 
+        // ==================== FORGOT PASSWORD ====================
         function showForgotPassword() {
             document.getElementById('forgotPasswordModal').classList.remove('hidden');
         }
@@ -251,6 +283,100 @@
             }
         });
 
+        // ==================== EMAIL VERIFICATION ====================
+        let pendingVerificationEmail = null;
+
+        async function sendVerificationCode(email) {
+            try {
+                const res = await fetch(`${API_BASE}/auth/send-verification`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email })
+                });
+                const data = await res.json();
+                if (res.ok) {
+                    if (data.dev_otp) console.log('Development OTP:', data.dev_otp);
+                    return true;
+                } else {
+                    alert(data.error);
+                    return false;
+                }
+            } catch (err) {
+                alert('Cannot connect to server.');
+                return false;
+            }
+        }
+
+        function showOtpModal() {
+            document.getElementById('otpEmailDisplay').innerText = pendingVerificationEmail;
+            document.getElementById('otpModal').classList.remove('hidden');
+        }
+
+        function closeOtpModal() {
+            document.getElementById('otpModal').classList.add('hidden');
+            document.getElementById('otp-code').value = '';
+            document.getElementById('otpMessage').classList.add('hidden');
+            pendingVerificationEmail = null;
+        }
+
+        async function resendOtp() {
+            if (!pendingVerificationEmail) return;
+            const messageDiv = document.getElementById('otpMessage');
+            const success = await sendVerificationCode(pendingVerificationEmail);
+            if (success) {
+                messageDiv.innerHTML = '<span class="text-green-600">✓ New verification code sent!</span>';
+            } else {
+                messageDiv.innerHTML = '<span class="text-red-600">⚠️ Failed to resend code.</span>';
+            }
+            messageDiv.classList.remove('hidden');
+            setTimeout(() => messageDiv.classList.add('hidden'), 3000);
+        }
+
+        document.getElementById('otp-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const otp = document.getElementById('otp-code').value.trim();
+            const messageDiv = document.getElementById('otpMessage');
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+            
+            if (!otp || otp.length !== 6) {
+                messageDiv.innerHTML = '<span class="text-red-600">Please enter the 6-digit code.</span>';
+                messageDiv.classList.remove('hidden');
+                return;
+            }
+            
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = 'Verifying...';
+            messageDiv.classList.add('hidden');
+            
+            try {
+                const res = await fetch(`${API_BASE}/auth/verify-email`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: pendingVerificationEmail, otp })
+                });
+                const data = await res.json();
+                
+                if (res.ok) {
+                    messageDiv.innerHTML = '<span class="text-green-600">✓ ' + data.message + '</span>';
+                    messageDiv.classList.remove('hidden');
+                    setTimeout(() => {
+                        closeOtpModal();
+                        alert('Email verified! Please log in again.');
+                    }, 1500);
+                } else {
+                    messageDiv.innerHTML = '<span class="text-red-600">⚠️ ' + data.error + '</span>';
+                    messageDiv.classList.remove('hidden');
+                }
+            } catch (err) {
+                messageDiv.innerHTML = '<span class="text-red-600">⚠️ Verification failed. Please try again.</span>';
+                messageDiv.classList.remove('hidden');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = 'Verify Email';
+            }
+        });
+
+        // ==================== PWA INSTALL ====================
         let deferredPrompt;
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
@@ -272,6 +398,7 @@
             document.getElementById('installAppBtn').style.display = 'none';
         }
 
+        // ==================== AUTH UI TOGGLE ====================
         function toggleAuth(showLogin) {
             const loginView = document.getElementById('login-view');
             const registerView = document.getElementById('register-view');
@@ -284,6 +411,7 @@
             }
         }
 
+        // ==================== REGISTRATION ====================
         document.getElementById('register-form').addEventListener('submit', async (e) => {
             e.preventDefault();
             const payload = {
@@ -304,7 +432,11 @@
                 });
                 const data = await res.json();
                 if (res.ok) {
-                    alert('Registration successful! Please log in.');
+                    alert('Registration successful! Please verify your email.');
+                    // Send verification code
+                    pendingVerificationEmail = payload.email;
+                    await sendVerificationCode(payload.email);
+                    showOtpModal();
                     toggleAuth(true);
                     document.getElementById('reg-username').value = '';
                     document.getElementById('reg-email').value = '';
@@ -318,14 +450,17 @@
             }
         });
 
+        // ==================== LOGIN (with verification check) ====================
         document.getElementById('login-form').addEventListener('submit', async (e) => {
             e.preventDefault();
             const email = document.getElementById('login-email').value.trim();
             const password = document.getElementById('login-password').value;
+            
             if (!email || !password) {
                 alert('Please enter email and password.');
                 return;
             }
+            
             try {
                 const res = await fetch(`${API_BASE}/auth/login`, {
                     method: 'POST',
@@ -333,10 +468,16 @@
                     body: JSON.stringify({ email, password })
                 });
                 const data = await res.json();
+                
                 if (res.ok) {
                     localStorage.setItem('coop_token', data.token);
                     localStorage.setItem('coop_user', JSON.stringify(data.user));
                     window.location.href = 'dashboard.html';
+                } else if (data.needs_verification) {
+                    pendingVerificationEmail = email;
+                    await sendVerificationCode(email);
+                    showOtpModal();
+                    alert('Please verify your email first. A verification code has been sent.');
                 } else {
                     alert(data.error || 'Login failed.');
                 }
@@ -345,6 +486,7 @@
             }
         });
 
+        // ==================== SERVICE WORKER ====================
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('/sw.js').then(reg => console.log('SW registered:', reg.scope)).catch(err => console.error('SW failed:', err));
