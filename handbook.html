@@ -1,0 +1,1532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Creator Co-Op | Handbook & Bye-Laws</title>
+    
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#0b1326">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Creator Co-Op">
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="manifest" href="manifest.json">
+    
+    <link rel="apple-touch-icon" href="icons/icon-200.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="icons/icon-150.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="icons/icon-100.png">
+    <meta name="msapplication-TileImage" content="icons/icon-150.png">
+    <meta name="msapplication-TileColor" content="#0b1326">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0,1">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #0a0a0c;
+            --bg-secondary: #141418;
+            --bg-card: #1a1a1e;
+            --border-color: #2d2d33;
+            --text-primary: #e5e7eb;
+            --text-secondary: #9ca3af;
+            --text-muted: #6b7280;
+            --cyan: #2fd9f4;
+            --cyan-dark: #1a9bb4;
+            --blue: #2563eb;
+            --green: #4ade80;
+            --red: #ef4444;
+            --yellow: #fbbf24;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.7;
+        }
+
+        /* ========================================================
+           HEADER / NAV
+           ======================================================== */
+        .app-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(10, 10, 12, 0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-color);
+            z-index: 100;
+            padding: 12px 20px;
+            padding-top: env(safe-area-inset-top, 12px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 20px;
+            font-weight: 900;
+            color: white;
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: var(--cyan);
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .btn-back {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            border-radius: 8px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .btn-back:hover {
+            background: var(--border-color);
+            color: white;
+        }
+
+        .btn-back .material-symbols-outlined {
+            font-size: 18px;
+        }
+
+        /* ========================================================
+           CONTAINER
+           ======================================================== */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ========================================================
+           SIDEBAR / TOC
+           ======================================================== */
+        .toc-wrapper {
+            position: fixed;
+            top: 64px;
+            left: 0;
+            bottom: 0;
+            width: 280px;
+            overflow-y: auto;
+            padding: 24px 20px;
+            background: var(--bg-secondary);
+            border-right: 1px solid var(--border-color);
+            z-index: 50;
+            display: none;
+        }
+
+        .toc-wrapper.show {
+            display: block;
+        }
+
+        .toc-title {
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .toc-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .toc-list li {
+            margin-bottom: 2px;
+        }
+
+        .toc-list a {
+            display: block;
+            padding: 6px 12px;
+            border-radius: 6px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 13px;
+            transition: all 0.2s;
+            border-left: 2px solid transparent;
+        }
+
+        .toc-list a:hover {
+            background: var(--bg-card);
+            color: white;
+            border-left-color: var(--cyan);
+        }
+
+        .toc-list a.active {
+            background: var(--bg-card);
+            color: var(--cyan);
+            border-left-color: var(--cyan);
+        }
+
+        .toc-list .toc-sub {
+            padding-left: 24px;
+            font-size: 12px;
+        }
+
+        .toc-toggle {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 60;
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            background: var(--cyan);
+            color: #0a0a0c;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(47, 217, 244, 0.3);
+            transition: all 0.2s;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .toc-toggle:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 30px rgba(47, 217, 244, 0.4);
+        }
+
+        .toc-toggle .material-symbols-outlined {
+            font-size: 28px;
+        }
+
+        /* ========================================================
+           MAIN CONTENT
+           ======================================================== */
+        .main-content {
+            padding-top: 76px;
+            padding-bottom: 60px;
+            margin-left: 0;
+            transition: margin-left 0.3s;
+        }
+
+        .main-content.with-toc {
+            margin-left: 280px;
+        }
+
+        /* ========================================================
+           HANDBOOK HEADER
+           ======================================================== */
+        .handbook-header {
+            padding: 40px 0 32px;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .handbook-header .badge {
+            display: inline-block;
+            background: rgba(47, 217, 244, 0.12);
+            color: var(--cyan);
+            font-size: 12px;
+            font-weight: 700;
+            padding: 4px 16px;
+            border-radius: 50px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+        }
+
+        .handbook-header h1 {
+            font-size: 36px;
+            font-weight: 900;
+            color: white;
+            margin-bottom: 8px;
+        }
+
+        .handbook-header h1 span {
+            color: var(--cyan);
+        }
+
+        .handbook-header .version {
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        /* ========================================================
+           SECTIONS
+           ======================================================== */
+        .section {
+            margin-bottom: 48px;
+            scroll-margin-top: 80px;
+        }
+
+        .section h2 {
+            font-size: 26px;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .section h2 .number {
+            color: var(--cyan);
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .section h3 {
+            font-size: 20px;
+            font-weight: 700;
+            color: white;
+            margin: 24px 0 12px;
+            scroll-margin-top: 80px;
+        }
+
+        .section h4 {
+            font-size: 17px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin: 16px 0 8px;
+            scroll-margin-top: 80px;
+        }
+
+        .section p {
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+            font-size: 15px;
+        }
+
+        .section ul,
+        .section ol {
+            color: var(--text-secondary);
+            margin: 8px 0 16px 20px;
+            font-size: 15px;
+        }
+
+        .section ul li,
+        .section ol li {
+            margin-bottom: 6px;
+        }
+
+        .section .highlight-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px 24px;
+            margin: 16px 0;
+        }
+
+        .section .highlight-box.cyan {
+            border-left: 4px solid var(--cyan);
+        }
+
+        .section .highlight-box.green {
+            border-left: 4px solid var(--green);
+        }
+
+        .section .highlight-box.yellow {
+            border-left: 4px solid var(--yellow);
+        }
+
+        .section .highlight-box.red {
+            border-left: 4px solid var(--red);
+        }
+
+        .section .highlight-box .title {
+            font-weight: 700;
+            color: white;
+            font-size: 15px;
+            margin-bottom: 4px;
+        }
+
+        .section .highlight-box p {
+            margin-bottom: 0;
+            font-size: 14px;
+        }
+
+        /* ========================================================
+           TABLES
+           ======================================================== */
+        .table-wrap {
+            overflow-x: auto;
+            margin: 16px 0;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+
+        table th {
+            background: var(--bg-secondary);
+            color: var(--text-secondary);
+            font-weight: 600;
+            text-align: left;
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border-color);
+            text-transform: uppercase;
+            font-size: 11px;
+            letter-spacing: 0.5px;
+        }
+
+        table td {
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-secondary);
+        }
+
+        table tr:last-child td {
+            border-bottom: none;
+        }
+
+        table td strong {
+            color: var(--text-primary);
+        }
+
+        /* ========================================================
+           RESPONSIVE
+           ======================================================== */
+        @media (min-width: 1024px) {
+            .toc-wrapper {
+                display: block;
+            }
+
+            .toc-toggle {
+                display: none !important;
+            }
+
+            .main-content {
+                margin-left: 280px;
+            }
+        }
+
+        @media (max-width: 1023px) {
+            .toc-wrapper {
+                display: none;
+                width: 100%;
+                top: 64px;
+                bottom: 0;
+                border-right: none;
+                border-bottom: 1px solid var(--border-color);
+                z-index: 90;
+            }
+
+            .toc-wrapper.show {
+                display: block;
+            }
+
+            .toc-toggle {
+                display: flex;
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            .handbook-header h1 {
+                font-size: 28px;
+            }
+
+            .section h2 {
+                font-size: 22px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 0 16px;
+            }
+
+            .handbook-header {
+                padding: 24px 0;
+            }
+
+            .handbook-header h1 {
+                font-size: 24px;
+            }
+
+            .section h2 {
+                font-size: 19px;
+            }
+
+            .section h3 {
+                font-size: 17px;
+            }
+
+            .section p,
+            .section ul,
+            .section ol {
+                font-size: 14px;
+            }
+
+            table {
+                font-size: 12px;
+            }
+
+            table th,
+            table td {
+                padding: 8px 12px;
+            }
+
+            .btn-back span:last-child {
+                display: none;
+            }
+        }
+
+        /* ========================================================
+           SCROLL TO TOP
+           ======================================================== */
+        .scroll-top {
+            position: fixed;
+            bottom: 80px;
+            right: 24px;
+            z-index: 55;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            font-size: 20px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .scroll-top:hover {
+            background: var(--border-color);
+            color: white;
+        }
+
+        .scroll-top.show {
+            display: flex;
+        }
+
+        /* ========================================================
+           FOOTER
+           ======================================================== */
+        .handbook-footer {
+            border-top: 1px solid var(--border-color);
+            padding: 24px 0 40px;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 13px;
+        }
+
+        .handbook-footer .brand {
+            color: white;
+            font-weight: 700;
+        }
+
+        .handbook-footer .brand span {
+            color: var(--cyan);
+        }
+
+        /* ========================================================
+           SECTION LINKS
+           ======================================================== */
+        .section-link {
+            color: var(--cyan);
+            text-decoration: none;
+            border-bottom: 1px dotted rgba(47, 217, 244, 0.3);
+        }
+
+        .section-link:hover {
+            border-bottom-color: var(--cyan);
+        }
+
+        /* ========================================================
+           RULES / BYE-LAWS CARDS
+           ======================================================== */
+        .rule-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 16px 20px;
+            margin: 8px 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .rule-card .icon {
+            font-size: 20px;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .rule-card .rule-text {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .rule-card .rule-text strong {
+            color: var(--text-primary);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ============================================================
+    HEADER
+    ============================================================ -->
+    <header class="app-header">
+        <a href="#" class="logo">Creator<span>Co-Op</span></a>
+        <div class="header-actions">
+            <a href="landing.html" class="btn-back">
+                <span class="material-symbols-outlined">arrow_back</span>
+                <span>Back to App</span>
+            </a>
+        </div>
+    </header>
+
+    <!-- ============================================================
+    TABLE OF CONTENTS SIDEBAR
+    ============================================================ -->
+    <nav class="toc-wrapper" id="tocSidebar">
+        <div class="toc-title">📖 Table of Contents</div>
+        <ul class="toc-list">
+            <li><a href="#section-1">1. Introduction</a></li>
+            <li><a href="#section-1-1" class="toc-sub">1.1 What is Creator Co-Op?</a></li>
+            <li><a href="#section-1-2" class="toc-sub">1.2 Core Objective</a></li>
+            <li><a href="#section-1-3" class="toc-sub">1.3 Target Audience</a></li>
+            
+            <li><a href="#section-2">2. How the Cooperative Works</a></li>
+            <li><a href="#section-2-1" class="toc-sub">2.1 The N-1 Guarantee</a></li>
+            <li><a href="#section-2-2" class="toc-sub">2.2 The Engagement Loop</a></li>
+            <li><a href="#section-2-3" class="toc-sub">2.3 Referrer Cloaking</a></li>
+            
+            <li><a href="#section-3">3. Membership</a></li>
+            <li><a href="#section-3-1" class="toc-sub">3.1 Who Can Join</a></li>
+            <li><a href="#section-3-2" class="toc-sub">3.2 Registration Process</a></li>
+            <li><a href="#section-3-3" class="toc-sub">3.3 Renewal & Cancellation</a></li>
+            
+            <li><a href="#section-4">4. Bye-Laws & Responsibilities</a></li>
+            <li><a href="#section-4-1" class="toc-sub">4.1 General Obligations</a></li>
+            <li><a href="#section-4-2" class="toc-sub">4.2 Engagement Rules</a></li>
+            <li><a href="#section-4-3" class="toc-sub">4.3 Content Rules</a></li>
+            <li><a href="#section-4-4" class="toc-sub">4.4 Financial Obligations</a></li>
+            <li><a href="#section-4-5" class="toc-sub">4.5 Code of Conduct</a></li>
+            <li><a href="#section-4-6" class="toc-sub">4.6 Consequences of Violations</a></li>
+            <li><a href="#section-4-7" class="toc-sub">4.7 Dispute Resolution</a></li>
+            <li><a href="#section-4-8" class="toc-sub">4.8 Data Privacy</a></li>
+            
+            <li><a href="#section-5">5. Getting Started</a></li>
+            <li><a href="#section-5-1" class="toc-sub">5.1 Creating Your Facebook Account</a></li>
+            <li><a href="#section-5-2" class="toc-sub">5.2 Creating Your Facebook Page</a></li>
+            
+            <li><a href="#section-6">6. Content Creation Guide</a></li>
+            <li><a href="#section-6-1" class="toc-sub">6.1 The 3 Pillars of Growth</a></li>
+            <li><a href="#section-6-2" class="toc-sub">6.2 The Hook Matrix</a></li>
+            <li><a href="#section-6-3" class="toc-sub">6.3 The Retention Curve</a></li>
+            <li><a href="#section-6-4" class="toc-sub">6.4 The 10-Minute Workflow</a></li>
+            
+            <li><a href="#section-7">7. Posting Strategy</a></li>
+            <li><a href="#section-7-1" class="toc-sub">7.1 When to Post</a></li>
+            <li><a href="#section-7-2" class="toc-sub">7.2 The 3:1 Value Rule</a></li>
+            <li><a href="#section-7-3" class="toc-sub">7.3 Hashtags, Captions, CTAs</a></li>
+            
+            <li><a href="#section-8">8. Facebook Monetization</a></li>
+            <li><a href="#section-8-1" class="toc-sub">8.1 Eligibility Requirements</a></li>
+            <li><a href="#section-8-2" class="toc-sub">8.2 Revenue Streams</a></li>
+            
+            <li><a href="#section-9">9. FAQ</a></li>
+            <li><a href="#section-10">10. Glossary</a></li>
+            <li><a href="#section-11">11. Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- ============================================================
+    TOC TOGGLE (Mobile)
+    ============================================================ -->
+    <button class="toc-toggle" id="tocToggle" aria-label="Toggle Table of Contents">
+        <span class="material-symbols-outlined">menu_book</span>
+    </button>
+
+    <!-- ============================================================
+    SCROLL TO TOP
+    ============================================================ -->
+    <button class="scroll-top" id="scrollTop" aria-label="Scroll to top">
+        <span class="material-symbols-outlined">arrow_upward</span>
+    </button>
+
+    <!-- ============================================================
+    MAIN CONTENT
+    ============================================================ -->
+    <main class="main-content" id="mainContent">
+
+        <div class="container">
+
+            <!-- HANDBOOK HEADER -->
+            <div class="handbook-header">
+                <div class="badge">📖 Official Guide</div>
+                <h1>Creator Co-Op <span>Handbook</span></h1>
+                <p class="version">Version 1.0 • June 2026</p>
+            </div>
+
+            <!-- ============================================================
+            SECTION 1: INTRODUCTION
+            ============================================================ -->
+            <section class="section" id="section-1">
+                <h2><span class="number">1.</span> Introduction</h2>
+
+                <div id="section-1-1">
+                    <h3>1.1 What is Creator Co-Op?</h3>
+                    <p><strong>Creator Co-Op is a zero-waste, peer-to-peer organic engagement network for West African content creators.</strong></p>
+                    <p>It is a private, technology-driven mutual collaboration network built exclusively for independent West African and diasporan digital publishers, influencers, and content creators.</p>
+                    <div class="highlight-box cyan">
+                        <div class="title">"We are all creators, and we are all engagers."</div>
+                        <p>Every member holds a dual responsibility: to create content and to engage with others' content.</p>
+                    </div>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr><th>Feature</th><th>Description</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td><strong>Closed-Loop Network</strong></td><td>Members only support each other, creating a trusted ecosystem</td></tr>
+                                <tr><td><strong>Zero-Waste Cycle</strong></td><td>Every engagement is used efficiently; nothing is wasted</td></tr>
+                                <tr><td><strong>Mathematical Guarantee</strong></td><td>Each post receives exactly (N-1) engagements</td></tr>
+                                <tr><td><strong>Privacy-First</strong></td><td>Referrer cloaking protects your page from penalties</td></tr>
+                                <tr><td><strong>Real Engagement</strong></td><td>No bots, no scripts, no fake accounts</td></tr>
+                                <tr><td><strong>Paid Membership</strong></td><td>Financial gatekeeper ensures "skin in the game" for all</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div id="section-1-2">
+                    <h3>1.2 Core Objective</h3>
+                    <p>Creator Co-Op solves a specific problem:</p>
+                    <div class="highlight-box yellow">
+                        <div class="title">The Problem</div>
+                        <p>Facebook's algorithm relies on early engagement to push content to wider audiences. New creators with small followings cannot get that initial engagement, so their content dies at the bottom of the feed regardless of quality.</p>
+                    </div>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr><th>Problem</th><th>Creator Co-Op Solution</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>No initial engagement</td><td>Guarantees (N-1) engagements per post</td></tr>
+                                <tr><td>Bots/fake engagement</td><td>Paid membership ensures "skin in the game"</td></tr>
+                                <tr><td>Spam/detection by platforms</td><td>Referrer cloaking makes engagement appear organic</td></tr>
+                                <tr><td>Freeloaders/ghosting</td><td>Hourly slot assignment + engagement tracking</td></tr>
+                                <tr><td>Algorithm exploitation</td><td>N-1 exhaust logic ensures every member participates</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div id="section-1-3">
+                    <h3>1.3 Target Audience</h3>
+                    <ul>
+                        <li><strong>West African content creators</strong> (Nigeria, Ghana, Senegal, Ivory Coast, and the diaspora)</li>
+                        <li>Facebook publishers, influencers, and digital creators</li>
+                        <li>Small to medium creators who cannot afford paid ads or lack organic reach</li>
+                    </ul>
+                    <div class="highlight-box green">
+                        <div class="title">Mission Statement</div>
+                        <p>"To empower every West African creator with guaranteed organic engagement, enabling algorithmic discovery and sustainable growth through cooperative power."</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ============================================================
+            SECTION 2: HOW THE COOPERATIVE WORKS
+            ============================================================ -->
+            <section class="section" id="section-2">
+                <h2><span class="number">2.</span> How the Cooperative Works</h2>
+
+                <div id="section-2-1">
+                    <h3>2.1 The N-1 Mathematical Guarantee</h3>
+                    <p><strong>N = Total number of active members in the cooperative</strong></p>
+                    <p>Every post submitted receives exactly <strong>(N-1)</strong> engagements before it expires.</p>
+                    <ul>
+                        <li>If there are 100 active members → each post gets 99 engagements</li>
+                        <li>If there are 200 active members → each post gets 199 engagements</li>
+                    </ul>
+                    <div class="highlight-box cyan">
+                        <div class="title">Why N-1?</div>
+                        <p>Because you do not engage with your own post. Everyone else does.</p>
+                    </div>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr><th>Benefit</th><th>Explanation</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td><strong>Perfect Reciprocity</strong></td><td>Every member's content gets the same support</td></tr>
+                                <tr><td><strong>No Freeloaders</strong></td><td>Every member must engage to receive engagement</td></tr>
+                                <tr><td><strong>No Favorites</strong></td><td>The system is mathematically fair to all</td></tr>
+                                <tr><td><strong>Zero Waste</strong></td><td>Every engagement goes to a post that still needs it</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div id="section-2-2">
+                    <h3>2.2 The Engagement Loop</h3>
+                    <div class="highlight-box">
+                        <div class="title">Flow Diagram</div>
+                        <p style="font-family: monospace; font-size: 13px; line-height: 2;">
+                            User submits Facebook post URL (1 per 24 hours)<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;│<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;▼<br>
+                            Post enters boost_links table (status: active)<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;│<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;▼<br>
+                            Other members in their assigned hourly slot see the post<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;│<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;▼<br>
+                            Each member opens link, engages (like/comment), then clicks "Mark Engaged"<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;│<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;▼<br>
+                            System records completed_engagements + increments clicks_received<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;│<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;▼<br>
+                            When clicks_received reaches (N-1) where N = total active members<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;│<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;▼<br>
+                            Post expires → removed from other users' feeds
+                        </p>
+                    </div>
+                    <div class="highlight-box cyan">
+                        <div class="title">The Hourly Slot System</div>
+                        <p>There are 24 hours in a day. Members are distributed evenly across the hours. If you are assigned the 7 AM slot:</p>
+                        <ol>
+                            <li>Log into the dashboard between 7 AM and 8 AM</li>
+                            <li>Open each engagement link</li>
+                            <li>Watch the content (at least 15 seconds)</li>
+                            <li>Leave a genuine comment</li>
+                            <li>Click "Mark as Engaged"</li>
+                        </ol>
+                        <p style="margin-top: 8px;"><strong>Your daily responsibility takes about 15 minutes.</strong></p>
+                    </div>
+                </div>
+
+                <div id="section-2-3">
+                    <h3>2.3 Referrer Cloaking & Privacy</h3>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr><th>Without Cloaking</th><th>With Cloaking</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Facebook may penalize your page</td><td>Facebook sees traffic as organic</td></tr>
+                                <tr><td>Engagement looks coordinated</td><td>Engagement looks natural</td></tr>
+                                <tr><td>Risk of shadowban</td><td>Page stays safe</td></tr>
+                                <tr><td>Analytics show referral traffic</td><td>Analytics show direct traffic</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <ul>
+                        <li>All passwords are hashed using bcrypt</li>
+                        <li>Communications are encrypted via TLS 1.3 (HTTPS)</li>
+                        <li>No sensitive data is ever collected or sold</li>
+                        <li>Referrer cloaking protects your page metrics</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- ============================================================
+            SECTION 3: MEMBERSHIP
+            ============================================================ -->
+            <section class="section" id="section-3">
+                <h2><span class="number">3.</span> Membership</h2>
+
+                <div id="section-3-1">
+                    <h3>3.1 Who Can Join</h3>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr><th>Requirement</th><th>Description</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td><strong>Age</strong></td><td>Be at least 18 years old</td></tr>
+                                <tr><td><strong>Location</strong></td><td>Be a West African resident or member of the diaspora</td></tr>
+                                <tr><td><strong>Content</strong></td><td>Own and operate an active Facebook page, profile, or creator account</td></tr>
+                                <tr><td><strong>Accuracy</strong></td><td>Provide accurate, complete, and up-to-date information</td></tr>
+                                <tr><td><strong>Standing</strong></td><td>Not have been previously banned for violations</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="highlight-box red">
+                        <div class="title">⚠️ Important</div>
+                        <ul>
+                            <li>Each user may hold only one active membership</li>
+                            <li>Multiple accounts are strictly prohibited</li>
+                            <li>Violations will result in permanent suspension without refund</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div id="section-3-2">
+                    <h3>3.2 Registration Process</h3>
+                    <ol>
+                        <li><strong>Create Account</strong> — Choose username, provide email, create password, add Facebook URL</li>
+                        <li><strong>Verify Email</strong> — OTP code sent to your email (valid for 15 minutes)</li>
+                        <li><strong>Complete Payment</strong> — Pay ₦5,000 via Paystack</li>
+                        <li><strong>Activate Account</strong> — Receive your hourly slot assignment and login credentials</li>
+                    </ol>
+                </div>
+
+                <div id="section-3-3">
+                    <h3>3.3 Renewal & Cancellation</h3>
+                    <ul>
+                        <li>Membership expires after 1 year</li>
+                        <li>Renewal reminder sent 30 days before expiry</li>
+                        <li>Renewal fee: ₦5,000</li>
+                        <li>Failure to renew results in dashboard deactivation</li>
+                        <li>Cancellation: Access terminates immediately</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- ============================================================
+            SECTION 4: BYE-LAWS & RESPONSIBILITIES
+            ============================================================ -->
+            <section class="section" id="section-4">
+                <h2><span class="number">4.</span> Bye-Laws & Member Responsibilities</h2>
+
+                <div id="section-4-1">
+                    <h3>4.1 General Obligations</h3>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr><th>Obligation</th><th>Description</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td><strong>Active Participation</strong></td><td>Complete your daily engagement tasks during your assigned slot</td></tr>
+                                <tr><td><strong>Honest Engagement</strong></td><td>Engage authentically with other members' content</td></tr>
+                                <tr><td><strong>Respect</strong></td><td>Treat all members with dignity and professionalism</td></tr>
+                                <tr><td><strong>Integrity</strong></td><td>Do not attempt to game the system or use bots</td></tr>
+                                <tr><td><strong>Confidentiality</strong></td><td>Do not share other members' content or dashboard access</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="highlight-box cyan">
+                        <div class="title">Dual Responsibility Model</div>
+                        <p>Every member is both a creator and an engager. You cannot have one without the other.</p>
+                    </div>
+                </div>
+
+                <div id="section-4-2">
+                    <h3>4.2 Engagement Rules</h3>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr><th>Rule</th><th>Requirement</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td><strong>Time Commitment</strong></td><td>Complete all engagement tasks within your 1-hour slot</td></tr>
+                                <tr><td><strong>Minimum Engagement Time</strong></td><td>Spend at least 15 seconds on each post</td></tr>
+                                <tr><td><strong>Comment Quality</strong></td><td>Leave genuine, meaningful comments</td></tr>
+                                <tr><td><strong>No Automation</strong></td><td>Do not use bots, macros, or scripts</td></tr>
+                                <tr><td><strong>Reciprocity</strong></td><td>Engage with all links in your feed</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr><th>✅ Good Engagement</th><th>❌ Bad Engagement</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Watching the full video</td><td>Clicking and leaving immediately</td></tr>
+                                <tr><td>Commenting with specifics</td><td>Commenting "Nice post!" on everything</td></tr>
+                                <tr><td>Varied reactions and emojis</td><td>Using the same emoji repeatedly</td></tr>
+                                <tr><td>Spending 15+ seconds</td><td>Engaging in under 5 seconds</td></tr>
+                                <tr><td>Genuine appreciation</td><td>Generic, copied comments</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div id="section-4-3">
+                    <h3>4.3 Content Rules</h3>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr><th>✅ Allowed</th><th>❌ Prohibited</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Your own original Facebook posts</td><td>Offensive or illegal content</td></tr>
+                                <tr><td>Content that provides value</td><td>Copyright infringement</td></tr>
+                                <tr><td>Posts following Facebook's Standards</td><td>Spam or low-quality content</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="highlight-box">
+                        <div class="title">Content Quality Expectation</div>
+                        <p>"Bring your best. The cooperative works best when everyone brings their best."</p>
+                    </div>
+                </div>
+
+                <div id="section-4-4">
+                    <h3>4.4 Financial Obligations</h3>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr><th>Obligation</th><th>Detail</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td><strong>Annual Fee</strong></td><td>₦5,000 due upon registration and annually thereafter</td></tr>
+                                <tr><td><strong>Payment Method</strong></td><td>Paystack (secure online payment)</td></tr>
+                                <tr><td><strong>No Freeloader Policy</strong></td><td>New members must subscribe within 7 days of sign-up. Failure to subscribe within 7 days will result in automatic account deactivation.</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="highlight-box red">
+                        <div class="title">⚠️ No Freeloader Policy</div>
+                        <p>New members are expected to subscribe within <strong>7 days</strong> of sign-up and sign-in. Accounts not subscribed within this period will be deactivated.</p>
+                    </div>
+                </div>
+
+                <div id="section-4-5">
+                    <h3>4.5 Code of Conduct</h3>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr><th>✅ Expected</th><th>❌ Unacceptable</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Professional communication</td><td>Harassment or bullying</td></tr>
+                                <tr><td>Supporting fellow creators</td><td>Competitiveness or sabotage</td></tr>
+                                <tr><td>Honest engagement</td><td>Fake engagement or bots</td></tr>
+                                <tr><td>Respect for community</td><td>Disrespectful comments</td></tr>
+                                <tr><td>Following the rules</td><td>Trying to game the system</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="highlight-box green">
+                        <div class="title">Community Guidelines</div>
+                        <ol>
+                            <li><strong>Be Respectful</strong> — Treat every member as you would want to be treated</li>
+                            <li><strong>Be Authentic</strong> — Genuine engagement benefits everyone</li>
+                            <li><strong>Be Reliable</strong> — Show up for your assigned slot every day</li>
+                            <li><strong>Be Collaborative</strong> — Help others grow, and you will grow too</li>
+                            <li><strong>Be Accountable</strong> — Take responsibility for your engagement tasks</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div id="section-4-6">
+                    <h3>4.6 Consequences of Violations</h3>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr><th>Offense</th><th>Action</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td><strong>First Strike</strong></td><td>Written warning + reminder of rules</td></tr>
+                                <tr><td><strong>Second Strike</strong></td><td>Temporary suspension (7 days)</td></tr>
+                                <tr><td><strong>Third Strike</strong></td><td>Permanent expulsion without refund</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="highlight-box red">
+                        <div class="title">Grounds for Immediate Expulsion</div>
+                        <ul>
+                            <li>Using bots, scripts, or automation</li>
+                            <li>Creating multiple accounts</li>
+                            <li>Harassment or abuse of members</li>
+                            <li>Submitting illegal or offensive content</li>
+                            <li>Sharing dashboard passwords</li>
+                            <li>Fraudulent activity</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div id="section-4-7">
+                    <h3>4.7 Dispute Resolution</h3>
+                    <ol>
+                        <li><strong>Informal Discussion</strong> — Attempt to resolve disputes directly with the other member</li>
+                        <li><strong>Mediation</strong> — Contact administration at support@creatorcooptechnologies.com</li>
+                        <li><strong>Arbitration</strong> — If mediation fails, binding arbitration in Lagos, Nigeria</li>
+                    </ol>
+                </div>
+
+                <div id="section-4-8">
+                    <h3>4.8 Data Privacy & Protection</h3>
+                    <ul>
+                        <li>All passwords are hashed using bcrypt</li>
+                        <li>Communications are encrypted via TLS 1.3</li>
+                        <li>Referrer cloaking protects your Facebook page</li>
+                        <li>We do not sell or share your data</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- ============================================================
+            SECTION 5: GETTING STARTED
+            ============================================================ -->
+            <section class="section" id="section-5">
+                <h2><span class="number">5.</span> Getting Started</h2>
+
+                <div id="section-5-1">
+                    <h3>5.1 Creating Your Facebook Account</h3>
+                    <h4>Desktop/Web</h4>
+                    <ol>
+                        <li>Go to facebook.com</li>
+                        <li>Click "Create New Account"</li>
+                        <li>Enter your name, email address, password, date of birth, and gender</li>
+                        <li>Click "Sign Up"</li>
+                        <li>Check your email for a verification code and enter it</li>
+                    </ol>
+                    <h4>Mobile (Android/iOS)</h4>
+                    <ol>
+                        <li>Open the Facebook app</li>
+                        <li>Tap "Create New Facebook Account" → "Next"</li>
+                        <li>Enter your real name → "Next"</li>
+                        <li>Select your date of birth → "Next"</li>
+                        <li>Select your gender → "Next"</li>
+                        <li>Enter your phone number (or tap "Sign Up with Email")</li>
+                        <li>Create a password → "Next" → "Sign Up"</li>
+                    </ol>
+                </div>
+
+                <div id="section-5-2">
+                    <h3>5.2 Creating Your Facebook Business Page</h3>
+                    <ol>
+                        <li>Log into Facebook with your personal account</li>
+                        <li>Go to facebook.com/pages/create</li>
+                        <li>Click "Create new page"</li>
+                        <li>Enter your Page name (your exact business name)</li>
+                        <li>Choose a Category</li>
+                        <li>Add a Description (up to 255 characters)</li>
+                        <li>Click "Create page"</li>
+                    </ol>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr><th>Feature</th><th>Personal Profile</th><th>Business Page</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td><strong>Followers</strong></td><td>Friends (mutual)</td><td>Followers (one-way)</td></tr>
+                                <tr><td><strong>Admin</strong></td><td>Single user</td><td>Multiple admins</td></tr>
+                                <tr><td><strong>Monetization</strong></td><td>Limited</td><td>Full monetization features</td></tr>
+                                <tr><td><strong>Discoverability</strong></td><td>Limited</td><td>Searchable and discoverable</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ============================================================
+            SECTION 6: CONTENT CREATION
+            ============================================================ -->
+            <section class="section" id="section-6">
+                <h2><span class="number">6.</span> Content Creation Guide</h2>
+
+                <div id="section-6-1">
+                    <h3>6.1 The 3 Pillars of Organic Growth</h3>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr><th>Pillar</th><th>Description</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td><strong>Velocity</strong></td><td>How fast engagement arrives after posting</td></tr>
+                                <tr><td><strong>Authenticity</strong></td><td>Real human behavior (not bots or spam)</td></tr>
+                                <tr><td><strong>Reciprocity</strong></td><td>Mutual support and exchange among members</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="highlight-box cyan">
+                        <div class="title">Velocity > Volume</div>
+                        <p>100 likes in 1 hour = ✅ Algorithm favors<br>500 likes over 3 days = ❌ Algorithm ignores</p>
+                    </div>
+                </div>
+
+                <div id="section-6-2">
+                    <h3>6.2 The Hook Matrix</h3>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr><th>Framework</th><th>Example</th><th>Best For</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td><strong>Question Hook</strong></td><td>"Are you making this mistake?"</td><td>Educational content</td></tr>
+                                <tr><td><strong>Contrarian Hook</strong></td><td>"Everyone is wrong about X."</td><td>Opinion/thought leadership</td></tr>
+                                <tr><td><strong>Story Hook</strong></td><td>"Let me tell you what happened..."</td><td>Personal/vlog content</td></tr>
+                                <tr><td><strong>Stat Hook</strong></td><td>"90% of creators don't know this."</td><td>Data-driven content</td></tr>
+                                <tr><td><strong>How-To Hook</strong></td><td>"Here's how I did Y in Z days."</td><td>Tutorial content</td></tr>
+                                <tr><td><strong>Mystery Hook</strong></td><td>"Wait until the end..."</td><td>Entertainment content</td></tr>
+                                <tr><td><strong>Relatability Hook</strong></td><td>"If you're a Nigerian creator..."</td><td>Cultural/local content</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div id="section-6-3">
+                    <h3>6.3 The Retention Curve</h3>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr><th>Time</th><th>Action</th><th>Description</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td><strong>0-3 seconds</strong></td><td>Hook</td><td>Stop the scroll</td></tr>
+                                <tr><td><strong>3-33 seconds</strong></td><td>Value</td><td>Deliver your most important point</td></tr>
+                                <tr><td><strong>33-63 seconds</strong></td><td>Proof</td><td>Show evidence, tell a story</td></tr>
+                                <tr><td><strong>Final 10 seconds</strong></td><td>CTA</td><td>Tell them what to do next</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div id="section-6-4">
+                    <h3>6.4 The 10-Minute Production Workflow</h3>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr><th>Step</th><th>Time</th><th>Action</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td><strong>1</strong></td><td>2 min</td><td>Script: Hook + 3 key points + CTA</td></tr>
+                                <tr><td><strong>2</strong></td><td>3 min</td><td>Record: One take, keep going</td></tr>
+                                <tr><td><strong>3</strong></td><td>3 min</td><td>Edit: Trim silence, auto-captions</td></tr>
+                                <tr><td><strong>4</strong></td><td>2 min</td><td>Thumbnail + Caption: Canva template</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="highlight-box">
+                        <div class="title">Tools</div>
+                        <p>🎬 CapCut • 🎬 InShot • 🎨 Canva</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ============================================================
+            SECTION 7: POSTING STRATEGY
+            ============================================================ -->
+            <section class="section" id="section-7">
+                <h2><span class="number">7.</span> Posting Strategy</h2>
+
+                <div id="section-7-1">
+                    <h3>7.1 When to Post</h3>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr><th>Day</th><th>Time</th><th>Activity</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td><strong>Weekdays</strong></td><td>6-8 AM</td><td>Morning scroll</td></tr>
+                                <tr><td><strong>Weekdays</strong></td><td>12-2 PM</td><td>Lunch break</td></tr>
+                                <tr><td><strong>Weekdays</strong></td><td>6-9 PM</td><td>Evening wind-down</td></tr>
+                                <tr><td><strong>Weekends</strong></td><td>9-11 AM</td><td>Slow morning</td></tr>
+                                <tr><td><strong>Weekends</strong></td><td>4-7 PM</td><td>Afternoon/evening</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div id="section-7-2">
+                    <h3>7.2 The 3:1 Value Rule</h3>
+                    <div class="highlight-box cyan">
+                        <div class="title">Rule: 3 Value Posts for Every 1 Promotional Post</div>
+                        <p><strong>Value Posts (3):</strong> Educational tips, entertainment, inspiration, connection<br>
+                        <strong>Promotional Posts (1):</strong> Selling products, sign-ups, page promotions</p>
+                    </div>
+                </div>
+
+                <div id="section-7-3">
+                    <h3>7.3 Hashtags, Captions, and CTAs</h3>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr><th>Element</th><th>Guideline</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td><strong>Hashtags</strong></td><td>3-5 relevant tags (category + niche)</td></tr>
+                                <tr><td><strong>Captions</strong></td><td>Hook → Value (short sentences) → CTA</td></tr>
+                                <tr><td><strong>CTA</strong></td><td>Specific question or action (e.g., "Comment 1, 2, or 3 below")</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ============================================================
+            SECTION 8: MONETIZATION
+            ============================================================ -->
+            <section class="section" id="section-8">
+                <h2><span class="number">8.</span> Facebook Monetization</h2>
+
+                <div id="section-8-1">
+                    <h3>8.1 Eligibility Requirements</h3>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr><th>Requirement</th><th>Threshold</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td><strong>Followers</strong></td><td>10,000 (for most features)</td></tr>
+                                <tr><td><strong>Watch Time</strong></td><td>600,000 minutes in last 60 days</td></tr>
+                                <tr><td><strong>Active Videos</strong></td><td>5+ on your page</td></tr>
+                                <tr><td><strong>Video Length</strong></td><td>Minimum 1 minute for ads</td></tr>
+                                <tr><td><strong>Content Originality</strong></td><td>Must add meaningful value</td></tr>
+                                <tr><td><strong>Page Standing</strong></td><td>No policy violations</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div id="section-8-2">
+                    <h3>8.2 Revenue Streams</h3>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr><th>Revenue Source</th><th>How It Works</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td><strong>In-Stream Ads</strong></td><td>Ads before/during/after videos</td></tr>
+                                <tr><td><strong>Performance Bonus</strong></td><td>Extra payouts based on content performance</td></tr>
+                                <tr><td><strong>Stars</strong></td><td>Viewers send Stars during live videos and posts</td></tr>
+                                <tr><td><strong>Branded Content</strong></td><td>Paid partnerships with brands</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ============================================================
+            SECTION 9: FAQ
+            ============================================================ -->
+            <section class="section" id="section-9">
+                <h2><span class="number">9.</span> Frequently Asked Questions</h2>
+
+                <div class="highlight-box">
+                    <div class="title">Q1: What is the Creator Co-Op and how does it work?</div>
+                    <p>A private, closed-loop engagement network for West African creators. Members submit posts, are assigned hourly slots, and must engage with peers. Each post receives (N-1) engagements.</p>
+                </div>
+
+                <div class="highlight-box">
+                    <div class="title">Q2: Is this a bot or spam network?</div>
+                    <p>No. Creator Co-Op uses real creators engaging with each other's content. No bots, no scripts, no automation.</p>
+                </div>
+
+                <div class="highlight-box">
+                    <div class="title">Q3: How much does membership cost?</div>
+                    <p>Annual membership is ₦5,000.</p>
+                </div>
+
+                <div class="highlight-box">
+                    <div class="title">Q4: How much time do I need to commit?</div>
+                    <p>15 minutes per day during your assigned hourly slot.</p>
+                </div>
+
+                <div class="highlight-box">
+                    <div class="title">Q5: What if I miss my assigned slot?</div>
+                    <p>Missing your slot results in a strike. Three strikes within 30 days lead to temporary suspension.</p>
+                </div>
+
+                <div class="highlight-box">
+                    <div class="title">Q6: Can I submit multiple posts per day?</div>
+                    <p>No. One post per 24 hours.</p>
+                </div>
+
+                <div class="highlight-box">
+                    <div class="title">Q7: What is the No Freeloader Policy?</div>
+                    <p>New members must subscribe within 7 days of sign-up. Failure to subscribe within 7 days results in automatic account deactivation.</p>
+                </div>
+
+                <div class="highlight-box">
+                    <div class="title">Q8: What if my Facebook page gets shadowbanned?</div>
+                    <p>Creator Co-Op uses referrer cloaking to protect your page. Facebook sees engagement as organic direct traffic.</p>
+                </div>
+            </section>
+
+            <!-- ============================================================
+            SECTION 10: GLOSSARY
+            ============================================================ -->
+            <section class="section" id="section-10">
+                <h2><span class="number">10.</span> Glossary</h2>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr><th>Term</th><th>Definition</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><strong>Authentication</strong></td><td>Process of verifying a user's identity</td></tr>
+                            <tr><td><strong>Boost</strong></td><td>A post submitted to the engagement loop</td></tr>
+                            <tr><td><strong>Cloaking</strong></td><td>Technology that strips identifying information from traffic</td></tr>
+                            <tr><td><strong>Engagement</strong></td><td>Interactions on content (likes, comments, shares, saves)</td></tr>
+                            <tr><td><strong>Freeloader</strong></td><td>A member who takes engagement without giving it</td></tr>
+                            <tr><td><strong>Hook</strong></td><td>The first 3 seconds of content that stops the scroll</td></tr>
+                            <tr><td><strong>Hourly Slot</strong></td><td>The hour each day when you must complete engagement tasks</td></tr>
+                            <tr><td><strong>N-1</strong></td><td>Total active members minus one (guaranteed engagements per post)</td></tr>
+                            <tr><td><strong>OTP</strong></td><td>One-Time Password (6-digit code for email verification)</td></tr>
+                            <tr><td><strong>PWA</strong></td><td>Progressive Web App (mobile-friendly version)</td></tr>
+                            <tr><td><strong>Reciprocity</strong></td><td>Mutual exchange of engagement</td></tr>
+                            <tr><td><strong>Velocity</strong></td><td>Speed of engagement arrival after posting</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- ============================================================
+            SECTION 11: CONTACT
+            ============================================================ -->
+            <section class="section" id="section-11">
+                <h2><span class="number">11.</span> Contact Information</h2>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr><th>Department</th><th>Email</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><strong>General Inquiries</strong></td><td>hello@creatorcooptechnologies.com</td></tr>
+                            <tr><td><strong>Technical Support</strong></td><td>support@creatorcooptechnologies.com</td></tr>
+                            <tr><td><strong>Legal & Privacy</strong></td><td>legal@creatorcooptechnologies.com</td></tr>
+                            <tr><td><strong>WhatsApp</strong></td><td>+234 703 646 0640</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- ============================================================
+            FOOTER
+            ============================================================ -->
+            <div class="handbook-footer">
+                <p>
+                    <span class="brand">Creator<span>Co-Op</span></span> •
+                    © 2026 All rights reserved
+                </p>
+                <p style="margin-top: 4px; font-size: 12px;">
+                    "Create alone, compete alone. Create together, grow together."
+                </p>
+                <p style="margin-top: 4px; font-size: 11px; color: var(--text-muted);">
+                    Version 1.0 • Last Updated: June 2026
+                </p>
+            </div>
+
+        </div>
+        <!-- end container -->
+    </main>
+
+    <!-- ============================================================
+    JAVASCRIPT
+    ============================================================ -->
+    <script>
+        // ============================================================
+        // TOC TOGGLE (Mobile)
+        // ============================================================
+        const tocToggle = document.getElementById('tocToggle');
+        const tocSidebar = document.getElementById('tocSidebar');
+
+        tocToggle.addEventListener('click', () => {
+            tocSidebar.classList.toggle('show');
+        });
+
+        // Close TOC when clicking a link on mobile
+        document.querySelectorAll('.toc-list a').forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth < 1024) {
+                    tocSidebar.classList.remove('show');
+                }
+            });
+        });
+
+        // ============================================================
+        // ACTIVE TOC LINK (Scroll Spy)
+        // ============================================================
+        const sections = document.querySelectorAll('.section');
+        const tocLinks = document.querySelectorAll('.toc-list a');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 100;
+                if (window.scrollY >= sectionTop) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            tocLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // ============================================================
+        // SCROLL TO TOP
+        // ============================================================
+        const scrollTopBtn = document.getElementById('scrollTop');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 500) {
+                scrollTopBtn.classList.add('show');
+            } else {
+                scrollTopBtn.classList.remove('show');
+            }
+        });
+
+        scrollTopBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // ============================================================
+        // CLOSE TOC ON CLICK OUTSIDE (Mobile)
+        // ============================================================
+        document.addEventListener('click', (e) => {
+            if (window.innerWidth < 1024) {
+                const isToc = tocSidebar.contains(e.target);
+                const isToggle = tocToggle.contains(e.target);
+                if (!isToc && !isToggle && tocSidebar.classList.contains('show')) {
+                    tocSidebar.classList.remove('show');
+                }
+            }
+        });
+
+        // ============================================================
+        // SERVICE WORKER
+        // ============================================================
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(reg => console.log('SW registered:', reg.scope))
+                    .catch(err => console.error('SW failed:', err));
+            });
+        }
+    </script>
+
+</body>
+</html>

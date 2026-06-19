@@ -34,6 +34,8 @@
         body { font-family: 'Inter', system-ui, sans-serif; }
         .install-btn { transition: all 0.2s ease; }
         .install-btn:hover { transform: translateY(-2px); }
+        .handbook-btn { transition: all 0.2s ease; }
+        .handbook-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(37, 99, 235, 0.3); }
         .password-wrapper {
             position: relative;
         }
@@ -78,7 +80,7 @@
                         Explore organic growth with the Creator Loop.
                     </h1>
                     <p class="text-zinc-600 text-lg md:text-xl mb-6 leading-relaxed">
-                        A closed-loop, zero-waste network built exclusively for content creators. No bots, no fake engagement. Pure organic — real peers boosting each other past generic platform’s algorithm gatekeepers.
+                        A closed-loop, zero-waste network built exclusively for content creators. No bots, no fake engagement. Pure organic — real peers boosting each other past generic platform's algorithm gatekeepers.
                     </p>
                     <div class="bg-white border border-zinc-200 p-4 rounded-xl shadow-sm flex items-center gap-4 max-w-sm">
                         <div class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-bold">🇳🇬</div>
@@ -90,10 +92,17 @@
                 </section>
 
                 <section class="w-full max-w-[400px] space-y-4">
+                    <!-- Install App Button -->
                     <button id="installAppBtn" class="install-btn w-full bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-bold py-3 rounded-xl shadow-md flex items-center justify-center gap-2 transition-all">
                         <span class="material-symbols-outlined">download</span>
                         Install App (PWA)
                     </button>
+
+                    <!-- Handbook Button -->
+                    <a href="handbook.html" class="handbook-btn w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl shadow-md flex items-center justify-center gap-2 transition-all">
+                        <span class="material-symbols-outlined">menu_book</span>
+                        Handbook & Guide
+                    </a>
 
                     <div class="bg-white border border-zinc-200 rounded-xl p-6 md:p-8 shadow-md">
                         <div id="login-view">
