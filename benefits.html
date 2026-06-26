@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Creator Co-Op Hub | Benefits – Grow Together</title>
+
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#2563EB">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Creator Co-Op Hub">
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="manifest" href="manifest.json">
+
+    <!-- Primary Icon -->
+    <link rel="apple-touch-icon" href="icons/co-creators.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="icons/icon-200.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="icons/icon-150.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="icons/icon-100.png">
+    <meta name="msapplication-TileImage" content="icons/icon-150.png">
+    <meta name="msapplication-TileColor" content="#2563EB">
+
+    <!-- Tailwind + Fonts -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0,1">
+
+    <style>
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            padding-top: env(safe-area-inset-top, 0);
+            background: #f4f6f9;
+            color: #1e293b;
+        }
+
+        /* ============================================================
+           HEADER / NAV
+           ============================================================ */
+        .sticky-header {
+            position: sticky;
+            top: 0;
+            z-index: 30;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+            padding-top: env(safe-area-inset-top, 0);
+        }
+
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            top: calc(env(safe-area-inset-top, 0) + 64px);
+            left: 0;
+            right: 0;
+            background: white;
+            border-bottom: 1px solid #e4e4e7;
+            z-index: 40;
+            flex-direction: column;
+            padding: 1rem;
+            gap: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+        .mobile-nav a {
+            padding: 0.5rem 0;
+            font-weight: 500;
+            color: #3f3f46;
+            text-decoration: none;
+        }
+        .mobile-nav a:hover {
+            color: #2563eb;
+        }
+
+        @media (max-width: 767px) {
+            .desktop-nav { display: none; }
+            .mobile-menu-btn { display: block; }
+            .mobile-nav.show { display: flex; }
+        }
+        @media (min-width: 768px) {
+            .desktop-nav { display: flex; gap: 1.5rem; }
+            .mobile-menu-btn { display: none; }
+        }
+
+        footer {
+            padding-bottom: env(safe-area-inset-bottom, 1rem);
+        }
+
+        /* ============================================================
+           BENEFIT CARDS
+           ============================================================ */
+        .benefit-card {
+            background: white;
+            border: 1px solid #e4e6ef;
+            border-radius: 12px;
+            padding: 24px;
+            transition: all 0.25s ease;
+            height: 100%;
+        }
+
+        .benefit-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.06);
+            border-color: #2563eb;
+        }
+
+        .benefit-card .icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin-bottom: 16px;
+        }
+
+        .benefit-card .icon.blue {
+            background: #dbeafe;
+            color: #2563eb;
+        }
+        .benefit-card .icon.green {
+            background: #d1fae5;
+            color: #059669;
+        }
+        .benefit-card .icon.purple {
+            background: #ede9fe;
+            color: #7c3aed;
+        }
+        .benefit-card .icon.orange {
+            background: #fef3c7;
+            color: #d97706;
+        }
+        .benefit-card .icon.pink {
+            background: #fce7f3;
+            color: #db2777;
+        }
+        .benefit-card .icon.teal {
+            background: #ccfbf1;
+            color: #0d9488;
+        }
+
+        .benefit-card h3 {
+            font-size: 18px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 6px;
+        }
+
+        .benefit-card p {
+            font-size: 14px;
+            color: #64748b;
+            line-height: 1.6;
+        }
+
+        /* ============================================================
+           SECTION HEADERS
+           ============================================================ */
+        .section-header {
+            text-align: center;
+            max-width: 640px;
+            margin: 0 auto 40px;
+        }
+
+        .section-header h2 {
+            font-size: 32px;
+            font-weight: 800;
+            color: #0f172a;
+            letter-spacing: -0.02em;
+        }
+
+        .section-header p {
+            color: #64748b;
+            font-size: 16px;
+            margin-top: 8px;
+        }
+
+        .section-divider {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin: 48px 0;
+        }
+        .section-divider::before,
+        .section-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: #e4e6ef;
+        }
+        .section-divider span {
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #94a3b8;
+            white-space: nowrap;
+        }
+
+        /* ============================================================
+           HIGHLIGHT / SAVINGS BOX
+           ============================================================ */
+        .savings-box {
+            background: linear-gradient(135deg, #eff6ff, #dbeafe);
+            border: 1px solid #bfdbfe;
+            border-radius: 16px;
+            padding: 24px 32px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+        }
+
+        .savings-box .number {
+            font-size: 32px;
+            font-weight: 900;
+            color: #1d4ed8;
+        }
+
+        .savings-box .label {
+            font-size: 14px;
+            color: #1e293b;
+        }
+
+        .savings-box .vs {
+            font-size: 14px;
+            font-weight: 700;
+            color: #94a3b8;
+        }
+
+        /* ============================================================
+           FOUNDING BADGE
+           ============================================================ */
+        .founding-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, #fef3c7, #fde68a);
+            color: #92400e;
+            font-size: 13px;
+            font-weight: 700;
+            padding: 6px 18px;
+            border-radius: 50px;
+            border: 1px solid #f59e0b;
+        }
+
+        /* ============================================================
+           FEATURE LIST (For Founding Benefits)
+           ============================================================ */
+        .feature-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .feature-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 8px 0;
+            color: #475569;
+            font-size: 14px;
+            border-bottom: 1px solid #f1f5f9;
+        }
+        .feature-list li:last-child {
+            border-bottom: none;
+        }
+        .feature-list li .check {
+            color: #059669;
+            font-weight: 700;
+            flex-shrink: 0;
+            font-size: 16px;
+            margin-top: 1px;
+        }
+        .feature-list li .check-gold {
+            color: #d97706;
+            font-weight: 700;
+            flex-shrink: 0;
+            font-size: 16px;
+            margin-top: 1px;
+        }
+
+        /* ============================================================
+           COMPARISON TABLE
+           ============================================================ */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #e4e6ef;
+        }
+        .comparison-table th {
+            background: #f8fafc;
+            padding: 14px 20px;
+            text-align: left;
+            font-weight: 600;
+            color: #475569;
+            border-bottom: 2px solid #e4e6ef;
+        }
+        .comparison-table td {
+            padding: 12px 20px;
+            border-bottom: 1px solid #e4e6ef;
+            color: #334155;
+        }
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+        .comparison-table .check {
+            color: #059669;
+            font-weight: 700;
+        }
+        .comparison-table .cross {
+            color: #94a3b8;
+        }
+        .comparison-table .highlight {
+            color: #1d4ed8;
+            font-weight: 700;
+        }
+
+        @media (max-width: 640px) {
+            .comparison-table {
+                font-size: 12px;
+            }
+            .comparison-table th,
+            .comparison-table td {
+                padding: 8px 12px;
+            }
+        }
+
+        /* ============================================================
+           RESPONSIVE
+           ============================================================ */
+        @media (max-width: 768px) {
+            .section-header h2 {
+                font-size: 26px;
+            }
+            .savings-box {
+                flex-direction: column;
+                text-align: center;
+                padding: 20px;
+            }
+            .savings-box .number {
+                font-size: 28px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .section-header h2 {
+                font-size: 22px;
+            }
+            .benefit-card {
+                padding: 18px;
+            }
+            .savings-box .number {
+                font-size: 24px;
+            }
+        }
+
+        /* ============================================================
+           UTILITY
+           ============================================================ */
+        .text-balance {
+            text-wrap: balance;
+        }
+
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #2563eb;
+            color: white;
+            font-weight: 600;
+            padding: 12px 28px;
+            border-radius: 50px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            font-size: 15px;
+        }
+        .btn-primary:hover {
+            background: #1d4ed8;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(37, 99, 235, 0.25);
+        }
+
+        .btn-outline {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: transparent;
+            color: #2563eb;
+            font-weight: 600;
+            padding: 10px 24px;
+            border-radius: 50px;
+            border: 2px solid #2563eb;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            font-size: 15px;
+        }
+        .btn-outline:hover {
+            background: #dbeafe;
+            transform: translateY(-2px);
+        }
+
+        /* ============================================================
+           ANIMATIONS
+           ============================================================ */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .animate-in {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+        .delay-1 {
+            animation-delay: 0.1s;
+            opacity: 0;
+        }
+        .delay-2 {
+            animation-delay: 0.2s;
+            opacity: 0;
+        }
+        .delay-3 {
+            animation-delay: 0.3s;
+            opacity: 0;
+        }
+        .delay-4 {
+            animation-delay: 0.4s;
+            opacity: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ============================================================
+    HEADER
+    ============================================================ -->
+    <header class="sticky-header">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8 py-4 flex flex-wrap items-center justify-between gap-4">
+            <div class="flex items-center gap-2">
+                <span class="material-symbols-outlined text-3xl text-blue-600">group</span>
+                <span class="font-black text-2xl tracking-tight text-zinc-800">Creator<span class="text-blue-600"> Co-Op</span> Hub</span>
+            </div>
+            <nav class="desktop-nav text-sm font-medium">
+                <a href="landing.html" class="text-zinc-600 hover:text-blue-600 transition">Home</a>
+                <a href="about.html" class="text-zinc-600 hover:text-blue-600 transition">About</a>
+                <a href="benefits.html" class="text-blue-600 border-b-2 border-blue-500 pb-0.5">Benefits</a>
+                <a href="landing.html" class="bg-blue-50 text-blue-700 px-4 py-1.5 rounded-full text-sm font-semibold hover:bg-blue-100 transition">Join Now</a>
+            </nav>
+            <button class="mobile-menu-btn text-zinc-700 focus:outline-none" id="mobileMenuBtn">
+                <span class="material-symbols-outlined text-2xl">menu</span>
+            </button>
+        </div>
+        <div class="mobile-nav" id="mobileNav">
+            <a href="landing.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="benefits.html" class="text-blue-600 font-semibold">Benefits</a>
+            <a href="landing.html" class="bg-blue-50 text-blue-700 px-4 py-2 rounded-full text-center">Join Now</a>
+        </div>
+    </header>
+
+    <!-- ============================================================
+    MAIN CONTENT
+    ============================================================ -->
+    <main class="max-w-7xl mx-auto px-6 lg:px-8 py-12 md:py-16">
+
+        <!-- ============================================================
+        HERO
+        ============================================================ -->
+        <div class="text-center mb-12">
+            <div class="flex flex-wrap items-center justify-center gap-3 mb-3">
+                <span class="founding-badge animate-in">
+                    <span class="material-symbols-outlined text-sm">stars</span>
+                    Founding Members Open
+                </span>
+            </div>
+            <h1 class="text-4xl md:text-5xl font-extrabold text-zinc-900 tracking-tight animate-in">
+                Grow Together.
+                <span class="text-blue-600">Engage Together.</span>
+            </h1>
+            <p class="text-zinc-500 text-lg max-w-2xl mx-auto mt-3 animate-in delay-1">
+                Whether you're a creator, influencer, small business, or just posting for fun — 
+                Creator Co-Op Hub helps you reach the algorithm gatekeeper and push your content further.
+            </p>
+            <div class="flex flex-wrap justify-center gap-3 mt-4 animate-in delay-2">
+                <span class="bg-blue-50 text-blue-700 text-xs font-semibold px-4 py-1.5 rounded-full">📱 For Creators</span>
+                <span class="bg-green-50 text-green-700 text-xs font-semibold px-4 py-1.5 rounded-full">🏢 For SMEs</span>
+                <span class="bg-purple-50 text-purple-700 text-xs font-semibold px-4 py-1.5 rounded-full">🎯 For Everyone</span>
+            </div>
+        </div>
+
+        <!-- ============================================================
+        SAVINGS HIGHLIGHT
+        ============================================================ -->
+        <div class="savings-box mb-12 animate-in delay-3">
+            <div>
+                <span class="text-xs font-bold uppercase text-blue-600 tracking-wider">💎 Exclusive Value</span>
+                <div class="flex items-center gap-3 mt-1 flex-wrap">
+                    <span class="number">₦5,000</span>
+                    <span class="label">for <strong>360 boosts</strong> annually</span>
+                    <span class="vs">vs</span>
+                    <span class="text-red-500 text-xl font-bold line-through">₦150,000+</span>
+                    <span class="label">on other platforms</span>
+                </div>
+            </div>
+            <div class="flex items-center gap-2 bg-white/60 rounded-full px-4 py-2">
+                <span class="material-symbols-outlined text-green-600">check_circle</span>
+                <span class="text-sm font-medium text-zinc-700">No per-boost charges</span>
+            </div>
+        </div>
+
+        <!-- ============================================================
+        SECTION: WHO IS THIS FOR?
+        ============================================================ -->
+        <div class="section-header animate-in delay-1">
+            <h2>Built for Everyone Who Posts</h2>
+            <p>From professional creators to small businesses and casual users — we help you break through the algorithm gatekeeper.</p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-6 mb-16">
+            <div class="benefit-card animate-in delay-1">
+                <div class="icon blue"><span class="material-symbols-outlined">mic</span></div>
+                <h3>Content Creators</h3>
+                <p>Influencers, digital publishers, and aspiring creators who need guaranteed engagement to trigger organic reach.</p>
+            </div>
+            <div class="benefit-card animate-in delay-2">
+                <div class="icon orange"><span class="material-symbols-outlined">storefront</span></div>
+                <h3>Small Businesses & SMEs</h3>
+                <p>Promote your products, services, and events to reach more customers. Get your content seen by the right audience.</p>
+            </div>
+            <div class="benefit-card animate-in delay-3">
+                <div class="icon green"><span class="material-symbols-outlined">emoji_events</span></div>
+                <h3>Casual Users & Hobbyists</h3>
+                <p>Anyone who posts content — photos, events, updates, or hobbies — can push past the gatekeeper for wider reach.</p>
+            </div>
+        </div>
+
+        <!-- ============================================================
+        REGULAR MEMBERS BENEFITS
+        ============================================================ -->
+        <div class="section-divider">
+            <span>Regular Members</span>
+        </div>
+
+        <div class="section-header">
+            <h2>Everything You Need to Grow</h2>
+            <p>One annual fee. Unlimited boosts. Guaranteed engagement.</p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-6 mb-12">
+            <!-- Community Benefits -->
+            <div class="benefit-card animate-in delay-1">
+                <div class="icon blue"><span class="material-symbols-outlined">diversity_3</span></div>
+                <h3>🤝 Community Benefits</h3>
+                <ul class="feature-list">
+                    <li><span class="check">✓</span> <div><strong>Guaranteed N-1 Engagement</strong><br>Every post receives engagement from all active members</div></li>
+                    <li><span class="check">✓</span> <div><strong>No Bots</strong><br>100% real human engagement — zero automation</div></li>
+                    <li><span class="check">✓</span> <div><strong>Referrer Cloaking</strong><br>Your page stays safe from platform penalties</div></li>
+                    <li><span class="check">✓</span> <div><strong>Hourly Slot System</strong><br>Fair, structured engagement distribution</div></li>
+                </ul>
+            </div>
+
+            <!-- Growth Benefits -->
+            <div class="benefit-card animate-in delay-2">
+                <div class="icon green"><span class="material-symbols-outlined">trending_up</span></div>
+                <h3>📈 Growth Benefits</h3>
+                <ul class="feature-list">
+                    <li><span class="check">✓</span> <div><strong>Algorithmic Boost</strong><br>Fast engagement triggers organic reach</div></li>
+                    <li><span class="check">✓</span> <div><strong>10x Average Growth</strong><br>Significant growth within 30 days</div></li>
+                    <li><span class="check">✓</span> <div><strong>Reach Expansion</strong><br>From 50 views to 5,000+ views</div></li>
+                    <li><span class="check">✓</span> <div><strong>8-15% Engagement Rate</strong><br>Industry-leading engagement metrics</div></li>
+                </ul>
+            </div>
+
+            <!-- Value Benefits -->
+            <div class="benefit-card animate-in delay-3">
+                <div class="icon purple"><span class="material-symbols-outlined">payments</span></div>
+                <h3>💰 Value Benefits</h3>
+                <ul class="feature-list">
+                    <li><span class="check">✓</span> <div><strong>Affordable Access</strong><br>₦5,000 annual membership fee</div></li>
+                    <li><span class="check">✓</span> <div><strong>30 Boosts Monthly</strong><br>360 boost requests annually — all included</div></li>
+                    <li><span class="check">✓</span> <div><strong>No Per-Boost Charges</strong><br>Unlike other platforms, we don't charge per boost</div></li>
+                    <li><span class="check">✓</span> <div><strong>No Hidden Costs</strong><br>Transparent pricing with zero surprises</div></li>
+                    <li><span class="check">✓</span> <div><strong>Group Discounts</strong><br>Organization and group rates available</div></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Stats Row -->
+        <div class="bg-white rounded-2xl border border-zinc-200 p-6 mb-12 grid grid-cols-2 md:grid-cols-5 gap-4 text-center shadow-sm animate-in delay-2">
+            <div>
+                <p class="text-2xl font-black text-blue-600">₦5,000</p>
+                <p class="text-xs text-zinc-500">Annual Fee</p>
+            </div>
+            <div>
+                <p class="text-2xl font-black text-orange-600">30</p>
+                <p class="text-xs text-zinc-500">Boosts/Month</p>
+            </div>
+            <div>
+                <p class="text-2xl font-black text-green-600">360</p>
+                <p class="text-xs text-zinc-500">Boosts/Year</p>
+            </div>
+            <div>
+                <p class="text-2xl font-black text-yellow-600">10x</p>
+                <p class="text-xs text-zinc-500">Average Growth</p>
+            </div>
+            <div>
+                <p class="text-2xl font-black text-purple-600">8-15%</p>
+                <p class="text-xs text-zinc-500">Engagement Rate</p>
+            </div>
+        </div>
+
+        <!-- ============================================================
+        FOUNDING MEMBERS SECTION
+        ============================================================ -->
+        <div class="section-divider">
+            <span>Founding Associate Members</span>
+        </div>
+
+        <div class="section-header">
+            <div class="flex items-center justify-center gap-2 mb-2">
+                <span class="material-symbols-outlined text-yellow-500">stars</span>
+                <span class="founding-badge">Limited to First 50 Members</span>
+            </div>
+            <h2>Exclusive Founding Benefits</h2>
+            <p>In addition to all regular member benefits, founding members receive lifetime perks.</p>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-6 mb-12">
+            <!-- Status Benefits -->
+            <div class="benefit-card animate-in delay-1" style="border-color: #fcd34d;">
+                <div class="icon orange"><span class="material-symbols-outlined">military_tech</span></div>
+                <h3>🏅 Exclusive Status</h3>
+                <ul class="feature-list">
+                    <li><span class="check-gold">★</span> <div><strong>Lifetime Founding Status</strong><br>Permanently recognized as a founding member</div></li>
+                    <li><span class="check-gold">★</span> <div><strong>Early Adopter Credibility</strong><br>Pioneer status in the creator cooperative movement</div></li>
+                    <li><span class="check-gold">★</span> <div><strong>Founding Badge</strong><br>Special badge displayed on your profile</div></li>
+                    <li><span class="check-gold">★</span> <div><strong>Priority Access</strong><br>First access to new features and updates</div></li>
+                </ul>
+            </div>
+
+            <!-- Financial Benefits -->
+            <div class="benefit-card animate-in delay-2" style="border-color: #fcd34d;">
+                <div class="icon green"><span class="material-symbols-outlined">savings</span></div>
+                <h3>💰 Financial Benefits</h3>
+                <ul class="feature-list">
+                    <li><span class="check-gold">★</span> <div><strong>50% Lifetime Discount</strong><br>Permanent 50% off all membership fees</div></li>
+                    <li><span class="check-gold">★</span> <div><strong>10% Referral Bonus</strong><br>Earn 10% for every creator you refer</div></li>
+                    <li><span class="check-gold">★</span> <div><strong>Lifetime Lock</strong><br>Your discount never increases</div></li>
+                    <li><span class="check-gold">★</span> <div><strong>First 50 Exclusive</strong><br>Only the first 50 members receive this offer</div></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Founding CTA -->
+        <div class="bg-gradient-to-r from-yellow-50 to-amber-50 rounded-2xl p-6 md:p-8 text-center border-2 border-yellow-400/30 mb-16 animate-in delay-3">
+            <div class="flex flex-wrap items-center justify-center gap-4 mb-4">
+                <span class="text-4xl">🏅</span>
+                <div>
+                    <h3 class="text-xl font-bold text-zinc-800">Join as a Founding Member</h3>
+                    <p class="text-zinc-500 text-sm">Only <span class="text-yellow-600 font-bold">50</span> spots available</p>
+                </div>
+            </div>
+            <div class="flex flex-wrap justify-center gap-4 text-sm mb-6">
+                <div class="flex items-center gap-2 text-yellow-700"><span class="material-symbols-outlined text-sm">check_circle</span> Lifetime Status</div>
+                <div class="flex items-center gap-2 text-yellow-700"><span class="material-symbols-outlined text-sm">check_circle</span> 50% Discount</div>
+                <div class="flex items-center gap-2 text-yellow-700"><span class="material-symbols-outlined text-sm">check_circle</span> 10% Referral</div>
+            </div>
+            <a href="#" class="btn-primary">
+                <span class="material-symbols-outlined">stars</span>
+                Claim Founding Spot — ₦2,500/year
+            </a>
+            <p class="text-xs text-zinc-400 mt-3">Regular price: ₦5,000/year • Founding price: ₦2,500/year</p>
+        </div>
+
+        <!-- ============================================================
+        COMPARISON TABLE
+        ============================================================ -->
+        <div class="section-divider">
+            <span>Regular vs Founding</span>
+        </div>
+
+        <div class="overflow-x-auto mb-12 animate-in delay-2">
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Benefit</th>
+                        <th class="text-center">Regular</th>
+                        <th class="text-center text-yellow-700">Founding</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>Lifetime Founding Status</td><td class="text-center cross">❌</td><td class="text-center text-yellow-600">✅</td></tr>
+                    <tr><td>Founding Badge</td><td class="text-center cross">❌</td><td class="text-center text-yellow-600">✅</td></tr>
+                    <tr><td>50% Lifetime Discount</td><td class="text-center cross">❌</td><td class="text-center text-yellow-600">✅</td></tr>
+                    <tr><td>10% Referral Bonus</td><td class="text-center cross">❌</td><td class="text-center text-yellow-600">✅</td></tr>
+                    <tr><td>Priority Access</td><td class="text-center cross">❌</td><td class="text-center text-yellow-600">✅</td></tr>
+                    <tr><td>30 Boosts Monthly</td><td class="text-center check">✅</td><td class="text-center check">✅</td></tr>
+                    <tr><td>360 Boosts Annually</td><td class="text-center check">✅</td><td class="text-center check">✅</td></tr>
+                    <tr><td>No Per-Boost Charges</td><td class="text-center check">✅</td><td class="text-center check">✅</td></tr>
+                    <tr><td>Guaranteed N-1 Engagement</td><td class="text-center check">✅</td><td class="text-center check">✅</td></tr>
+                    <tr><td>No Bots</td><td class="text-center check">✅</td><td class="text-center check">✅</td></tr>
+                    <tr><td>Referrer Cloaking</td><td class="text-center check">✅</td><td class="text-center check">✅</td></tr>
+                    <tr class="bg-blue-50/50"><td><strong>Annual Fee</strong></td><td class="text-center font-bold">₦5,000</td><td class="text-center font-bold text-yellow-700">₦2,500</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- ============================================================
+        FINAL CTA
+        ============================================================ -->
+        <div class="bg-blue-600 rounded-2xl p-8 md:p-12 text-center text-white animate-in delay-3">
+            <span class="text-4xl mb-3 block">🚀</span>
+            <h2 class="text-2xl md:text-3xl font-bold mb-2">Ready to Grow Together?</h2>
+            <p class="text-blue-100 text-sm max-w-md mx-auto mb-6">
+                Join West Africa's first no-bot creator cooperative. One fee. Unlimited boosts. Guaranteed growth.
+            </p>
+            <div class="flex flex-wrap justify-center gap-3">
+                <a href="#" class="bg-white text-blue-600 font-bold px-8 py-3 rounded-full hover:bg-blue-50 transition inline-flex items-center gap-2">
+                    <span class="material-symbols-outlined">rocket_launch</span>
+                    Join Now — Free First Month
+                </a>
+                <a href="benefits.html" class="border border-white/30 text-white font-medium px-6 py-3 rounded-full hover:bg-white/10 transition inline-flex items-center gap-2">
+                    <span class="material-symbols-outlined">info</span>
+                    Learn More
+                </a>
+            </div>
+            <p class="text-blue-200 text-xs mt-4">No bots. No fake engagement. Just real creators helping creators.</p>
+        </div>
+
+    </main>
+
+    <!-- ============================================================
+    FOOTER
+    ============================================================ -->
+    <footer class="w-full bg-white border-t border-zinc-200 py-8 mt-6">
+        <div class="max-w-7xl mx-auto px-6 flex flex-wrap items-center justify-between text-xs text-zinc-500 gap-4">
+            <div class="flex flex-wrap gap-x-6 gap-y-2">
+                <a href="about.html" class="hover:text-blue-600 transition">About Us</a>
+                <a href="benefits.html" class="text-blue-600 font-medium hover:underline">Benefits</a>
+                <a href="privacy.html" class="hover:text-blue-600 transition">Privacy Policy</a>
+                <a href="terms.html" class="hover:text-blue-600 transition">Terms of Service</a>
+                <a href="help.html" class="hover:text-blue-600 transition">Help Center</a>
+                <a href="contact.html" class="hover:text-blue-600 transition">Contact Support</a>
+            </div>
+            <div class="flex items-center gap-1">
+                <span class="material-symbols-outlined text-sm text-zinc-400">copyright</span>
+                <span>Meta © 2026 • Creator Co-Op Hub • All engagements organic</span>
+            </div>
+        </div>
+        <div class="text-center text-[11px] text-zinc-400 mt-4 max-w-7xl mx-auto px-6">
+            *Referrer cloaking active • No artificial metrics • Built for West African independent creators & SMEs
+        </div>
+    </footer>
+
+    <!-- ============================================================
+    JAVASCRIPT
+    ============================================================ -->
+    <script>
+        // Mobile nav toggle
+        const menuBtn = document.getElementById('mobileMenuBtn');
+        const mobileNav = document.getElementById('mobileNav');
+
+        if (menuBtn && mobileNav) {
+            menuBtn.addEventListener('click', () => {
+                mobileNav.classList.toggle('show');
+            });
+            mobileNav.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileNav.classList.remove('show');
+                });
+            });
+        }
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    e.preventDefault();
+                    targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Service Worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(reg => console.log('Service Worker registered:', reg.scope))
+                    .catch(err => console.error('Service Worker registration failed:', err));
+            });
+        }
+    </script>
+
+</body>
+</html>
