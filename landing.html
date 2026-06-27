@@ -13,8 +13,10 @@
     <meta name="mobile-web-app-capable" content="yes">
     <link rel="manifest" href="manifest.json">
     
-    <!-- Primary Icon -->
+    <!-- Primary Icon - Your New Logo (try first) -->
     <link rel="apple-touch-icon" href="icons/co-creators.png">
+    
+    <!-- Fallback to old working icons -->
     <link rel="apple-touch-icon" sizes="180x180" href="icons/icon-200.png">
     <link rel="apple-touch-icon" sizes="152x152" href="icons/icon-150.png">
     <link rel="apple-touch-icon" sizes="120x120" href="icons/icon-100.png">
@@ -36,7 +38,9 @@
         .handbook-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(37, 99, 235, 0.3); }
         .benefits-btn { transition: all 0.2s ease; }
         .benefits-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(147, 51, 234, 0.3); }
-        .password-wrapper { position: relative; }
+        .password-wrapper {
+            position: relative;
+        }
         .password-toggle {
             position: absolute;
             right: 12px;
@@ -46,14 +50,21 @@
             color: #9ca3af;
             transition: color 0.2s;
         }
-        .password-toggle:hover { color: #2563eb; }
+        .password-toggle:hover {
+            color: #2563eb;
+        }
         .forgot-password {
             font-size: 0.75rem;
             text-align: right;
             margin-top: 0.25rem;
         }
-        .forgot-password a { color: #2563eb; text-decoration: none; }
-        .forgot-password a:hover { text-decoration: underline; }
+        .forgot-password a {
+            color: #2563eb;
+            text-decoration: none;
+        }
+        .forgot-password a:hover {
+            text-decoration: underline;
+        }
         .platform-tag {
             display: inline-block;
             background: #eef2ff;
@@ -86,6 +97,7 @@
                         we help you break through the algorithm gatekeeper.
                     </p>
                     
+                    <!-- Platform Tags -->
                     <div class="flex flex-wrap gap-1.5 mb-4">
                         <span class="platform-tag">📘 Facebook</span>
                         <span class="platform-tag">📸 Instagram</span>
@@ -112,16 +124,19 @@
                 </section>
 
                 <section class="w-full max-w-[400px] space-y-4">
+                    <!-- Install App Button -->
                     <button id="installAppBtn" class="install-btn w-full bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-bold py-3 rounded-xl shadow-md flex items-center justify-center gap-2 transition-all">
                         <span class="material-symbols-outlined">download</span>
                         Install App (PWA)
                     </button>
 
+                    <!-- Handbook Button -->
                     <a href="handbook.html" class="handbook-btn w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl shadow-md flex items-center justify-center gap-2 transition-all">
                         <span class="material-symbols-outlined">menu_book</span>
                         Handbook & Guide
                     </a>
 
+                    <!-- Benefits Button -->
                     <a href="benefits.html" class="benefits-btn w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 rounded-xl shadow-md flex items-center justify-center gap-2 transition-all">
                         <span class="material-symbols-outlined">list_alt</span>
                         View Benefits
@@ -470,6 +485,7 @@
                 const data = await res.json();
                 if (res.ok) {
                     alert('Registration successful! Please verify your email.');
+                    // Send verification code
                     pendingVerificationEmail = payload.email;
                     await sendVerificationCode(payload.email);
                     showOtpModal();
@@ -486,9 +502,7 @@
             }
         });
 
-        // ============================================================
-        // LOGIN (with "already logged in" check)
-        // ============================================================
+        // ==================== LOGIN (with verification check) ====================
         document.getElementById('login-form').addEventListener('submit', async (e) => {
             e.preventDefault();
             const email = document.getElementById('login-email').value.trim();
@@ -511,32 +525,6 @@
                     localStorage.setItem('coop_token', data.token);
                     localStorage.setItem('coop_user', JSON.stringify(data.user));
                     window.location.href = 'dashboard.html';
-                } else if (res.status === 409) {
-                    // Account already logged in on another device
-                    const deviceInfo = data.device || 'Unknown device';
-                    const forceLogin = confirm(
-                        `⚠️ This account is already logged in on another device.\n\n` +
-                        `Device: ${deviceInfo}\n\n` +
-                        `Click "OK" to log out the other device and continue.\n` +
-                        `Click "Cancel" to stay logged in on the other device.`
-                    );
-                    
-                    if (forceLogin) {
-                        const forceRes = await fetch(`${API_BASE}/auth/force-login`, {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({ email, password })
-                        });
-                        const forceData = await forceRes.json();
-                        
-                        if (forceRes.ok) {
-                            localStorage.setItem('coop_token', forceData.token);
-                            localStorage.setItem('coop_user', JSON.stringify(forceData.user));
-                            window.location.href = 'dashboard.html';
-                        } else {
-                            alert(forceData.error || 'Force login failed. Please try again.');
-                        }
-                    }
                 } else if (data.needs_verification) {
                     pendingVerificationEmail = email;
                     await sendVerificationCode(email);
