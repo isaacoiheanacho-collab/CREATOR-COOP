@@ -64,6 +64,19 @@
       main { margin-left: 260px; margin-top: calc(env(safe-area-inset-top, 0) + 64px); padding: 1.5rem; }
     }
     .timer-box { font-family: monospace; letter-spacing: 0.1em; }
+    /* Custom select styling */
+    select {
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%239ca3af' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 1rem center;
+      padding-right: 2.5rem;
+      cursor: pointer;
+    }
+    select option {
+      background: #1a1a1e;
+      color: #e5e7eb;
+    }
   </style>
 </head>
 <body>
@@ -91,7 +104,35 @@
         <div class="text-center"><div class="text-sm text-green-400 font-mono">NETWORK STATUS: READY</div><h1 class="text-2xl md:text-3xl font-bold mt-1">Submit Boost</h1><p class="text-gray-400 text-sm">Elevate your project visibility across the collective.</p></div>
         <div class="bg-black/30 rounded-xl p-4 text-center"><p class="text-[11px] font-bold uppercase text-gray-500">📡 PROTOCOLS</p><p class="text-sm text-gray-300">One submission per 24h. Links expire at 95% engagement.</p></div>
         <div class="text-center space-y-2"><p class="text-[11px] font-bold uppercase text-gray-500 tracking-wider">NEXT SUBMISSION AVAILABLE IN</p><div class="timer-box text-3xl md:text-4xl font-mono font-bold text-primary" id="countdownDisplay">-- : -- : --</div><div class="text-xs text-gray-500">HRS &nbsp; MIN &nbsp; SEC</div></div>
-        <form id="boostForm" class="space-y-5"><div><label class="block text-[11px] font-bold uppercase text-gray-500 mb-2">PROJECT ENDPOINT (URL)</label><input type="url" id="boostUrl" required placeholder="https://facebook.com/yourpost" class="w-full bg-gray-900 border border-gray-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-primary"></div><button type="submit" id="submitBtn" class="w-full btn-primary py-4 rounded-xl text-lg font-bold transition-all disabled:opacity-50 disabled:cursor-not-allowed">SUBMIT TO NETWORK</button><div id="submitMessage" class="text-sm text-center"></div></form>
+        <form id="boostForm" class="space-y-5">
+          
+          <!-- PLATFORM SELECTOR (VISUAL ONLY) -->
+          <div>
+            <label class="block text-[11px] font-bold uppercase text-gray-500 mb-2">SOCIAL PLATFORM</label>
+            <select id="platformSelect" class="w-full bg-gray-900 border border-gray-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-primary">
+              <option value="facebook">📘 Facebook</option>
+              <option value="instagram">📸 Instagram</option>
+              <option value="tiktok">🎵 TikTok</option>
+              <option value="x">🐦 X (Twitter)</option>
+              <option value="youtube">▶️ YouTube</option>
+              <option value="telegram">✈️ Telegram</option>
+              <option value="linkedin">💼 LinkedIn</option>
+              <option value="pinterest">📌 Pinterest</option>
+              <option value="reddit">🤖 Reddit</option>
+              <option value="other">🌐 Other</option>
+            </select>
+            <p class="text-xs text-gray-500 mt-1">Select the platform where your content lives</p>
+          </div>
+
+          <!-- URL INPUT (UNCHANGED) -->
+          <div>
+            <label class="block text-[11px] font-bold uppercase text-gray-500 mb-2">PROJECT ENDPOINT (URL)</label>
+            <input type="url" id="boostUrl" required placeholder="https://facebook.com/yourpost" class="w-full bg-gray-900 border border-gray-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-primary">
+          </div>
+
+          <button type="submit" id="submitBtn" class="w-full btn-primary py-4 rounded-xl text-lg font-bold transition-all disabled:opacity-50 disabled:cursor-not-allowed">SUBMIT TO NETWORK</button>
+          <div id="submitMessage" class="text-sm text-center"></div>
+        </form>
         <div class="text-center text-[10px] text-gray-600 font-mono pt-4 border-t border-gray-800"><p>TXID: B005T-772-X | NODE: AMS-CORE-01</p><p class="mt-1">v2.4.0-STABLE | CO-OP COLLECTIVE</p></div>
       </div>
     </div>
@@ -137,12 +178,22 @@
       const url = document.getElementById('boostUrl').value.trim();
       const btn = document.getElementById('submitBtn');
       const msgDiv = document.getElementById('submitMessage');
+      
+      // Get platform for display only (not sent to backend)
+      const platform = document.getElementById('platformSelect').value;
+      
       if(!url){ msgDiv.innerHTML='<span class="text-red-400">Enter a valid URL</span>'; return; }
+      
       btn.disabled = true; btn.innerText = 'SUBMITTING...'; msgDiv.innerHTML = '';
       try {
+        // Only URL is sent to backend - platform is visual only
         const res = await authFetch('/links/boost', { method: 'POST', body: JSON.stringify({ link_url: url }) });
         const data = await res.json();
-        if(res.ok) { msgDiv.innerHTML = '<span class="text-green-400">✓ Boost submitted! It will appear in the queue.</span>'; document.getElementById('boostUrl').value = ''; updateCooldown(); }
+        if(res.ok) { 
+          msgDiv.innerHTML = `<span class="text-green-400">✓ Boost submitted for ${platform}! It will appear in the queue.</span>`; 
+          document.getElementById('boostUrl').value = ''; 
+          updateCooldown(); 
+        }
         else { msgDiv.innerHTML = `<span class="text-red-400">${data.error || data.message}</span>`; if(res.status===429) updateCooldown(); }
       } catch(err){ msgDiv.innerHTML = `<span class="text-red-400">${err.message}</span>`; }
       finally { btn.disabled = false; btn.innerText = 'SUBMIT TO NETWORK'; setTimeout(()=>updateCooldown(),500); }
