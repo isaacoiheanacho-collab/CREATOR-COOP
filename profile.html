@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Creator Co-Op | Profile Settings</title>
+  <title>Creator Co-Op Hub | Profile Settings</title>
   <meta name="theme-color" content="#0b1326">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -66,6 +66,95 @@
       .desktop-sidebar { display: flex; flex-direction: column; width: 260px; background: #0a0a0c; border-right: 1px solid #2d2d33; position: fixed; top: calc(env(safe-area-inset-top, 0) + 64px); left: 0; bottom: 0; z-index: 40; }
       main { margin-left: 260px; margin-top: calc(env(safe-area-inset-top, 0) + 64px); padding: 1.5rem; }
     }
+
+    /* ============================================================
+       SOCIAL PLATFORM INPUT GROUP (Dropdown)
+       ============================================================ */
+    .social-entry {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid #2d2d33;
+      border-radius: 10px;
+      padding: 4px 4px 4px 14px;
+      transition: all 0.2s;
+    }
+    .social-entry:focus-within {
+      border-color: #2fd9f4;
+      background: rgba(47, 217, 244, 0.05);
+    }
+    .social-entry select {
+      background: transparent;
+      border: none;
+      outline: none;
+      color: #e5e7eb;
+      padding: 10px 4px;
+      font-size: 13px;
+      font-weight: 500;
+      min-width: 110px;
+      cursor: pointer;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236b7280' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 4px center;
+      padding-right: 20px;
+    }
+    .social-entry select option {
+      background: #1a1a1e;
+      color: #e5e7eb;
+    }
+    .social-entry input {
+      background: transparent;
+      border: none;
+      outline: none;
+      color: #e5e7eb;
+      padding: 10px 0;
+      flex: 1;
+      font-size: 14px;
+      min-width: 150px;
+    }
+    .social-entry input::placeholder {
+      color: #6b7280;
+    }
+    .social-entry .platform-icon {
+      font-size: 18px;
+      flex-shrink: 0;
+      width: 24px;
+      text-align: center;
+    }
+    .social-entry .remove-btn {
+      background: transparent;
+      border: none;
+      color: #6b7280;
+      cursor: pointer;
+      padding: 4px 10px;
+      font-size: 18px;
+      transition: color 0.2s;
+      border-radius: 6px;
+    }
+    .social-entry .remove-btn:hover {
+      color: #ef4444;
+      background: rgba(239, 68, 68, 0.1);
+    }
+    .add-social-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(47, 217, 244, 0.08);
+      color: #2fd9f4;
+      border: 1px dashed rgba(47, 217, 244, 0.3);
+      border-radius: 10px;
+      padding: 10px 18px;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .add-social-btn:hover {
+      background: rgba(47, 217, 244, 0.15);
+      border-color: #2fd9f4;
+    }
   </style>
 </head>
 <body>
@@ -74,7 +163,7 @@
     <div class="flex justify-between items-center px-4 h-14">
       <div class="flex items-center gap-2">
         <span class="material-symbols-outlined text-cyan-400 text-2xl">group</span>
-        <span class="font-black text-lg text-cyan-400 tracking-tight">Creator Co-Op</span>
+        <span class="font-black text-lg text-cyan-400 tracking-tight">Creator Co-Op Hub</span>
       </div>
       <div class="flex items-center gap-3">
         <img id="topbarAvatar" src="https://ui-avatars.com/api/?background=2fd9f4&color=000&name=User" class="w-8 h-8 rounded-full object-cover border border-gray-600">
@@ -96,8 +185,13 @@
   <main>
     <div class="flex flex-col xl:flex-row gap-6">
       <div class="flex-grow space-y-6">
-        <div><h2 class="text-2xl md:text-3xl font-bold">Profile Settings</h2><p class="text-gray-400 text-sm">Manage your identity across the collective.</p></div>
+        <div>
+          <h2 class="text-2xl md:text-3xl font-bold">Profile Settings</h2>
+          <p class="text-gray-400 text-sm">Manage your identity and connected social platforms.</p>
+        </div>
+
         <div class="glass-card rounded-xl p-6 md:p-8">
+          <!-- Avatar -->
           <div class="flex flex-col sm:flex-row items-start sm:items-center gap-6 mb-8">
             <div class="relative group">
               <div class="w-20 h-20 md:w-24 md:h-24 rounded-2xl overflow-hidden border-2 border-gray-700 group-hover:border-primary transition-colors">
@@ -106,22 +200,146 @@
               <button id="uploadAvatarBtn" class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity rounded-2xl"><span class="material-symbols-outlined text-primary">edit</span></button>
               <input type="file" id="avatarFile" accept="image/jpeg,image/png,image/webp" class="hidden">
             </div>
-            <div><h3 class="text-xl md:text-2xl font-bold" id="profileDisplayName">Loading...</h3><p class="text-gray-500 text-sm" id="memberSince">Account created --</p></div>
+            <div>
+              <h3 class="text-xl md:text-2xl font-bold" id="profileDisplayName">Loading...</h3>
+              <p class="text-gray-500 text-sm" id="memberSince">Account created --</p>
+            </div>
           </div>
-          <form id="profileForm" class="grid grid-cols-1 gap-5">
-            <div><label class="text-[11px] font-bold uppercase text-gray-500 ml-1">USERNAME</label><div class="relative"><span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[18px] text-gray-500">alternate_email</span><input type="text" id="profileUsername" class="w-full bg-gray-900 border border-gray-700 rounded-lg pl-10 pr-4 py-3 focus:outline-none focus:border-primary text-white"></div></div>
-            <div><label class="text-[11px] font-bold uppercase text-gray-500 ml-1">EMAIL (READONLY)</label><div class="relative opacity-60"><span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[18px] text-gray-500">mail</span><input type="email" id="profileEmail" class="w-full bg-gray-800 border border-gray-700 rounded-lg pl-10 pr-4 py-3 cursor-not-allowed text-white" readonly></div></div>
-            <div><label class="text-[11px] font-bold uppercase text-gray-500 ml-1">FACEBOOK PROFILE URL</label><div class="relative"><span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[18px] text-gray-500">link</span><input type="url" id="profileFacebook" class="w-full bg-gray-900 border border-gray-700 rounded-lg pl-10 pr-4 py-3 focus:outline-none focus:border-primary text-white"></div></div>
-            <div><label class="text-[11px] font-bold uppercase text-gray-500 ml-1">PHONE NUMBER</label><div class="relative"><span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[18px] text-gray-500">call</span><input type="tel" id="profilePhone" class="w-full bg-gray-900 border border-gray-700 rounded-lg pl-10 pr-4 py-3 focus:outline-none focus:border-primary text-white"></div></div>
-            <div><label class="text-[11px] font-bold uppercase text-gray-500 ml-1">COUNTRY / REGION</label><div class="relative"><span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[18px] text-gray-500">public</span><select id="profileCountry" class="w-full bg-gray-900 border border-gray-700 rounded-lg pl-10 pr-4 py-3 focus:outline-none focus:border-primary text-white"><option value="NG">Nigeria</option><option value="GH">Ghana</option><option value="US">United States</option><option value="GB">United Kingdom</option><option value="CA">Canada</option></select></div></div>
-            <div class="pt-4 flex justify-end"><button type="submit" class="bg-gradient-to-r from-blue-600 to-blue-700 text-white text-sm font-bold px-6 py-3 rounded-lg flex items-center gap-2 group">SAVE CHANGES <span class="material-symbols-outlined text-base group-hover:translate-x-1 transition-transform">send</span></button></div>
+
+          <form id="profileForm" class="space-y-6">
+            <!-- Basic Info -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label class="text-[11px] font-bold uppercase text-gray-500 ml-1">USERNAME</label>
+                <div class="relative">
+                  <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[18px] text-gray-500">alternate_email</span>
+                  <input type="text" id="profileUsername" class="w-full bg-gray-900 border border-gray-700 rounded-lg pl-10 pr-4 py-3 focus:outline-none focus:border-primary text-white">
+                </div>
+              </div>
+              <div>
+                <label class="text-[11px] font-bold uppercase text-gray-500 ml-1">EMAIL (READONLY)</label>
+                <div class="relative opacity-60">
+                  <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[18px] text-gray-500">mail</span>
+                  <input type="email" id="profileEmail" class="w-full bg-gray-800 border border-gray-700 rounded-lg pl-10 pr-4 py-3 cursor-not-allowed text-white" readonly>
+                </div>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label class="text-[11px] font-bold uppercase text-gray-500 ml-1">PHONE NUMBER</label>
+                <div class="relative">
+                  <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[18px] text-gray-500">call</span>
+                  <input type="tel" id="profilePhone" class="w-full bg-gray-900 border border-gray-700 rounded-lg pl-10 pr-4 py-3 focus:outline-none focus:border-primary text-white">
+                </div>
+              </div>
+              <div>
+                <label class="text-[11px] font-bold uppercase text-gray-500 ml-1">COUNTRY / REGION</label>
+                <div class="relative">
+                  <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[18px] text-gray-500">public</span>
+                  <select id="profileCountry" class="w-full bg-gray-900 border border-gray-700 rounded-lg pl-10 pr-4 py-3 focus:outline-none focus:border-primary text-white">
+                    <option value="Nigeria">Nigeria</option>
+                    <option value="UK">United Kingdom</option>
+                    <option value="Canada">Canada</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <!-- ============================================================
+            SOCIAL PROFILE URL (from sign-up, mandatory)
+            ============================================================ -->
+            <div>
+              <label class="text-[11px] font-bold uppercase text-gray-500 ml-1">SOCIAL PROFILE URL (Primary)</label>
+              <div class="relative">
+                <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[18px] text-gray-500">link</span>
+                <input type="url" id="profileSocial" placeholder="https://facebook.com/yourpage or https://tiktok.com/@username" class="w-full bg-gray-900 border border-gray-700 rounded-lg pl-10 pr-4 py-3 focus:outline-none focus:border-primary text-white">
+              </div>
+              <p class="text-[10px] text-gray-500 mt-1">This is your primary social profile URL from sign-up.</p>
+            </div>
+
+            <!-- ============================================================
+            ADDITIONAL SOCIAL PLATFORMS (Dropdown)
+            ============================================================ -->
+            <div>
+              <div class="flex items-center gap-2 mb-3">
+                <span class="material-symbols-outlined text-cyan-400 text-lg">add_link</span>
+                <h3 class="text-sm font-bold uppercase text-gray-400 tracking-wider">Additional Social Platforms</h3>
+                <span class="text-[10px] text-gray-600 ml-2">— Optional</span>
+              </div>
+              <p class="text-xs text-gray-500 mb-4">Add your other social media profiles. These are optional.</p>
+
+              <!-- Social Entries Container -->
+              <div id="socialEntriesContainer" class="space-y-3">
+                <!-- Entries will be added here dynamically -->
+              </div>
+
+              <!-- Add Button -->
+              <button type="button" id="addSocialBtn" class="add-social-btn mt-3">
+                <span class="material-symbols-outlined text-sm">add</span>
+                Add Platform
+              </button>
+            </div>
+
+            <div class="pt-4 flex justify-end">
+              <button type="submit" class="bg-gradient-to-r from-blue-600 to-blue-700 text-white text-sm font-bold px-6 py-3 rounded-lg flex items-center gap-2 group hover:scale-105 transition">
+                SAVE CHANGES
+                <span class="material-symbols-outlined text-base group-hover:translate-x-1 transition-transform">send</span>
+              </button>
+            </div>
           </form>
         </div>
       </div>
+
+      <!-- Sidebar Stats -->
       <div class="w-full md:w-80 flex-shrink-0 space-y-6">
-        <div class="glass-card rounded-xl p-6 border-l-4 border-green-400"><p class="text-[11px] font-bold uppercase text-gray-500 mb-4">ACCOUNT STATUS</p><div class="flex items-end justify-between"><div><span id="reputationScore" class="stat-value text-green-400">0%</span><p class="text-xs text-gray-500 mt-1">Reputation Score</p></div><span class="material-symbols-outlined text-green-400 text-3xl">verified_user</span></div></div>
-        <div class="glass-card rounded-xl p-6"><p class="text-[11px] font-bold uppercase text-gray-500 mb-6">QUICK STATS</p><div class="space-y-6"><div class="flex items-center gap-4"><div class="w-10 h-10 rounded-lg bg-gray-800 flex items-center justify-center"><span class="material-symbols-outlined text-primary">rocket_launch</span></div><div><p class="stat-value" id="completedMissions">0</p><p class="text-xs text-gray-500 uppercase">Completed Missions</p></div></div><div class="flex items-center gap-4"><div class="w-10 h-10 rounded-lg bg-gray-800 flex items-center justify-center"><span class="material-symbols-outlined text-blue-500">account_balance_wallet</span></div><div><p class="stat-value" id="totalEarnings">0</p><p class="text-xs text-gray-500 uppercase">Total Engagements</p></div></div><div class="flex items-center gap-4"><div class="w-10 h-10 rounded-lg bg-gray-800 flex items-center justify-center"><span class="material-symbols-outlined text-gray-400">timer</span></div><div><p class="stat-value" id="hoursActive">0</p><p class="text-xs text-gray-500 uppercase">Days Active</p></div></div></div></div>
-        <div class="glass-card rounded-xl p-6 relative overflow-hidden group"><div class="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div><p class="text-[11px] font-bold uppercase text-gray-500 mb-2">NEXT TIER PROGRESS</p><div class="flex justify-between items-end mb-2"><span class="text-sm font-bold text-primary">Vanguard</span><span class="text-xs text-gray-500"><span id="currentXP">0</span> / <span id="targetXP">10,000</span> XP</span></div><div class="progress-bar"><div id="xpProgressBar" class="progress-fill"></div></div></div>
+        <div class="glass-card rounded-xl p-6 border-l-4 border-green-400">
+          <p class="text-[11px] font-bold uppercase text-gray-500 mb-4">ACCOUNT STATUS</p>
+          <div class="flex items-end justify-between">
+            <div>
+              <span id="reputationScore" class="stat-value text-green-400">0%</span>
+              <p class="text-xs text-gray-500 mt-1">Reputation Score</p>
+            </div>
+            <span class="material-symbols-outlined text-green-400 text-3xl">verified_user</span>
+          </div>
+        </div>
+
+        <div class="glass-card rounded-xl p-6">
+          <p class="text-[11px] font-bold uppercase text-gray-500 mb-6">QUICK STATS</p>
+          <div class="space-y-6">
+            <div class="flex items-center gap-4">
+              <div class="w-10 h-10 rounded-lg bg-gray-800 flex items-center justify-center"><span class="material-symbols-outlined text-primary">rocket_launch</span></div>
+              <div>
+                <p class="stat-value" id="completedMissions">0</p>
+                <p class="text-xs text-gray-500 uppercase">Completed Missions</p>
+              </div>
+            </div>
+            <div class="flex items-center gap-4">
+              <div class="w-10 h-10 rounded-lg bg-gray-800 flex items-center justify-center"><span class="material-symbols-outlined text-blue-500">account_balance_wallet</span></div>
+              <div>
+                <p class="stat-value" id="totalEarnings">0</p>
+                <p class="text-xs text-gray-500 uppercase">Total Engagements</p>
+              </div>
+            </div>
+            <div class="flex items-center gap-4">
+              <div class="w-10 h-10 rounded-lg bg-gray-800 flex items-center justify-center"><span class="material-symbols-outlined text-gray-400">timer</span></div>
+              <div>
+                <p class="stat-value" id="hoursActive">0</p>
+                <p class="text-xs text-gray-500 uppercase">Days Active</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass-card rounded-xl p-6 relative overflow-hidden group">
+          <div class="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+          <p class="text-[11px] font-bold uppercase text-gray-500 mb-2">NEXT TIER PROGRESS</p>
+          <div class="flex justify-between items-end mb-2">
+            <span class="text-sm font-bold text-primary">Vanguard</span>
+            <span class="text-xs text-gray-500"><span id="currentXP">0</span> / <span id="targetXP">10,000</span> XP</span>
+          </div>
+          <div class="progress-bar"><div id="xpProgressBar" class="progress-fill"></div></div>
+        </div>
       </div>
     </div>
   </main>
@@ -136,73 +354,270 @@
 
   <script>
     const API_BASE = location.hostname === 'localhost' ? 'http://localhost:5000/api' : 'https://creator-coop-backend.onrender.com/api';
+    
+    // ============================================================
+    // PLATFORM CONFIGURATION
+    // ============================================================
+    const PLATFORMS = {
+      facebook: { label: 'Facebook', icon: '📘', placeholder: 'https://facebook.com/username' },
+      instagram: { label: 'Instagram', icon: '📸', placeholder: 'https://instagram.com/@username' },
+      tiktok: { label: 'TikTok', icon: '🎵', placeholder: 'https://tiktok.com/@username' },
+      x: { label: 'X / Twitter', icon: '🐦', placeholder: 'https://x.com/@username' },
+      youtube: { label: 'YouTube', icon: '▶️', placeholder: 'https://youtube.com/@channel' },
+      telegram: { label: 'Telegram', icon: '✈️', placeholder: 'https://t.me/@username' },
+      linkedin: { label: 'LinkedIn', icon: '🔗', placeholder: 'https://linkedin.com/in/username' },
+      snapchat: { label: 'Snapchat', icon: '👻', placeholder: 'https://snapchat.com/add/username' },
+      pinterest: { label: 'Pinterest', icon: '📌', placeholder: 'https://pinterest.com/username' },
+      reddit: { label: 'Reddit', icon: '🤖', placeholder: 'https://reddit.com/user/username' },
+      twitch: { label: 'Twitch', icon: '🎮', placeholder: 'https://twitch.tv/username' },
+      discord: { label: 'Discord', icon: '💬', placeholder: 'https://discord.com/users/id' },
+      other: { label: 'Other', icon: '🔗', placeholder: 'https://otherplatform.com/username' }
+    };
+
+    // ============================================================
+    // DOM REFERENCES
+    // ============================================================
+    const container = document.getElementById('socialEntriesContainer');
+    const addBtn = document.getElementById('addSocialBtn');
+    let entryCount = 0;
+
+    // ============================================================
+    // CREATE SOCIAL ENTRY
+    // ============================================================
+    function createSocialEntry(platform = 'facebook', url = '') {
+      const entry = document.createElement('div');
+      entry.className = 'social-entry';
+      entry.dataset.id = entryCount++;
+
+      // Platform Icon
+      const iconSpan = document.createElement('span');
+      iconSpan.className = 'platform-icon';
+      iconSpan.textContent = PLATFORMS[platform]?.icon || '🔗';
+
+      // Platform Select
+      const select = document.createElement('select');
+      select.className = 'platform-select';
+      for (const [key, value] of Object.entries(PLATFORMS)) {
+        const opt = document.createElement('option');
+        opt.value = key;
+        opt.textContent = value.label;
+        if (key === platform) opt.selected = true;
+        select.appendChild(opt);
+      }
+
+      // URL Input
+      const input = document.createElement('input');
+      input.type = 'url';
+      input.className = 'platform-url';
+      input.placeholder = PLATFORMS[platform]?.placeholder || 'Enter profile URL';
+      input.value = url;
+
+      // Remove Button
+      const removeBtn = document.createElement('button');
+      removeBtn.type = 'button';
+      removeBtn.className = 'remove-btn';
+      removeBtn.innerHTML = '✕';
+      removeBtn.title = 'Remove platform';
+
+      // Assemble
+      entry.appendChild(iconSpan);
+      entry.appendChild(select);
+      entry.appendChild(input);
+      entry.appendChild(removeBtn);
+
+      // ============================================================
+      // EVENT HANDLERS
+      // ============================================================
+      // Update icon when platform changes
+      select.addEventListener('change', () => {
+        const key = select.value;
+        iconSpan.textContent = PLATFORMS[key]?.icon || '🔗';
+        input.placeholder = PLATFORMS[key]?.placeholder || 'Enter profile URL';
+      });
+
+      // Remove entry
+      removeBtn.addEventListener('click', () => {
+        if (container.children.length > 0) {
+          entry.remove();
+        }
+      });
+
+      return entry;
+    }
+
+    // ============================================================
+    // ADD ENTRY
+    // ============================================================
+    addBtn.addEventListener('click', () => {
+      container.appendChild(createSocialEntry('other', ''));
+    });
+
+    // ============================================================
+    // LOAD SOCIAL LINKS FROM BACKEND
+    // ============================================================
+    function loadSocialLinks(socialLinks) {
+      container.innerHTML = '';
+      
+      const entries = Object.entries(socialLinks || {});
+      
+      if (entries.length === 0) {
+        return;
+      }
+
+      entries.forEach(([platform, url]) => {
+        if (url && PLATFORMS[platform]) {
+          container.appendChild(createSocialEntry(platform, url));
+        }
+      });
+    }
+
+    // ============================================================
+    // GET SOCIAL DATA FROM FORM
+    // ============================================================
+    function getSocialData() {
+      const entries = container.querySelectorAll('.social-entry');
+      const data = {};
+      
+      entries.forEach(entry => {
+        const select = entry.querySelector('.platform-select');
+        const input = entry.querySelector('.platform-url');
+        const platform = select.value;
+        const url = input.value.trim();
+        
+        if (url) {
+          data[platform] = url;
+        }
+      });
+      
+      return data;
+    }
+
+    // ============================================================
+    // AUTH FUNCTIONS
+    // ============================================================
     function getToken() { return localStorage.getItem('coop_token'); }
-    async function authFetch(endpoint, opts={}) {
+
+    async function authFetch(endpoint, opts = {}) {
       const token = getToken();
       if (!token) throw new Error('No token');
-      const res = await fetch(`${API_BASE}${endpoint}`, { ...opts, headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}`, ...opts.headers } });
+      const res = await fetch(`${API_BASE}${endpoint}`, {
+        ...opts,
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}`, ...opts.headers }
+      });
       if (res.status === 401) { localStorage.clear(); location.href = 'landing.html'; throw new Error('Session expired'); }
       return res;
     }
+
+    // ============================================================
+    // LOAD PROFILE DATA
+    // ============================================================
     async function loadProfileData() {
       try {
         const me = await (await authFetch('/auth/me')).json();
-        document.getElementById('profileDisplayName').innerText = me.user.username;
-        document.getElementById('profileUsername').value = me.user.username;
-        document.getElementById('profileEmail').value = me.user.email;
-        document.getElementById('profileFacebook').value = me.user.facebook_profile_url || '';
-        document.getElementById('topbarAvatar').src = `https://ui-avatars.com/api/?background=2fd9f4&color=000&name=${encodeURIComponent(me.user.username)}`;
-        document.getElementById('profileAvatar').src = `https://ui-avatars.com/api/?background=2fd9f4&color=000&name=${encodeURIComponent(me.user.username)}`;
+        const user = me.user;
+        
+        document.getElementById('profileDisplayName').innerText = user.username;
+        document.getElementById('profileUsername').value = user.username;
+        document.getElementById('profileEmail').value = user.email;
+        document.getElementById('profileSocial').value = user.social_profile_url || '';
+        document.getElementById('profilePhone').value = user.phone || '';
+        
+        if (user.country) {
+          const sel = document.getElementById('profileCountry');
+          const options = [...sel.options];
+          const match = options.find(o => o.value === user.country);
+          if (match) sel.value = user.country;
+        }
+        
+        // Load additional social links
+        const socials = user.social_links || {};
+        loadSocialLinks(socials);
+        
+        document.getElementById('topbarAvatar').src = `https://ui-avatars.com/api/?background=2fd9f4&color=000&name=${encodeURIComponent(user.username)}`;
+        document.getElementById('profileAvatar').src = `https://ui-avatars.com/api/?background=2fd9f4&color=000&name=${encodeURIComponent(user.username)}`;
         document.getElementById('memberSince').innerText = `Account created ${new Date().toLocaleDateString()}`;
-        try {
-          const profile = await (await authFetch('/profile')).json();
-          const prof = profile.profile || {};
-          document.getElementById('profilePhone').value = prof.phone || '';
-          if (prof.country) { const sel = document.getElementById('profileCountry'); if ([...sel.options].some(o=>o.value===prof.country)) sel.value = prof.country; }
-        } catch(e) {}
+
         const boosts = await (await authFetch('/boosts?limit=100')).json();
-        const totalEng = (boosts.boosts || []).reduce((s,b)=>s+(b.engagement_count||0),0);
+        const totalEng = (boosts.boosts || []).reduce((s, b) => s + (b.engagement_count || 0), 0);
         const totalBoosts = (boosts.boosts || []).length;
         document.getElementById('completedMissions').innerText = totalBoosts;
         document.getElementById('totalEarnings').innerText = totalEng;
         document.getElementById('hoursActive').innerText = '1';
-        const rep = Math.min(100, Math.floor(totalEng/10));
+        const rep = Math.min(100, Math.floor(totalEng / 10));
         document.getElementById('reputationScore').innerText = `${rep}%`;
-        const xp = Math.min(10000, totalEng*10);
+        const xp = Math.min(10000, totalEng * 10);
         document.getElementById('currentXP').innerText = xp;
-        document.getElementById('xpProgressBar').style.width = `${(xp/10000)*100}%`;
-      } catch(e){ console.error(e); }
+        document.getElementById('xpProgressBar').style.width = `${(xp / 10000) * 100}%`;
+      } catch (e) { console.error(e); }
     }
+
+    // ============================================================
+    // SAVE PROFILE
+    // ============================================================
     document.getElementById('profileForm').addEventListener('submit', async (e) => {
       e.preventDefault();
-      const username = document.getElementById('profileUsername').value.trim();
-      const fbUrl = document.getElementById('profileFacebook').value.trim();
-      const phone = document.getElementById('profilePhone').value.trim();
-      const country = document.getElementById('profileCountry').value;
+      
+      const payload = {
+        username: document.getElementById('profileUsername').value.trim(),
+        social_profile_url: document.getElementById('profileSocial').value.trim(),
+        phone: document.getElementById('profilePhone').value.trim(),
+        country: document.getElementById('profileCountry').value,
+        social_links: getSocialData()
+      };
+
       try {
-        await authFetch('/auth/update-profile', { method: 'POST', body: JSON.stringify({ username, facebook_profile_url: fbUrl, phone, country }) });
-        alert('Profile updated');
+        await authFetch('/auth/update-profile', {
+          method: 'POST',
+          body: JSON.stringify(payload)
+        });
+        alert('Profile updated successfully!');
         loadProfileData();
+        const username = payload.username;
         document.getElementById('topbarAvatar').src = `https://ui-avatars.com/api/?background=2fd9f4&color=000&name=${encodeURIComponent(username)}`;
         document.getElementById('profileAvatar').src = `https://ui-avatars.com/api/?background=2fd9f4&color=000&name=${encodeURIComponent(username)}`;
-      } catch(err){ alert('Update failed: '+err.message); }
+      } catch (err) {
+        alert('Update failed: ' + err.message);
+      }
     });
-    document.getElementById('uploadAvatarBtn').addEventListener('click', ()=>document.getElementById('avatarFile').click());
+
+    // ============================================================
+    // AVATAR UPLOAD
+    // ============================================================
+    document.getElementById('uploadAvatarBtn').addEventListener('click', () => document.getElementById('avatarFile').click());
     document.getElementById('avatarFile').addEventListener('change', async (e) => {
-      const file = e.target.files[0]; if(!file) return;
-      const formData = new FormData(); formData.append('avatar', file);
+      const file = e.target.files[0];
+      if (!file) return;
+      const formData = new FormData();
+      formData.append('avatar', file);
       try {
-        const res = await fetch(`${API_BASE}/profile/upload-avatar`, { method: 'POST', headers: { 'Authorization': `Bearer ${getToken()}` }, body: formData });
-        if(!res.ok) throw new Error('Upload failed');
+        const res = await fetch(`${API_BASE}/profile/upload-avatar`, {
+          method: 'POST',
+          headers: { 'Authorization': `Bearer ${getToken()}` },
+          body: formData
+        });
+        if (!res.ok) throw new Error('Upload failed');
         const data = await res.json();
-        const newUrl = data.avatar_url + '?t='+Date.now();
+        const newUrl = data.avatar_url + '?t=' + Date.now();
         document.getElementById('topbarAvatar').src = newUrl;
         document.getElementById('profileAvatar').src = newUrl;
-        alert('Avatar updated');
-      } catch(err){ alert('Upload failed: '+err.message); }
+        alert('Avatar updated!');
+      } catch (err) {
+        alert('Upload failed: ' + err.message);
+      }
     });
-    document.getElementById('logoutBtn').onclick = () => { localStorage.clear(); location.href='landing.html'; };
-    (async()=>{ if(!getToken()) location.href='landing.html'; await loadProfileData(); })();
+
+    // ============================================================
+    // LOGOUT
+    // ============================================================
+    document.getElementById('logoutBtn').onclick = () => { localStorage.clear(); location.href = 'landing.html'; };
+    
+    // ============================================================
+    // INIT
+    // ============================================================
+    (async () => {
+      if (!getToken()) location.href = 'landing.html';
+      await loadProfileData();
+    })();
   </script>
 </body>
 </html>
