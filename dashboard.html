@@ -75,6 +75,35 @@
     th, td { padding: 1rem; text-align: left; border-bottom: 1px solid #2d2d33; }
     th { color: #9ca3af; font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
     td { color: #e5e7eb; }
+
+    /* Platform engagement chips */
+    .platform-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      padding: 4px 14px 4px 10px;
+      font-size: 13px;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+    .platform-chip:hover {
+      background: rgba(47, 217, 244, 0.1);
+      border-color: rgba(47, 217, 244, 0.3);
+    }
+    .platform-chip .count {
+      font-weight: 700;
+      color: #2fd9f4;
+      margin-left: 2px;
+    }
+    .platform-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 6px;
+    }
   </style>
 </head>
 <body>
@@ -143,8 +172,31 @@
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <div class="glass-card rounded-lg p-4"><p class="text-gray-400 text-[11px] font-bold uppercase">BOOSTS USED</p><p class="text-2xl md:text-3xl font-black"><span id="boostsUsed">0</span> <span class="text-gray-500">/ 1</span></p><div class="mt-4 h-1 w-full bg-gray-800 rounded-full overflow-hidden"><div id="boostsProgress" class="h-full bg-primary w-0 transition-all"></div></div></div>
         <div class="glass-card rounded-lg p-4 border-l-2 border-blue-500"><p class="text-gray-400 text-[11px] font-bold uppercase">NEXT BOOST</p><p class="text-2xl md:text-3xl font-black text-blue-400" id="nextBoostTime">Ready</p><p class="text-xs text-gray-500 mt-2">Available for immediate deployment.</p></div>
-        <div class="glass-card rounded-lg p-4"><p class="text-gray-400 text-[11px] font-bold uppercase">TOTAL ENGAGEMENTS</p><p class="text-2xl md:text-3xl font-black" id="totalEngagements">0</p><p class="text-xs text-green-400 mt-2">Top 5% of Co-op</p></div>
-        <div class="glass-card rounded-lg p-4 border-l-2 border-green-400"><p class="text-gray-400 text-[11px] font-bold uppercase">MEMBERSHIP STATUS</p><p class="text-2xl md:text-3xl font-black" id="membershipStatus">Inactive</p><p class="text-xs text-gray-500 mt-2" id="expiryInfo">No active subscription</p></div>
+        <div class="glass-card rounded-lg p-4 border-l-2 border-green-400">
+          <p class="text-gray-400 text-[11px] font-bold uppercase">MEMBERSHIP STATUS</p>
+          <p class="text-2xl md:text-3xl font-black" id="membershipStatus">Inactive</p>
+          <p class="text-xs text-gray-500 mt-2" id="expiryInfo">No active subscription</p>
+        </div>
+        <div class="glass-card rounded-lg p-4 border-l-2 border-yellow-400">
+          <p class="text-gray-400 text-[11px] font-bold uppercase">TOTAL BOOSTS</p>
+          <p class="text-2xl md:text-3xl font-black" id="totalBoostsCount">0</p>
+          <p class="text-xs text-gray-500 mt-2">Posts submitted to the loop</p>
+        </div>
+      </div>
+
+      <!-- Platform Engagement Breakdown -->
+      <div class="glass-card rounded-xl p-4 md:p-6">
+        <div class="flex items-center justify-between mb-3 flex-wrap gap-2">
+          <div class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-primary text-2xl">analytics</span>
+            <h3 class="text-lg md:text-xl font-bold text-white">Engagement by Platform</h3>
+          </div>
+          <button onclick="loadPlatformEngagements()" class="text-gray-400 hover:text-white text-[11px] font-bold uppercase tracking-wider">REFRESH</button>
+        </div>
+        <div id="platformEngagementContainer" class="platform-chips">
+          <span class="text-gray-500 text-sm">Loading platforms...</span>
+        </div>
+        <p class="text-[10px] text-gray-500 mt-3">Engagement counts grouped by social platform from your boost history.</p>
       </div>
 
       <!-- My Boosts Table -->
@@ -174,7 +226,9 @@
 
   <script>
     const API_BASE = location.hostname === 'localhost' ? 'http://localhost:5000/api' : 'https://creator-coop-backend.onrender.com/api';
+    
     function getToken() { return localStorage.getItem('coop_token'); }
+    
     async function authFetch(endpoint, opts={}) {
       const token = getToken();
       if (!token) throw new Error('No token');
@@ -182,6 +236,117 @@
       if (res.status === 401) { localStorage.clear(); location.href = 'landing.html'; throw new Error('Session expired'); }
       return res;
     }
+
+    // ============================================================
+    // PLATFORM DETECTION
+    // ============================================================
+    function getPlatformFromUrl(url) {
+      try {
+        const domain = new URL(url).hostname.replace(/^www\./, '');
+        if (domain.includes('facebook') || domain.includes('fb.com') || domain.includes('fb.watch')) {
+          return { platform: 'Facebook', icon: '📘' };
+        }
+        if (domain.includes('instagram') || domain.includes('l.instagram')) {
+          return { platform: 'Instagram', icon: '📸' };
+        }
+        if (domain.includes('tiktok') || domain.includes('vm.tiktok') || domain.includes('vt.tiktok')) {
+          return { platform: 'TikTok', icon: '🎵' };
+        }
+        if (domain.includes('youtube') || domain.includes('youtu.be')) {
+          return { platform: 'YouTube', icon: '▶️' };
+        }
+        if (domain.includes('telegram') || domain.includes('t.me')) {
+          return { platform: 'Telegram', icon: '✈️' };
+        }
+        if (domain.includes('x.com') || domain.includes('twitter.com')) {
+          return { platform: 'X', icon: '🐦' };
+        }
+        if (domain.includes('linkedin')) {
+          return { platform: 'LinkedIn', icon: '💼' };
+        }
+        if (domain.includes('snapchat')) {
+          return { platform: 'Snapchat', icon: '👻' };
+        }
+        if (domain.includes('pinterest')) {
+          return { platform: 'Pinterest', icon: '📌' };
+        }
+        if (domain.includes('reddit')) {
+          return { platform: 'Reddit', icon: '🤖' };
+        }
+        if (domain.includes('twitch')) {
+          return { platform: 'Twitch', icon: '🎮' };
+        }
+        if (domain.includes('discord') || domain.includes('discord.com')) {
+          return { platform: 'Discord', icon: '💬' };
+        }
+        if (domain.includes('whatsapp')) {
+          return { platform: 'WhatsApp', icon: '💚' };
+        }
+        return { platform: 'Other', icon: '🔗' };
+      } catch (e) {
+        return { platform: 'Other', icon: '🔗' };
+      }
+    }
+
+    function getPlatformEngagements(boosts) {
+      const platformMap = {};
+      
+      (boosts || []).forEach(boost => {
+        const { platform, icon } = getPlatformFromUrl(boost.original_url);
+        if (!platformMap[platform]) {
+          platformMap[platform] = { icon, count: 0, boosts: 0 };
+        }
+        platformMap[platform].count += (boost.engagement_count || 0);
+        platformMap[platform].boosts += 1;
+      });
+      
+      return platformMap;
+    }
+
+    // ============================================================
+    // LOAD PLATFORM ENGAGEMENTS
+    // ============================================================
+    async function loadPlatformEngagements() {
+      const container = document.getElementById('platformEngagementContainer');
+      container.innerHTML = '<span class="text-gray-500 text-sm">Loading...</span>';
+      
+      try {
+        const data = await (await authFetch('/boosts?limit=100')).json();
+        const boosts = data.boosts || [];
+        const platformData = getPlatformEngagements(boosts);
+        
+        const platforms = Object.keys(platformData);
+        
+        if (platforms.length === 0) {
+          container.innerHTML = '<span class="text-gray-500 text-sm">No boosts submitted yet. Create your first boost!</span>';
+          return;
+        }
+
+        // Sort by count descending
+        const sorted = platforms.sort((a, b) => platformData[b].count - platformData[a].count);
+        
+        let html = '';
+        sorted.forEach(platform => {
+          const data = platformData[platform];
+          html += `
+            <span class="platform-chip">
+              ${data.icon} ${platform}
+              <span class="count">${data.count}</span>
+              <span style="font-size:10px;color:#6b7280;font-weight:400;">(${data.boosts} posts)</span>
+            </span>
+          `;
+        });
+        
+        container.innerHTML = html;
+      } catch (e) {
+        console.error(e);
+        container.innerHTML = '<span class="text-red-400 text-sm">Failed to load platform data</span>';
+      }
+    }
+
+    // ============================================================
+    // LOAD STATS
+    // ============================================================
     async function loadStats() {
       try {
         const me = await (await authFetch('/auth/me')).json();
@@ -189,19 +354,36 @@
         document.getElementById('topbarAvatar').src = `https://ui-avatars.com/api/?background=2fd9f4&color=000&name=${encodeURIComponent(me.user.username)}`;
         document.getElementById('membershipStatus').innerHTML = me.subscription_active ? 'Active' : 'Inactive';
         document.getElementById('expiryInfo').innerHTML = me.subscription_active ? 'Renewal in 14 days' : 'No active subscription';
+        
         const boosts = await (await authFetch('/boosts?limit=100')).json();
-        const totalEng = (boosts.boosts || []).reduce((s,b)=>s+(b.engagement_count||0),0);
-        document.getElementById('totalEngagements').innerText = totalEng;
-        const score = Math.min(100, Math.floor(totalEng/10));
+        const boostList = boosts.boosts || [];
+        
+        // Total boosts count
+        document.getElementById('totalBoostsCount').innerText = boostList.length;
+        
+        // Total engagements (sum across all boosts) - keep for score calculation
+        const totalEng = boostList.reduce((s, b) => s + (b.engagement_count || 0), 0);
+        
+        // Engagement score based on total engagements
+        const score = Math.min(100, Math.floor(totalEng / 10));
         document.getElementById('engagementScore').innerText = score;
-        document.getElementById('scoreChange').innerText = `+${Math.floor(score/5)}%`;
+        document.getElementById('scoreChange').innerText = `+${Math.floor(score / 5)}%`;
+        
+        // Boosts used (1 per 24h)
         const last = await (await authFetch('/links/last-post')).json();
         const canPost = !last.lastPost || (new Date() - new Date(last.lastPost)) >= 86400000;
         document.getElementById('boostsUsed').innerHTML = canPost ? '0' : '1';
         document.getElementById('boostsProgress').style.width = canPost ? '0%' : '100%';
-        document.getElementById('nextBoostTime').innerHTML = canPost ? 'Ready' : `${Math.ceil(24-(new Date()-new Date(last.lastPost))/3600000)} hour(s)`;
+        document.getElementById('nextBoostTime').innerHTML = canPost ? 'Ready' : `${Math.ceil(24 - (new Date() - new Date(last.lastPost)) / 3600000)} hour(s)`;
+        
+        // Also load platform engagements
+        await loadPlatformEngagements();
       } catch(e){ console.error(e); }
     }
+
+    // ============================================================
+    // LOAD MY BOOSTS
+    // ============================================================
     async function loadMyBoosts() {
       const tbody = document.getElementById('myBoostsList');
       tbody.innerHTML = '<tr><td colspan="5" class="text-center text-gray-500 py-10">Loading...</td></tr>';
@@ -210,11 +392,38 @@
         const boosts = data.boosts || [];
         document.getElementById('myBoostsCount').innerText = boosts.length;
         if(boosts.length===0){ tbody.innerHTML='<tr><td colspan="5" class="text-center text-gray-500 py-10">No boosts yet. Click "New Project".</td></tr>'; return; }
-        tbody.innerHTML = boosts.map(b => `<tr><td class="max-w-xs truncate"><a href="${b.original_url}" target="_blank" class="text-cyan-400 hover:underline text-sm">${b.original_url}</a><div class="text-xs text-gray-500">${b.category||'General'}</div></td><td class="text-sm">${new Date(b.submitted_at).toLocaleString()}</td><td><span class="status-badge ${b.status==='active'?'status-active':(b.status==='queued'?'status-queued':'status-completed')}">${b.status?.toUpperCase()||'UNKNOWN'}</span></td><td class="text-sm font-mono">${(b.engagement_count||0).toLocaleString()}</td><td><button class="text-primary hover:text-cyan-300 text-sm" onclick="window.open('${b.original_url}','_blank')">View</button></td></tr>`).join('');
+        tbody.innerHTML = boosts.map(b => {
+          const { icon, platform } = getPlatformFromUrl(b.original_url);
+          return `<tr>
+            <td class="max-w-xs truncate">
+              <div class="flex items-center gap-2">
+                <span>${icon}</span>
+                <a href="${b.original_url}" target="_blank" class="text-cyan-400 hover:underline text-sm">${b.original_url}</a>
+              </div>
+              <div class="text-xs text-gray-500">${platform}</div>
+            </td>
+            <td class="text-sm">${new Date(b.submitted_at).toLocaleString()}</td>
+            <td><span class="status-badge ${b.status==='active'?'status-active':(b.status==='queued'?'status-queued':'status-completed')}">${b.status?.toUpperCase()||'UNKNOWN'}</span></td>
+            <td class="text-sm font-mono">${(b.engagement_count||0).toLocaleString()}</td>
+            <td><button class="text-primary hover:text-cyan-300 text-sm" onclick="window.open('${b.original_url}','_blank')">View</button></td>
+          </tr>`;
+        }).join('');
       } catch(e){ tbody.innerHTML='<tr><td colspan="5" class="text-center text-red-400 py-10">Failed to load.</td></tr>'; }
     }
+
+    // ============================================================
+    // LOGOUT
+    // ============================================================
     document.getElementById('logoutBtn').onclick = () => { localStorage.clear(); location.href='landing.html'; };
-    (async()=>{ if(!getToken()) location.href='landing.html'; await loadStats(); await loadMyBoosts(); })();
+
+    // ============================================================
+    // INIT
+    // ============================================================
+    (async()=>{ 
+      if(!getToken()) location.href='landing.html'; 
+      await loadStats(); 
+      await loadMyBoosts(); 
+    })();
   </script>
 </body>
 </html>
