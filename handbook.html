@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Creator Co-Op | Handbook & Bye-Laws</title>
+    <title>Creator Co-Op | Handbook & Bye-Laws for Nigerians</title>
     
     <!-- PWA Meta Tags -->
     <meta name="theme-color" content="#0b1326">
@@ -56,9 +56,6 @@
             line-height: 1.7;
         }
 
-        /* ========================================================
-           HEADER / NAV
-           ======================================================== */
         .app-header {
             position: fixed;
             top: 0;
@@ -117,18 +114,12 @@
             font-size: 18px;
         }
 
-        /* ========================================================
-           CONTAINER
-           ======================================================== */
         .container {
             max-width: 900px;
             margin: 0 auto;
             padding: 0 24px;
         }
 
-        /* ========================================================
-           SIDEBAR / TOC
-           ======================================================== */
         .toc-wrapper {
             position: fixed;
             top: 64px;
@@ -224,9 +215,6 @@
             font-size: 28px;
         }
 
-        /* ========================================================
-           MAIN CONTENT
-           ======================================================== */
         .main-content {
             padding-top: 76px;
             padding-bottom: 60px;
@@ -238,9 +226,6 @@
             margin-left: 280px;
         }
 
-        /* ========================================================
-           HANDBOOK HEADER
-           ======================================================== */
         .handbook-header {
             padding: 40px 0 32px;
             border-bottom: 1px solid var(--border-color);
@@ -261,6 +246,14 @@
             margin-bottom: 12px;
         }
 
+        .handbook-header .flags {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 8px;
+            font-size: 24px;
+        }
+
         .handbook-header h1 {
             font-size: 36px;
             font-weight: 900;
@@ -277,9 +270,18 @@
             font-size: 14px;
         }
 
-        /* ========================================================
-           SECTIONS
-           ======================================================== */
+        .platform-tag {
+            display: inline-block;
+            background: rgba(47, 217, 244, 0.1);
+            color: var(--cyan);
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 0.2rem 0.7rem;
+            border-radius: 20px;
+            margin: 0.15rem;
+            border: 1px solid rgba(47, 217, 244, 0.15);
+        }
+
         .section {
             margin-bottom: 48px;
             scroll-margin-top: 80px;
@@ -373,9 +375,6 @@
             font-size: 14px;
         }
 
-        /* ========================================================
-           TABLES
-           ======================================================== */
         .table-wrap {
             overflow-x: auto;
             margin: 16px 0;
@@ -415,18 +414,13 @@
             color: var(--text-primary);
         }
 
-        /* ========================================================
-           RESPONSIVE
-           ======================================================== */
         @media (min-width: 1024px) {
             .toc-wrapper {
                 display: block;
             }
-
             .toc-toggle {
                 display: none !important;
             }
-
             .main-content {
                 margin-left: 280px;
             }
@@ -442,23 +436,18 @@
                 border-bottom: 1px solid var(--border-color);
                 z-index: 90;
             }
-
             .toc-wrapper.show {
                 display: block;
             }
-
             .toc-toggle {
                 display: flex;
             }
-
             .main-content {
                 margin-left: 0;
             }
-
             .handbook-header h1 {
                 font-size: 28px;
             }
-
             .section h2 {
                 font-size: 22px;
             }
@@ -468,46 +457,35 @@
             .container {
                 padding: 0 16px;
             }
-
             .handbook-header {
                 padding: 24px 0;
             }
-
             .handbook-header h1 {
                 font-size: 24px;
             }
-
             .section h2 {
                 font-size: 19px;
             }
-
             .section h3 {
                 font-size: 17px;
             }
-
             .section p,
             .section ul,
             .section ol {
                 font-size: 14px;
             }
-
             table {
                 font-size: 12px;
             }
-
             table th,
             table td {
                 padding: 8px 12px;
             }
-
             .btn-back span:last-child {
                 display: none;
             }
         }
 
-        /* ========================================================
-           SCROLL TO TOP
-           ======================================================== */
         .scroll-top {
             position: fixed;
             bottom: 80px;
@@ -536,9 +514,6 @@
             display: flex;
         }
 
-        /* ========================================================
-           FOOTER
-           ======================================================== */
         .handbook-footer {
             border-top: 1px solid var(--border-color);
             padding: 24px 0 40px;
@@ -556,9 +531,6 @@
             color: var(--cyan);
         }
 
-        /* ========================================================
-           SECTION LINKS
-           ======================================================== */
         .section-link {
             color: var(--cyan);
             text-decoration: none;
@@ -569,9 +541,6 @@
             border-bottom-color: var(--cyan);
         }
 
-        /* ========================================================
-           RULES / BYE-LAWS CARDS
-           ======================================================== */
         .rule-card {
             background: var(--bg-card);
             border: 1px solid var(--border-color);
@@ -596,6 +565,18 @@
 
         .rule-card .rule-text strong {
             color: var(--text-primary);
+        }
+
+        .flag-badge {
+            display: inline-block;
+            background: rgba(47, 217, 244, 0.08);
+            color: var(--cyan);
+            font-size: 0.65rem;
+            font-weight: 600;
+            padding: 0.15rem 0.6rem;
+            border-radius: 20px;
+            margin: 0.1rem;
+            border: 1px solid rgba(47, 217, 244, 0.1);
         }
     </style>
 </head>
@@ -646,8 +627,8 @@
             <li><a href="#section-4-8" class="toc-sub">4.8 Data Privacy</a></li>
             
             <li><a href="#section-5">5. Getting Started</a></li>
-            <li><a href="#section-5-1" class="toc-sub">5.1 Creating Your Facebook Account</a></li>
-            <li><a href="#section-5-2" class="toc-sub">5.2 Creating Your Facebook Page</a></li>
+            <li><a href="#section-5-1" class="toc-sub">5.1 Creating Your Social Media Accounts</a></li>
+            <li><a href="#section-5-2" class="toc-sub">5.2 Creating Your Business Page</a></li>
             
             <li><a href="#section-6">6. Content Creation Guide</a></li>
             <li><a href="#section-6-1" class="toc-sub">6.1 The 3 Pillars of Growth</a></li>
@@ -660,7 +641,7 @@
             <li><a href="#section-7-2" class="toc-sub">7.2 The 3:1 Value Rule</a></li>
             <li><a href="#section-7-3" class="toc-sub">7.3 Hashtags, Captions, CTAs</a></li>
             
-            <li><a href="#section-8">8. Facebook Monetization</a></li>
+            <li><a href="#section-8">8. Platform Monetization</a></li>
             <li><a href="#section-8-1" class="toc-sub">8.1 Eligibility Requirements</a></li>
             <li><a href="#section-8-2" class="toc-sub">8.2 Revenue Streams</a></li>
             
@@ -694,8 +675,18 @@
             <!-- HANDBOOK HEADER -->
             <div class="handbook-header">
                 <div class="badge">📖 Official Guide</div>
+                <div class="flags">🇳🇬 🇬🇧 🇨🇦</div>
                 <h1>Creator Co-Op <span>Handbook</span></h1>
                 <p class="version">Version 1.0 • June 2026</p>
+                <div class="platform-tags" style="margin-top: 12px;">
+                    <span class="platform-tag">📘 Facebook</span>
+                    <span class="platform-tag">📸 Instagram</span>
+                    <span class="platform-tag">🎵 TikTok</span>
+                    <span class="platform-tag">🐦 X</span>
+                    <span class="platform-tag">▶️ YouTube</span>
+                    <span class="platform-tag">✈️ Telegram</span>
+                    <span class="platform-tag">💼 LinkedIn</span>
+                </div>
             </div>
 
             <!-- ============================================================
@@ -706,10 +697,10 @@
 
                 <div id="section-1-1">
                     <h3>1.1 What is Creator Co-Op?</h3>
-                    <p><strong>Creator Co-Op is a zero-waste, peer-to-peer organic engagement network for West African content creators.</strong></p>
-                    <p>It is a private, technology-driven mutual collaboration network built exclusively for independent West African and diasporan digital publishers, influencers, and content creators.</p>
+                    <p><strong>Creator Co-Op is a zero-waste, peer-to-peer organic engagement network for Nigerians in Nigeria, the United Kingdom, and Canada.</strong></p>
+                    <p>It is a private, technology-driven mutual collaboration network built exclusively for <strong>content creators, influencers, digital publishers, small businesses (SMEs), and anyone who posts content</strong> on any social media platform.</p>
                     <div class="highlight-box cyan">
-                        <div class="title">"We are all creators, and we are all engagers."</div>
+                        <div class="title">"We are all creators/publishers, and we are all engagers."</div>
                         <p>Every member holds a dual responsibility: to create content and to engage with others' content.</p>
                     </div>
                     <div class="table-wrap">
@@ -721,9 +712,10 @@
                                 <tr><td><strong>Closed-Loop Network</strong></td><td>Members only support each other, creating a trusted ecosystem</td></tr>
                                 <tr><td><strong>Zero-Waste Cycle</strong></td><td>Every engagement is used efficiently; nothing is wasted</td></tr>
                                 <tr><td><strong>Mathematical Guarantee</strong></td><td>Each post receives exactly (N-1) engagements</td></tr>
-                                <tr><td><strong>Privacy-First</strong></td><td>Referrer cloaking protects your page from penalties</td></tr>
+                                <tr><td><strong>Privacy-First</strong></td><td>Referrer cloaking protects your content from penalties</td></tr>
                                 <tr><td><strong>Real Engagement</strong></td><td>No bots, no scripts, no fake accounts</td></tr>
                                 <tr><td><strong>Paid Membership</strong></td><td>Financial gatekeeper ensures "skin in the game" for all</td></tr>
+                                <tr><td><strong>Multi-Platform</strong></td><td>Works on Facebook, Instagram, TikTok, X, YouTube, Telegram, LinkedIn & more</td></tr>
                             </tbody>
                         </table>
                     </div>
@@ -734,7 +726,7 @@
                     <p>Creator Co-Op solves a specific problem:</p>
                     <div class="highlight-box yellow">
                         <div class="title">The Problem</div>
-                        <p>Facebook's algorithm relies on early engagement to push content to wider audiences. New creators with small followings cannot get that initial engagement, so their content dies at the bottom of the feed regardless of quality.</p>
+                        <p>Social media algorithms rely on early engagement to push content to wider audiences. New creators, businesses, and casual users with small followings cannot get that initial engagement, so their content dies at the bottom of the feed regardless of quality.</p>
                     </div>
                     <div class="table-wrap">
                         <table>
@@ -755,13 +747,20 @@
                 <div id="section-1-3">
                     <h3>1.3 Target Audience</h3>
                     <ul>
-                        <li><strong>West African content creators</strong> (Nigeria, Ghana, Senegal, Ivory Coast, and the diaspora)</li>
-                        <li>Facebook publishers, influencers, and digital creators</li>
-                        <li>Small to medium creators who cannot afford paid ads or lack organic reach</li>
+                        <li><strong>Nigerians living in Nigeria, the United Kingdom, and Canada</strong></li>
+                        <li><strong>Content creators, influencers, and digital publishers</strong> across all platforms</li>
+                        <li><strong>Small businesses (SMEs)</strong> who want to promote their products and services</li>
+                        <li><strong>Regular social media users</strong> who post content and want wider reach</li>
+                        <li><strong>Anyone who posts content</strong> — photos, events, updates, or hobbies</li>
                     </ul>
                     <div class="highlight-box green">
                         <div class="title">Mission Statement</div>
-                        <p>"To empower every West African creator with guaranteed organic engagement, enabling algorithmic discovery and sustainable growth through cooperative power."</p>
+                        <p>"To empower every Nigerian — whether creator, business, or everyday user — with guaranteed organic engagement, enabling algorithmic discovery and sustainable growth through cooperative power."</p>
+                    </div>
+                    <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px;">
+                        <span class="flag-badge">🇳🇬 Nigeria</span>
+                        <span class="flag-badge">🇬🇧 United Kingdom</span>
+                        <span class="flag-badge">🇨🇦 Canada</span>
                     </div>
                 </div>
             </section>
@@ -804,7 +803,7 @@
                     <div class="highlight-box">
                         <div class="title">Flow Diagram</div>
                         <p style="font-family: monospace; font-size: 13px; line-height: 2;">
-                            User submits Facebook post URL (1 per 24 hours)<br>
+                            User submits social media post URL (1 per 24 hours)<br>
                             &nbsp;&nbsp;&nbsp;&nbsp;│<br>
                             &nbsp;&nbsp;&nbsp;&nbsp;▼<br>
                             Post enters boost_links table (status: active)<br>
@@ -847,9 +846,9 @@
                                 <tr><th>Without Cloaking</th><th>With Cloaking</th></tr>
                             </thead>
                             <tbody>
-                                <tr><td>Facebook may penalize your page</td><td>Facebook sees traffic as organic</td></tr>
+                                <tr><td>Platforms may penalize your content</td><td>Platforms see traffic as organic</td></tr>
                                 <tr><td>Engagement looks coordinated</td><td>Engagement looks natural</td></tr>
-                                <tr><td>Risk of shadowban</td><td>Page stays safe</td></tr>
+                                <tr><td>Risk of shadowban</td><td>Content stays safe</td></tr>
                                 <tr><td>Analytics show referral traffic</td><td>Analytics show direct traffic</td></tr>
                             </tbody>
                         </table>
@@ -858,7 +857,7 @@
                         <li>All passwords are hashed using bcrypt</li>
                         <li>Communications are encrypted via TLS 1.3 (HTTPS)</li>
                         <li>No sensitive data is ever collected or sold</li>
-                        <li>Referrer cloaking protects your page metrics</li>
+                        <li>Referrer cloaking protects your content metrics across all platforms</li>
                     </ul>
                 </div>
             </section>
@@ -878,8 +877,8 @@
                             </thead>
                             <tbody>
                                 <tr><td><strong>Age</strong></td><td>Be at least 18 years old</td></tr>
-                                <tr><td><strong>Location</strong></td><td>Be a West African resident or member of the diaspora</td></tr>
-                                <tr><td><strong>Content</strong></td><td>Own and operate an active Facebook page, profile, or creator account</td></tr>
+                                <tr><td><strong>Location</strong></td><td>Be a Nigerian citizen or resident living in <strong>Nigeria, the United Kingdom, or Canada</strong></td></tr>
+                                <tr><td><strong>Content</strong></td><td>Own and operate an active social media account on <strong>Facebook, Instagram, TikTok, X, YouTube, Telegram, LinkedIn, or any supported platform</strong></td></tr>
                                 <tr><td><strong>Accuracy</strong></td><td>Provide accurate, complete, and up-to-date information</td></tr>
                                 <tr><td><strong>Standing</strong></td><td>Not have been previously banned for violations</td></tr>
                             </tbody>
@@ -898,7 +897,7 @@
                 <div id="section-3-2">
                     <h3>3.2 Registration Process</h3>
                     <ol>
-                        <li><strong>Create Account</strong> — Choose username, provide email, create password, add Facebook URL</li>
+                        <li><strong>Create Account</strong> — Choose username, provide email, create password, add social media URL (Facebook, Instagram, TikTok, X, YouTube, Telegram, or LinkedIn)</li>
                         <li><strong>Verify Email</strong> — OTP code sent to your email (valid for 15 minutes)</li>
                         <li><strong>Complete Payment</strong> — Pay ₦5,000 via Paystack</li>
                         <li><strong>Activate Account</strong> — Receive your hourly slot assignment and login credentials</li>
@@ -941,7 +940,7 @@
                     </div>
                     <div class="highlight-box cyan">
                         <div class="title">Dual Responsibility Model</div>
-                        <p>Every member is both a creator and an engager. You cannot have one without the other.</p>
+                        <p>Every member is both a creator/publisher and an engager. You cannot have one without the other.</p>
                     </div>
                 </div>
 
@@ -985,9 +984,9 @@
                                 <tr><th>✅ Allowed</th><th>❌ Prohibited</th></tr>
                             </thead>
                             <tbody>
-                                <tr><td>Your own original Facebook posts</td><td>Offensive or illegal content</td></tr>
+                                <tr><td>Your own original social media posts</td><td>Offensive or illegal content</td></tr>
                                 <tr><td>Content that provides value</td><td>Copyright infringement</td></tr>
-                                <tr><td>Posts following Facebook's Standards</td><td>Spam or low-quality content</td></tr>
+                                <tr><td>Posts following platform Community Standards</td><td>Spam or low-quality content</td></tr>
                             </tbody>
                         </table>
                     </div>
@@ -1026,7 +1025,7 @@
                             </thead>
                             <tbody>
                                 <tr><td>Professional communication</td><td>Harassment or bullying</td></tr>
-                                <tr><td>Supporting fellow creators</td><td>Competitiveness or sabotage</td></tr>
+                                <tr><td>Supporting fellow members</td><td>Competitiveness or sabotage</td></tr>
                                 <tr><td>Honest engagement</td><td>Fake engagement or bots</td></tr>
                                 <tr><td>Respect for community</td><td>Disrespectful comments</td></tr>
                                 <tr><td>Following the rules</td><td>Trying to game the system</td></tr>
@@ -1086,7 +1085,7 @@
                     <ul>
                         <li>All passwords are hashed using bcrypt</li>
                         <li>Communications are encrypted via TLS 1.3</li>
-                        <li>Referrer cloaking protects your Facebook page</li>
+                        <li>Referrer cloaking protects your content across all platforms</li>
                         <li>We do not sell or share your data</li>
                     </ul>
                 </div>
@@ -1099,8 +1098,10 @@
                 <h2><span class="number">5.</span> Getting Started</h2>
 
                 <div id="section-5-1">
-                    <h3>5.1 Creating Your Facebook Account</h3>
-                    <h4>Desktop/Web</h4>
+                    <h3>5.1 Creating Your Social Media Accounts</h3>
+                    <p>The Creator Co-Op works with multiple social media platforms. Here's how to create accounts on each:</p>
+                    
+                    <h4>Facebook</h4>
                     <ol>
                         <li>Go to facebook.com</li>
                         <li>Click "Create New Account"</li>
@@ -1108,20 +1109,60 @@
                         <li>Click "Sign Up"</li>
                         <li>Check your email for a verification code and enter it</li>
                     </ol>
-                    <h4>Mobile (Android/iOS)</h4>
+
+                    <h4>Instagram</h4>
                     <ol>
-                        <li>Open the Facebook app</li>
-                        <li>Tap "Create New Facebook Account" → "Next"</li>
-                        <li>Enter your real name → "Next"</li>
-                        <li>Select your date of birth → "Next"</li>
-                        <li>Select your gender → "Next"</li>
-                        <li>Enter your phone number (or tap "Sign Up with Email")</li>
-                        <li>Create a password → "Next" → "Sign Up"</li>
+                        <li>Download the Instagram app or go to instagram.com</li>
+                        <li>Tap "Sign up" and enter your email or phone number</li>
+                        <li>Create a username and password</li>
+                        <li>Fill in your profile info</li>
+                    </ol>
+
+                    <h4>TikTok</h4>
+                    <ol>
+                        <li>Download the TikTok app</li>
+                        <li>Tap "Sign up" and choose your method (email or phone)</li>
+                        <li>Create a username and password</li>
+                        <li>Set up your profile</li>
+                    </ol>
+
+                    <h4>X (Twitter)</h4>
+                    <ol>
+                        <li>Go to x.com or download the app</li>
+                        <li>Click "Sign up"</li>
+                        <li>Enter your name, email, and create a password</li>
+                        <li>Choose a username</li>
+                    </ol>
+
+                    <h4>YouTube</h4>
+                    <ol>
+                        <li>Go to youtube.com</li>
+                        <li>Sign in with your Google account</li>
+                        <li>Click your profile picture → "Create a channel"</li>
+                        <li>Enter your channel name and details</li>
+                    </ol>
+
+                    <h4>Telegram</h4>
+                    <ol>
+                        <li>Download Telegram from your app store</li>
+                        <li>Enter your phone number to sign up</li>
+                        <li>Create a profile with your name and photo</li>
+                    </ol>
+
+                    <h4>LinkedIn</h4>
+                    <ol>
+                        <li>Go to linkedin.com</li>
+                        <li>Click "Join now"</li>
+                        <li>Enter your name, email, and password</li>
+                        <li>Complete your profile</li>
                     </ol>
                 </div>
 
                 <div id="section-5-2">
-                    <h3>5.2 Creating Your Facebook Business Page</h3>
+                    <h3>5.2 Creating Your Business Page</h3>
+                    <p>For businesses and professional creators, setting up a business page is recommended:</p>
+                    
+                    <h4>Facebook Business Page</h4>
                     <ol>
                         <li>Log into Facebook with your personal account</li>
                         <li>Go to facebook.com/pages/create</li>
@@ -1131,6 +1172,7 @@
                         <li>Add a Description (up to 255 characters)</li>
                         <li>Click "Create page"</li>
                     </ol>
+
                     <div class="table-wrap">
                         <table>
                             <thead>
@@ -1286,29 +1328,29 @@
             SECTION 8: MONETIZATION
             ============================================================ -->
             <section class="section" id="section-8">
-                <h2><span class="number">8.</span> Facebook Monetization</h2>
+                <h2><span class="number">8.</span> Platform Monetization</h2>
+                <p>While the Creator Co-Op works across all platforms, monetization opportunities vary by platform. Here are the general requirements:</p>
 
                 <div id="section-8-1">
-                    <h3>8.1 Eligibility Requirements</h3>
+                    <h3>8.1 General Eligibility Requirements</h3>
                     <div class="table-wrap">
                         <table>
                             <thead>
-                                <tr><th>Requirement</th><th>Threshold</th></tr>
+                                <tr><th>Platform</th><th>Key Requirements</th></tr>
                             </thead>
                             <tbody>
-                                <tr><td><strong>Followers</strong></td><td>10,000 (for most features)</td></tr>
-                                <tr><td><strong>Watch Time</strong></td><td>600,000 minutes in last 60 days</td></tr>
-                                <tr><td><strong>Active Videos</strong></td><td>5+ on your page</td></tr>
-                                <tr><td><strong>Video Length</strong></td><td>Minimum 1 minute for ads</td></tr>
-                                <tr><td><strong>Content Originality</strong></td><td>Must add meaningful value</td></tr>
-                                <tr><td><strong>Page Standing</strong></td><td>No policy violations</td></tr>
+                                <tr><td><strong>Facebook</strong></td><td>10,000 followers, 600,000 watch minutes in last 60 days, 5+ active videos</td></tr>
+                                <tr><td><strong>Instagram</strong></td><td>Creator account, 10,000+ followers, engagement with branded content</td></tr>
+                                <tr><td><strong>TikTok</strong></td><td>Creator Fund/Program eligibility varies by country</td></tr>
+                                <tr><td><strong>YouTube</strong></td><td>1,000 subscribers + 4,000 watch hours (or 10M shorts views)</td></tr>
+                                <tr><td><strong>X (Twitter)</strong></td><td>X Premium subscription required for ad revenue sharing</td></tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
 
                 <div id="section-8-2">
-                    <h3>8.2 Revenue Streams</h3>
+                    <h3>8.2 Common Revenue Streams</h3>
                     <div class="table-wrap">
                         <table>
                             <thead>
@@ -1316,9 +1358,10 @@
                             </thead>
                             <tbody>
                                 <tr><td><strong>In-Stream Ads</strong></td><td>Ads before/during/after videos</td></tr>
-                                <tr><td><strong>Performance Bonus</strong></td><td>Extra payouts based on content performance</td></tr>
-                                <tr><td><strong>Stars</strong></td><td>Viewers send Stars during live videos and posts</td></tr>
+                                <tr><td><strong>Creator/Performance Bonuses</strong></td><td>Extra payouts based on content performance</td></tr>
+                                <tr><td><strong>Virtual Gifts/Stars</strong></td><td>Viewers send virtual gifts during live content</td></tr>
                                 <tr><td><strong>Branded Content</strong></td><td>Paid partnerships with brands</td></tr>
+                                <tr><td><strong>Subscriptions/Memberships</strong></td><td>Fans pay for exclusive content</td></tr>
                             </tbody>
                         </table>
                     </div>
@@ -1333,12 +1376,12 @@
 
                 <div class="highlight-box">
                     <div class="title">Q1: What is the Creator Co-Op and how does it work?</div>
-                    <p>A private, closed-loop engagement network for West African creators. Members submit posts, are assigned hourly slots, and must engage with peers. Each post receives (N-1) engagements.</p>
+                    <p>A private, closed-loop engagement network for <strong>Nigerians in Nigeria, the UK, and Canada</strong>. Members submit posts from any social media platform, are assigned hourly slots, and must engage with peers. Each post receives (N-1) engagements.</p>
                 </div>
 
                 <div class="highlight-box">
                     <div class="title">Q2: Is this a bot or spam network?</div>
-                    <p>No. Creator Co-Op uses real creators engaging with each other's content. No bots, no scripts, no automation.</p>
+                    <p>No. Creator Co-Op uses real people engaging with each other's content. No bots, no scripts, no automation.</p>
                 </div>
 
                 <div class="highlight-box">
@@ -1358,7 +1401,7 @@
 
                 <div class="highlight-box">
                     <div class="title">Q6: Can I submit multiple posts per day?</div>
-                    <p>No. One post per 24 hours.</p>
+                    <p>No. One post per 24 hours across any platform.</p>
                 </div>
 
                 <div class="highlight-box">
@@ -1367,8 +1410,18 @@
                 </div>
 
                 <div class="highlight-box">
-                    <div class="title">Q8: What if my Facebook page gets shadowbanned?</div>
-                    <p>Creator Co-Op uses referrer cloaking to protect your page. Facebook sees engagement as organic direct traffic.</p>
+                    <div class="title">Q8: What if my content gets shadowbanned?</div>
+                    <p>Creator Co-Op uses referrer cloaking to protect your content across all platforms. Platforms see engagement as organic direct traffic.</p>
+                </div>
+
+                <div class="highlight-box">
+                    <div class="title">Q9: Which platforms are supported?</div>
+                    <p>Facebook, Instagram, TikTok, X, YouTube, Telegram, LinkedIn, and more. You must have an active account on the platform you're submitting content for.</p>
+                </div>
+
+                <div class="highlight-box">
+                    <div class="title">Q10: Who can join?</div>
+                    <p>Any Nigerian citizen or resident living in Nigeria, the United Kingdom, or Canada. This includes content creators, influencers, digital publishers, small businesses (SMEs), and anyone who posts content on social media.</p>
                 </div>
             </section>
 
@@ -1432,7 +1485,7 @@
                     "Create alone, compete alone. Create together, grow together."
                 </p>
                 <p style="margin-top: 4px; font-size: 11px; color: var(--text-muted);">
-                    Version 1.0 • Last Updated: June 2026
+                    Version 1.0 • Last Updated: June 2026 • 🇳🇬 🇬🇧 🇨🇦
                 </p>
             </div>
 
@@ -1454,7 +1507,6 @@
             tocSidebar.classList.toggle('show');
         });
 
-        // Close TOC when clicking a link on mobile
         document.querySelectorAll('.toc-list a').forEach(link => {
             link.addEventListener('click', () => {
                 if (window.innerWidth < 1024) {
