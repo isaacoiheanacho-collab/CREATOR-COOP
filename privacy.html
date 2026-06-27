@@ -77,6 +77,17 @@
         }
         footer { padding-bottom: env(safe-area-inset-bottom, 1rem); }
         .policy-section { scroll-margin-top: 80px; }
+        .flag-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background: #eef2ff;
+            padding: 0.2rem 0.7rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: #4338ca;
+        }
     </style>
 </head>
 <body class="bg-[#f4f6f9] text-zinc-800 antialiased">
@@ -90,6 +101,7 @@
             <nav class="desktop-nav text-sm font-medium">
                 <a href="landing.html" class="text-zinc-600 hover:text-blue-600 transition">Home</a>
                 <a href="about.html" class="text-zinc-600 hover:text-blue-600 transition">About</a>
+                <a href="benefits.html" class="text-zinc-600 hover:text-blue-600 transition">Benefits</a>
                 <a href="landing.html" class="bg-blue-50 text-blue-700 px-4 py-1.5 rounded-full text-sm font-semibold hover:bg-blue-100 transition">Login / Join</a>
             </nav>
             <button class="mobile-menu-btn text-zinc-700 focus:outline-none" id="mobileMenuBtn">
@@ -99,6 +111,7 @@
         <div class="mobile-nav" id="mobileNav">
             <a href="landing.html">Home</a>
             <a href="about.html">About</a>
+            <a href="benefits.html">Benefits</a>
             <a href="landing.html" class="bg-blue-50 text-blue-700 px-4 py-2 rounded-full text-center">Login / Join</a>
         </div>
     </header>
@@ -111,7 +124,12 @@
                 <span class="text-sm font-semibold uppercase tracking-wider">Legal & Transparency</span>
             </div>
             <h1 class="text-4xl md:text-5xl font-extrabold text-zinc-900 tracking-tight">Privacy Policy</h1>
-            <p class="text-zinc-500 mt-3 text-sm border-l-4 border-blue-400 pl-4">Last updated: June 15, 2026 • Effective for all members and visitors</p>
+            <div class="flex flex-wrap items-center gap-3 mt-2">
+                <p class="text-zinc-500 text-sm border-l-4 border-blue-400 pl-4">Last updated: June 15, 2026 • Effective for all members and visitors</p>
+                <span class="flag-badge">🇳🇬 Nigeria</span>
+                <span class="flag-badge">🇬🇧 UK</span>
+                <span class="flag-badge">🇨🇦 Canada</span>
+            </div>
             <p class="text-zinc-600 mt-4 leading-relaxed">Your privacy is the foundation of the Creator Co‑Op loop. This policy explains how we collect, use, disclose, and safeguard your information when you use our platform. We are committed to total transparency, data minimisation, and strict adherence to Nigerian data protection regulations as well as global best practices.</p>
         </div>
 
@@ -133,13 +151,13 @@
                 <div class="space-y-4 text-zinc-600 leading-relaxed">
                     <p>To operate the closed‑loop cooperative and maintain security, we collect the following categories of personal data:</p>
                     <ul class="list-disc pl-6 space-y-2">
-                        <li><strong class="font-semibold text-zinc-800">Account Information:</strong> Full name (or username), email address, encrypted password, and Facebook profile URL (mandatory for verification).</li>
+                        <li><strong class="font-semibold text-zinc-800">Account Information:</strong> Full name (or username), email address, encrypted password, and <strong>social media profile URL</strong> (mandatory for verification — Facebook, Instagram, TikTok, X, YouTube, Telegram, or LinkedIn).</li>
                         <li><strong class="font-semibold text-zinc-800">Engagement Data:</strong> Records of posts submitted to the loop, assigned hourly slots, engagement history (likes, comments, shares traded), and timestamps to enforce N-1 mathematical balance.</li>
                         <li><strong class="font-semibold text-zinc-800">Payment & Billing Data:</strong> Token fee payments processed via secure third‑party gateways (we do not store full card details; only transaction confirmation and date).</li>
                         <li><strong class="font-semibold text-zinc-800">Technical Information:</strong> IP address, browser type, device identifiers, and referrer headers (partially stripped via cloaking), collected for security and performance monitoring.</li>
                         <li><strong class="font-semibold text-zinc-800">Support Communications:</strong> Any messages, feedback, or disputes submitted to our help centre.</li>
                     </ul>
-                    <p class="mt-3 text-sm bg-blue-50/40 p-3 rounded-lg">We never collect sensitive data (e.g., financial passwords, private messages from Facebook, or location tracking). All data is minimised to what is strictly necessary for the cooperative function.</p>
+                    <p class="mt-3 text-sm bg-blue-50/40 p-3 rounded-lg">We never collect sensitive data (e.g., financial passwords, private messages from social platforms, or location tracking). All data is minimised to what is strictly necessary for the cooperative function.</p>
                 </div>
             </section>
 
@@ -150,7 +168,7 @@
                     <ul class="list-disc pl-6 space-y-1">
                         <li>Managing your membership, login, and dashboard access.</li>
                         <li>Assigning hourly slots and distributing engagement tasks fairly (N-1 logic).</li>
-                        <li>Verifying Facebook profile authenticity to prevent bots and duplicate accounts.</li>
+                        <li>Verifying social media profile authenticity to prevent bots and duplicate accounts.</li>
                         <li>Calculating engagement credits and ensuring reciprocity among members.</li>
                         <li>Communicating important service updates, loop status, and policy changes.</li>
                         <li>Improving platform security, detecting fraudulent activity, and enforcing our Terms of Service.</li>
@@ -165,14 +183,14 @@
                 <div class="space-y-3 text-zinc-600">
                     <p>We do not share your personal information with external parties except in the following limited circumstances:</p>
                     <ul class="list-disc pl-6 space-y-1">
-                        <li><strong>Within the Cooperative:</strong> Your Facebook profile link and username are visible to other members to enable engagement. However, your email address and payment details remain private.</li>
+                        <li><strong>Within the Cooperative:</strong> Your social media profile link and username are visible to other members to enable engagement. However, your email address and payment details remain private.</li>
                         <li><strong>Service Providers:</strong> We use trusted third‑party services for payment processing (e.g., Paystack or Flutterwave), cloud hosting (e.g., AWS or DigitalOcean), and error tracking. These providers are contractually bound to handle data only for the purposes we specify.</li>
                         <li><strong>Legal Compliance:</strong> If required by a valid court order, subpoena, or Nigerian data protection law (NDPR), we may disclose limited information after reviewing the request's legality.</li>
                         <li><strong>Business Transfers:</strong> In the unlikely event of a merger or acquisition, member data would be transferred under the same privacy commitments.</li>
                     </ul>
                     <div class="bg-amber-50/40 p-3 rounded-lg border-l-3 border-amber-400 mt-3">
                         <span class="material-symbols-outlined text-amber-600 align-middle text-sm">gpp_maybe</span>
-                        <span class="text-sm"> We never share individual engagement statistics with external platforms, and our referrer‑cloaking technology ensures that Facebook analytics never see our domain as the traffic source.</span>
+                        <span class="text-sm"> We never share individual engagement statistics with external platforms, and our referrer‑cloaking technology ensures that social media analytics never see our domain as the traffic source.</span>
                     </div>
                 </div>
             </section>
@@ -187,7 +205,7 @@
                     <ul class="list-disc pl-6 space-y-1">
                         <li>All passwords are hashed using bcrypt; we never store plaintext passwords.</li>
                         <li>Communications between your browser and our servers are encrypted via TLS 1.3 (HTTPS).</li>
-                        <li>Our PWA implements strict <strong>Referrer-Policy: no-referrer</strong> and custom cloaking headers. When you click a peer's content link, the outgoing HTTP referrer is completely stripped — ensuring that Facebook analytics registers the visit as "Direct Traffic", not as coming from the Co‑Op domain.</li>
+                        <li>Our PWA implements strict <strong>Referrer-Policy: no-referrer</strong> and custom cloaking headers. When you click a peer's content link, the outgoing HTTP referrer is completely stripped — ensuring that <strong>all social media platforms</strong> register the visit as "Direct Traffic", not as coming from the Co‑Op domain.</li>
                         <li>Access to internal systems is restricted to essential personnel only, with multi‑factor authentication.</li>
                         <li>Automated scripts, bots, and fake engagement tools are actively blocked via behavioral heuristics.</li>
                     </ul>
@@ -201,7 +219,7 @@
                     <p>As a member of the Creator Co‑Op (or a visitor), you have the following rights under the Nigeria Data Protection Regulation (NDPR) and similar frameworks:</p>
                     <ul class="list-disc pl-6 space-y-1">
                         <li><strong>Access:</strong> Request a copy of the personal data we hold about you.</li>
-                        <li><strong>Rectification:</strong> Update or correct inaccurate information (e.g., email, Facebook link).</li>
+                        <li><strong>Rectification:</strong> Update or correct inaccurate information (e.g., email, social media links).</li>
                         <li><strong>Erasure ("Right to be Forgotten"):</strong> Request deletion of your account and associated data, subject to any legal retention obligations (e.g., transaction records for 5 years).</li>
                         <li><strong>Restriction:</strong> Temporarily limit how we process your data while a dispute is resolved.</li>
                         <li><strong>Data Portability:</strong> Receive your engagement history and account data in a structured, machine‑readable format.</li>
@@ -243,7 +261,7 @@
 
             <section class="bg-white rounded-2xl border border-zinc-200 p-6 md:p-8 shadow-sm">
                 <h2 class="text-2xl font-bold flex items-center gap-2 mb-4"><span class="material-symbols-outlined text-blue-500">public</span> 9. International Data Transfers</h2>
-                <p class="text-zinc-600">Our servers are primarily located in West Africa (Nigeria) and the European Union (for redundancy). By using the platform, you consent to data processing in these regions. We ensure that any data transfer complies with NDPR adequacy requirements.</p>
+                <p class="text-zinc-600">Our servers are primarily located in Nigeria and the European Union (for redundancy). By using the platform, you consent to data processing in these regions. We ensure that any data transfer complies with NDPR adequacy requirements. The Creator Co‑Op serves <strong>Nigerians in Nigeria, the United Kingdom, and Canada</strong>, and we are committed to protecting your data regardless of where you access the platform.</p>
             </section>
 
             <section id="policy-changes" class="policy-section bg-white rounded-2xl border border-zinc-200 p-6 md:p-8 shadow-sm">
@@ -252,6 +270,11 @@
                 <div class="mt-4 bg-gray-50 p-4 rounded-xl">
                     <p class="text-sm text-zinc-500">For any privacy‑related inquiries, complaints, or data requests, please contact:</p>
                     <p class="font-mono text-sm text-zinc-700 mt-1">Privacy Officer: <span class="font-semibold">Creator Co‑Op Legal Team</span><br>Email: <a href="mailto:legal@creatorcooptechnologies.com" class="text-blue-600 hover:underline">legal@creatorcooptechnologies.com</a><br>Address: 42 Allen Avenue, Ikeja, Lagos, Nigeria</p>
+                    <div class="flex gap-2 mt-2">
+                        <span class="flag-badge">🇳🇬</span>
+                        <span class="flag-badge">🇬🇧</span>
+                        <span class="flag-badge">🇨🇦</span>
+                    </div>
                 </div>
             </section>
         </div>
@@ -265,18 +288,20 @@
         <div class="max-w-7xl mx-auto px-6 flex flex-wrap items-center justify-between text-xs text-zinc-500 gap-4">
             <div class="flex flex-wrap gap-x-6 gap-y-2">
                 <a href="about.html" class="hover:text-blue-600 transition">About Us</a>
+                <a href="benefits.html" class="hover:text-blue-600 transition">Benefits</a>
                 <a href="privacy.html" class="text-blue-600 font-medium hover:underline">Privacy Policy</a>
                 <a href="terms.html" class="hover:text-blue-600 transition">Terms of Service</a>
                 <a href="help.html" class="hover:text-blue-600 transition">Help Center</a>
                 <a href="contact.html" class="hover:text-blue-600 transition">Contact Support</a>
             </div>
-            <div class="flex items-center gap-1">
+            <div class="flex items-center gap-2">
+                <span>🇳🇬 🇬🇧 🇨🇦</span>
                 <span class="material-symbols-outlined text-sm text-zinc-400">copyright</span>
                 <span>Meta © 2026 • Creator Co-Op Engine • All engagements organic</span>
             </div>
         </div>
         <div class="text-center text-[11px] text-zinc-400 mt-4 max-w-7xl mx-auto px-6">
-            *Referrer cloaking active • No artificial metrics • Built for West African independent creators
+            *Referrer cloaking active • No artificial metrics • Built for Nigerians in Nigeria, UK & Canada
         </div>
     </footer>
 
