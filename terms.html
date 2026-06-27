@@ -77,6 +77,17 @@
         }
         footer { padding-bottom: env(safe-area-inset-bottom, 1rem); }
         .tos-section { scroll-margin-top: 80px; }
+        .flag-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background: #eef2ff;
+            padding: 0.2rem 0.7rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: #4338ca;
+        }
     </style>
 </head>
 <body class="bg-[#f4f6f9] text-zinc-800 antialiased">
@@ -90,6 +101,7 @@
             <nav class="desktop-nav text-sm font-medium">
                 <a href="landing.html" class="text-zinc-600 hover:text-blue-600 transition">Home</a>
                 <a href="about.html" class="text-zinc-600 hover:text-blue-600 transition">About</a>
+                <a href="benefits.html" class="text-zinc-600 hover:text-blue-600 transition">Benefits</a>
                 <a href="landing.html" class="bg-blue-50 text-blue-700 px-4 py-1.5 rounded-full text-sm font-semibold hover:bg-blue-100 transition">Login / Join</a>
             </nav>
             <button class="mobile-menu-btn text-zinc-700 focus:outline-none" id="mobileMenuBtn">
@@ -99,6 +111,7 @@
         <div class="mobile-nav" id="mobileNav">
             <a href="landing.html">Home</a>
             <a href="about.html">About</a>
+            <a href="benefits.html">Benefits</a>
             <a href="landing.html" class="bg-blue-50 text-blue-700 px-4 py-2 rounded-full text-center">Login / Join</a>
         </div>
     </header>
@@ -110,8 +123,13 @@
                 <span class="text-sm font-semibold uppercase tracking-wider">Legal Agreement</span>
             </div>
             <h1 class="text-4xl md:text-5xl font-extrabold text-zinc-900 tracking-tight">Terms of Service</h1>
-            <p class="text-zinc-500 mt-3 text-sm border-l-4 border-blue-400 pl-4">Effective: May 26, 2026 • Version 2.0</p>
-            <p class="text-zinc-600 mt-4 leading-relaxed">These Terms govern your membership in the Creator Co‑Op, a closed‑loop engagement cooperative. By registering, accessing, or using our platform (the “Service”), you agree to be bound by this agreement. If you do not agree, please do not use the Service.</p>
+            <div class="flex flex-wrap items-center gap-3 mt-2">
+                <p class="text-zinc-500 text-sm border-l-4 border-blue-400 pl-4">Effective: May 26, 2026 • Version 2.0</p>
+                <span class="flag-badge">🇳🇬 Nigeria</span>
+                <span class="flag-badge">🇬🇧 UK</span>
+                <span class="flag-badge">🇨🇦 Canada</span>
+            </div>
+            <p class="text-zinc-600 mt-4 leading-relaxed">These Terms govern your membership in the Creator Co‑Op, a closed‑loop engagement cooperative serving <strong>Nigerians in Nigeria, the United Kingdom, and Canada</strong>. By registering, accessing, or using our platform (the "Service"), you agree to be bound by this agreement. If you do not agree, please do not use the Service.</p>
         </div>
 
         <div class="bg-white rounded-2xl shadow-sm border border-zinc-200 p-5 mb-10 sticky top-20 z-20 bg-white/95 backdrop-blur-sm">
@@ -135,12 +153,15 @@
                     <p>To become a member of the Creator Co‑Op, you must:</p>
                     <ul class="list-disc pl-6 space-y-1">
                         <li>Be at least 18 years old.</li>
-                        <li>Be a West African resident or member of the West African diaspora (Nigeria, Ghana, Senegal, Ivory Coast, etc.) or have a genuine connection to the West African creator economy.</li>
-                        <li>Own and operate an active Facebook digital publisher page, influencer profile, or content creator account.</li>
-                        <li>Provide accurate, complete, and up‑to‑date registration information, including a valid email address and Facebook profile URL.</li>
+                        <li>Be a <strong>Nigerian citizen or resident living in Nigeria, the United Kingdom, or Canada</strong>.</li>
+                        <li>Own and operate an active social media account on <strong>Facebook, Instagram, TikTok, X, YouTube, Telegram, LinkedIn, or any supported platform</strong>.</li>
+                        <li>Provide accurate, complete, and up‑to‑date registration information, including a valid email address and social media profile URL.</li>
                         <li>Not have been previously banned from the Co‑Op for violations of these Terms.</li>
                     </ul>
                     <p>Each user may hold only one active membership. Multiple accounts are strictly prohibited and will result in permanent suspension without refund.</p>
+                    <div class="bg-blue-50/40 p-3 rounded-lg mt-3">
+                        <p class="text-sm"><strong class="text-blue-700">Supported Platforms:</strong> Facebook, Instagram, TikTok, X, YouTube, Telegram, LinkedIn, and more.</p>
+                    </div>
                 </div>
             </section>
 
@@ -153,11 +174,11 @@
                         <li>Fees are non‑refundable except as expressly stated in our refund policy (7‑day money‑back guarantee for new members who have not submitted any post into the loop).</li>
                         <li>All payments are processed through secure third‑party gateways. The Co‑Op does not store full payment card details.</li>
                         <li>Failure to renew your membership before expiration will result in automatic deactivation of your dashboard and removal from the hourly slot rotation.</li>
-                        <li>We reserve the right to adjust fees with 30 days’ notice via email. Continued use after the change constitutes acceptance.</li>
+                        <li>We reserve the right to adjust fees with 30 days' notice via email. Continued use after the change constitutes acceptance.</li>
                     </ul>
                     <div class="bg-blue-50/40 p-3 rounded-lg mt-2">
                         <span class="material-symbols-outlined text-blue-600 align-middle text-sm">info</span>
-                        <span class="text-sm">The token fee is a financial gatekeeper to eliminate bots and freeloaders, ensuring “skin in the game” for every participant.</span>
+                        <span class="text-sm">The token fee is a financial gatekeeper to eliminate bots and freeloaders, ensuring "skin in the game" for every participant.</span>
                     </div>
                 </div>
             </section>
@@ -171,9 +192,9 @@
                         <li><strong>Hourly slot commitment:</strong> The system assigns you a specific time slot. During that slot, you are required to open the provided engagement links and perform genuine interactions (likes, comments, shares, or reactions) on each linked post.</li>
                         <li><strong>N-1 guarantee:</strong> Each post submitted receives exactly (N‑1) engagements where N is the total active membership count. You are not permitted to skip or partially complete your engagement duties.</li>
                         <li><strong>Authenticity rule:</strong> All engagements must be manual and human. Use of automation, bots, scripts, macros, or any artificial means is strictly forbidden and will lead to immediate ban.</li>
-                        <li><strong>No “ghosting”:</strong> Failure to complete your assigned engagement tasks within the allowed window will result in a strike. Three strikes within 30 days lead to temporary suspension; repeated violations cause permanent expulsion.</li>
+                        <li><strong>No "ghosting":</strong> Failure to complete your assigned engagement tasks within the allowed window will result in a strike. Three strikes within 30 days lead to temporary suspension; repeated violations cause permanent expulsion.</li>
                     </ul>
-                    <p class="mt-2">The Co‑Op monitors compliance through behavioural analytics, timestamps, and pattern detection. We reserve the right to audit any member’s engagement history.</p>
+                    <p class="mt-2">The Co‑Op monitors compliance through behavioural analytics, timestamps, and pattern detection. We reserve the right to audit any member's engagement history.</p>
                 </div>
             </section>
 
@@ -183,8 +204,8 @@
                     <p>To preserve the integrity and safety of the network, you shall not:</p>
                     <ul class="list-disc pl-6 space-y-1">
                         <li>Use bots, auto‑clickers, engagement farms, or any form of artificial or programmatic interaction.</li>
-                        <li>Submit offensive, illegal, or copyrighted content that violates Facebook’s Community Standards or applicable laws.</li>
-                        <li>Attempt to bypass referrer‑cloaking or reverse‑engineer the platform’s security measures.</li>
+                        <li>Submit offensive, illegal, or copyrighted content that violates <strong>any social media platform's Community Standards</strong> or applicable laws.</li>
+                        <li>Attempt to bypass referrer‑cloaking or reverse‑engineer the platform's security measures.</li>
                         <li>Harass, threaten, or abuse other members. The Co‑Op is a collaborative space; toxic behaviour will not be tolerated.</li>
                         <li>Share your login credentials or allow non‑members to access the dashboard.</li>
                         <li>Manipulate the N-1 cycle by creating dummy accounts or colluding to artificially inflate engagement beyond the designated process.</li>
@@ -197,10 +218,10 @@
             <section id="intellectual-property" class="tos-section bg-white rounded-2xl border border-zinc-200 p-6 md:p-8 shadow-sm">
                 <h2 class="text-2xl font-bold flex items-center gap-2 mb-4"><span class="material-symbols-outlined text-blue-500">copyright</span> 5. Intellectual Property & User Content</h2>
                 <div class="space-y-3 text-zinc-600">
-                    <p>You retain all ownership rights to the content you submit to the loop (e.g., Facebook post URLs, images, captions). The Co‑Op does not claim any copyright over your content.</p>
+                    <p>You retain all ownership rights to the content you submit to the loop (e.g., social media post URLs, images, captions). The Co‑Op does not claim any copyright over your content.</p>
                     <p>By submitting a post to the loop, you grant other members a limited, non‑exclusive, revocable right to view and engage with that post for the sole purpose of the engagement loop. No other rights are granted.</p>
                     <p>You represent and warrant that your content does not infringe any third‑party intellectual property, privacy, or publicity rights.</p>
-                    <p>The Co‑Op’s platform code, design, logos, and “Creator Co‑Op” name are proprietary. You may not copy, modify, or redistribute any part of the Service without explicit written permission.</p>
+                    <p>The Co‑Op's platform code, design, logos, and "Creator Co‑Op" name are proprietary. You may not copy, modify, or redistribute any part of the Service without explicit written permission.</p>
                 </div>
             </section>
 
@@ -217,8 +238,8 @@
             <section id="disclaimers" class="tos-section bg-white rounded-2xl border border-zinc-200 p-6 md:p-8 shadow-sm">
                 <h2 class="text-2xl font-bold flex items-center gap-2 mb-4"><span class="material-symbols-outlined text-blue-500">warning</span> 7. Disclaimers</h2>
                 <div class="space-y-3 text-zinc-600">
-                    <p>The Creator Co‑Op is a mutual engagement tool; we do not guarantee specific results such as follower count, reach, or revenue. Algorithm performance depends on many factors outside our control. We do not promise that your content will go viral or that your Facebook account will not be subject to platform‑specific restrictions.</p>
-                    <p>The Service is provided “as is” and “as available” without warranties of any kind, either express or implied, including but not limited to uninterrupted access, error‑free operation, or that the loop will always bypass platform detection. We continually improve our cloaking methods, but we cannot be held liable for changes in third‑party platform policies.</p>
+                    <p>The Creator Co‑Op is a mutual engagement tool; we do not guarantee specific results such as follower count, reach, or revenue. Algorithm performance depends on many factors outside our control. We do not promise that your content will go viral or that your social media accounts will not be subject to platform‑specific restrictions.</p>
+                    <p>The Service is provided "as is" and "as available" without warranties of any kind, either express or implied, including but not limited to uninterrupted access, error‑free operation, or that the loop will always bypass platform detection. We continually improve our cloaking methods, but we cannot be held liable for changes in third‑party platform policies.</p>
                     <p>We do not warrant that the Service will be compatible with all devices or browser versions.</p>
                 </div>
             </section>
@@ -238,6 +259,11 @@
                     <p>These Terms shall be governed by and construed in accordance with the laws of the Federal Republic of Nigeria, without regard to conflict of law principles.</p>
                     <p>Any dispute arising out of or relating to these Terms or the Service shall first be attempted to be resolved through informal negotiation within 30 days. If unresolved, the dispute shall be submitted to binding arbitration in Lagos, Nigeria, in accordance with the Arbitration and Conciliation Act. The arbitration shall be conducted by a single arbitrator agreed upon by both parties. Each party shall bear its own costs.</p>
                     <p>Notwithstanding the foregoing, either party may seek injunctive relief in Nigerian courts to prevent unauthorised use of the Service or violation of intellectual property rights.</p>
+                    <div class="mt-3 flex gap-2">
+                        <span class="flag-badge">🇳🇬</span>
+                        <span class="flag-badge">🇬🇧</span>
+                        <span class="flag-badge">🇨🇦</span>
+                    </div>
                 </div>
             </section>
 
@@ -253,6 +279,11 @@
                 <div class="mt-6 bg-gray-50 p-4 rounded-xl">
                     <p class="text-sm text-zinc-600">For questions about these Terms, please contact:</p>
                     <p class="font-mono text-sm">Legal Department, Creator Co‑Op<br>Email: <a href="mailto:legal@creatorcooptechnologies.com" class="text-blue-600 hover:underline">legal@creatorcooptechnologies.com</a></p>
+                    <div class="flex gap-2 mt-2">
+                        <span class="flag-badge">🇳🇬</span>
+                        <span class="flag-badge">🇬🇧</span>
+                        <span class="flag-badge">🇨🇦</span>
+                    </div>
                 </div>
             </section>
         </div>
@@ -266,18 +297,20 @@
         <div class="max-w-7xl mx-auto px-6 flex flex-wrap items-center justify-between text-xs text-zinc-500 gap-4">
             <div class="flex flex-wrap gap-x-6 gap-y-2">
                 <a href="about.html" class="hover:text-blue-600 transition">About Us</a>
+                <a href="benefits.html" class="hover:text-blue-600 transition">Benefits</a>
                 <a href="privacy.html" class="hover:text-blue-600 transition">Privacy Policy</a>
                 <a href="terms.html" class="text-blue-600 font-medium hover:underline">Terms of Service</a>
                 <a href="help.html" class="hover:text-blue-600 transition">Help Center</a>
                 <a href="contact.html" class="hover:text-blue-600 transition">Contact Support</a>
             </div>
-            <div class="flex items-center gap-1">
+            <div class="flex items-center gap-2">
+                <span>🇳🇬 🇬🇧 🇨🇦</span>
                 <span class="material-symbols-outlined text-sm text-zinc-400">copyright</span>
                 <span>Meta © 2026 • Creator Co-Op Engine • All engagements organic</span>
             </div>
         </div>
         <div class="text-center text-[11px] text-zinc-400 mt-4 max-w-7xl mx-auto px-6">
-            *Referrer cloaking active • No artificial metrics • Built for West African independent creators
+            *Referrer cloaking active • No artificial metrics • Built for Nigerians in Nigeria, UK & Canada
         </div>
     </footer>
 
