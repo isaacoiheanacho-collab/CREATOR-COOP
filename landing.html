@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Creator Co-Op Hub Nigeria - Boost Content Organically</title>
+    <title>Creator Co-Op Hub | Organic Growth for Nigerians in Nigeria, UK & Canada</title>
     
     <!-- PWA Meta Tags -->
     <meta name="theme-color" content="#2563EB">
@@ -65,6 +65,16 @@
         .forgot-password a:hover {
             text-decoration: underline;
         }
+        .platform-tag {
+            display: inline-block;
+            background: #eef2ff;
+            color: #4338ca;
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 0.2rem 0.7rem;
+            border-radius: 20px;
+            margin: 0.15rem;
+        }
     </style>
 </head>
 <body class="bg-[#f4f6f9] text-zinc-900 font-sans">
@@ -76,19 +86,39 @@
                 <section class="flex-1 max-w-[580px]">
                     <div class="flex items-center gap-3 text-blue-600 font-black text-4xl tracking-tighter mb-5">
                         <span class="material-symbols-outlined text-4xl">group</span>
-                        <span>Creators Co-Op Hub</span>
+                        <span>Creator Co-Op Hub</span>
                     </div>
                     <h1 class="text-3xl md:text-5xl font-extrabold text-zinc-900 leading-tight mb-4">
                         Explore organic growth with the Creator Loop.
                     </h1>
-                    <p class="text-zinc-600 text-lg md:text-xl mb-6 leading-relaxed">
-                        A closed-loop, zero-waste network built exclusively for content creators, small businesses, and anyone who posts content. No bots, no fake engagement. Pure organic — real peers boosting each other past generic platform's algorithm gatekeepers.
+                    <p class="text-zinc-600 text-lg md:text-xl mb-4 leading-relaxed">
+                        A closed-loop, zero-waste network built for <strong class="text-blue-700">Nigerians in Nigeria, the UK, and Canada</strong>. 
+                        Whether you're a <strong>content creator, influencer, digital publisher, small business (SME), or just someone who posts content</strong> — 
+                        we help you break through the algorithm gatekeeper.
                     </p>
+                    
+                    <!-- Platform Tags -->
+                    <div class="flex flex-wrap gap-1.5 mb-4">
+                        <span class="platform-tag">📘 Facebook</span>
+                        <span class="platform-tag">📸 Instagram</span>
+                        <span class="platform-tag">🎵 TikTok</span>
+                        <span class="platform-tag">🐦 X</span>
+                        <span class="platform-tag">▶️ YouTube</span>
+                        <span class="platform-tag">✈️ Telegram</span>
+                        <span class="platform-tag">💼 LinkedIn</span>
+                        <span class="platform-tag">➕ More</span>
+                    </div>
+                    
+                    <p class="text-zinc-600 text-base mb-6 leading-relaxed">
+                        No bots, no fake engagement. Pure organic — real peers boosting each other past generic platform's algorithm gatekeepers. 
+                        <strong class="text-blue-700">Works across all social media platforms.</strong>
+                    </p>
+                    
                     <div class="bg-white border border-zinc-200 p-4 rounded-xl shadow-sm flex items-center gap-4 max-w-sm">
                         <div class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-bold">🇳🇬</div>
                         <div>
-                            <h4 class="font-bold text-sm">Affordable Local Access</h4>
-                            <p class="text-xs text-zinc-500">Only ₦5,000 yearly token fee</p>
+                            <h4 class="font-bold text-sm">Affordable Access for Nigerians</h4>
+                            <p class="text-xs text-zinc-500">Only ₦5,000 yearly token fee • UK & Canada welcome</p>
                         </div>
                     </div>
                 </section>
@@ -158,8 +188,9 @@
                                     </div>
                                 </div>
                                 <div>
-                                    <label class="block text-xs font-bold uppercase tracking-wider text-zinc-500 mb-1">Facebook Profile Link (Mandatory)</label>
-                                    <input type="url" id="reg-facebook" required placeholder="https://facebook.com/yourpage" class="w-full rounded-lg border-zinc-300 shadow-sm focus:border-blue-500 px-3 py-2">
+                                    <label class="block text-xs font-bold uppercase tracking-wider text-zinc-500 mb-1">Social Media Profile Link</label>
+                                    <input type="url" id="reg-social" required placeholder="https://facebook.com/yourpage or https://instagram.com/@username" class="w-full rounded-lg border-zinc-300 shadow-sm focus:border-blue-500 px-3 py-2">
+                                    <p class="text-[10px] text-zinc-400 mt-1">Facebook, Instagram, TikTok, X, YouTube, Telegram, or LinkedIn</p>
                                 </div>
                                 <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 rounded-lg transition duration-150">
                                     Join Cooperative
@@ -233,7 +264,10 @@
                     <a href="help.html" class="hover:underline">Help Center</a>
                     <a href="contact.html" class="hover:underline">Contact Support</a>
                 </div>
-                <div>Meta © 2026 • Creator Co-Op Engine</div>
+                <div class="flex items-center gap-2">
+                    <span>🇳🇬 🇬🇧 🇨🇦</span>
+                    <span>Meta © 2026 • Creator Co-Op Engine</span>
+                </div>
             </div>
         </footer>
     </div>
@@ -436,9 +470,9 @@
                 username: document.getElementById('reg-username').value.trim(),
                 email: document.getElementById('reg-email').value.trim(),
                 password: document.getElementById('reg-password').value,
-                facebook_profile_url: document.getElementById('reg-facebook').value.trim()
+                social_profile_url: document.getElementById('reg-social').value.trim()
             };
-            if (!payload.username || !payload.email || !payload.password || !payload.facebook_profile_url) {
+            if (!payload.username || !payload.email || !payload.password || !payload.social_profile_url) {
                 alert('Please fill all fields.');
                 return;
             }
@@ -459,7 +493,7 @@
                     document.getElementById('reg-username').value = '';
                     document.getElementById('reg-email').value = '';
                     document.getElementById('reg-password').value = '';
-                    document.getElementById('reg-facebook').value = '';
+                    document.getElementById('reg-social').value = '';
                 } else {
                     alert(data.error || 'Registration failed.');
                 }
