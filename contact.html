@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Creator Co-Op | Contact Support – Get in Touch</title>
+    <title>Creator Co-Op | Contact Support – Get in Touch for Nigerians</title>
     
     <!-- PWA Meta Tags -->
     <meta name="theme-color" content="#2563EB">
@@ -76,6 +76,27 @@
             .mobile-menu-btn { display: none; }
         }
         footer { padding-bottom: env(safe-area-inset-bottom, 1rem); }
+        .flag-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background: #eef2ff;
+            padding: 0.2rem 0.7rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: #4338ca;
+        }
+        .platform-tag {
+            display: inline-block;
+            background: #eef2ff;
+            color: #4338ca;
+            font-size: 0.65rem;
+            font-weight: 600;
+            padding: 0.15rem 0.6rem;
+            border-radius: 20px;
+            margin: 0.1rem;
+        }
     </style>
 </head>
 <body class="bg-[#f4f6f9] text-zinc-800 antialiased">
@@ -89,6 +110,7 @@
             <nav class="desktop-nav text-sm font-medium">
                 <a href="landing.html" class="text-zinc-600 hover:text-blue-600 transition">Home</a>
                 <a href="about.html" class="text-zinc-600 hover:text-blue-600 transition">About</a>
+                <a href="benefits.html" class="text-zinc-600 hover:text-blue-600 transition">Benefits</a>
                 <a href="landing.html" class="bg-blue-50 text-blue-700 px-4 py-1.5 rounded-full text-sm font-semibold hover:bg-blue-100 transition">Login / Join</a>
             </nav>
             <button class="mobile-menu-btn text-zinc-700 focus:outline-none" id="mobileMenuBtn">
@@ -98,6 +120,7 @@
         <div class="mobile-nav" id="mobileNav">
             <a href="landing.html">Home</a>
             <a href="about.html">About</a>
+            <a href="benefits.html">Benefits</a>
             <a href="landing.html" class="bg-blue-50 text-blue-700 px-4 py-2 rounded-full text-center">Login / Join</a>
         </div>
     </header>
@@ -106,7 +129,21 @@
         <div class="text-center mb-12">
             <span class="material-symbols-outlined text-5xl text-blue-500 mb-3">contact_support</span>
             <h1 class="text-4xl md:text-5xl font-extrabold text-zinc-900 tracking-tight">Contact Support</h1>
-            <p class="text-zinc-500 mt-3 max-w-2xl mx-auto">Have a question, issue, or feedback? Our team is here to help. We typically respond within 24 hours (Monday–Friday).</p>
+            <div class="flex flex-wrap justify-center gap-2 mt-2">
+                <span class="flag-badge">🇳🇬 Nigeria</span>
+                <span class="flag-badge">🇬🇧 UK</span>
+                <span class="flag-badge">🇨🇦 Canada</span>
+            </div>
+            <div class="flex flex-wrap justify-center gap-1 mt-2">
+                <span class="platform-tag">📘 Facebook</span>
+                <span class="platform-tag">📸 Instagram</span>
+                <span class="platform-tag">🎵 TikTok</span>
+                <span class="platform-tag">🐦 X</span>
+                <span class="platform-tag">▶️ YouTube</span>
+                <span class="platform-tag">✈️ Telegram</span>
+                <span class="platform-tag">💼 LinkedIn</span>
+            </div>
+            <p class="text-zinc-500 mt-3 max-w-2xl mx-auto">Have a question, issue, or feedback? Our team is here to help. We typically respond within 24 hours (Monday–Friday) for <strong>Nigerians in Nigeria, the UK, and Canada</strong>.</p>
         </div>
 
         <div class="grid lg:grid-cols-3 gap-8">
@@ -117,6 +154,8 @@
                     <a href="mailto:hello@creatorcooptechnologies.com" class="text-blue-600 hover:underline break-all">hello@creatorcooptechnologies.com</a>
                     <p class="text-sm text-zinc-600 mt-2">Technical support:</p>
                     <a href="mailto:support@creatorcooptechnologies.com" class="text-blue-600 hover:underline break-all">support@creatorcooptechnologies.com</a>
+                    <p class="text-sm text-zinc-600 mt-2">Legal & Privacy:</p>
+                    <a href="mailto:legal@creatorcooptechnologies.com" class="text-blue-600 hover:underline break-all">legal@creatorcooptechnologies.com</a>
                     <p class="text-xs text-zinc-400 mt-3">For urgent matters, include "URGENT" in the subject line.</p>
                 </div>
                 <div class="bg-white rounded-2xl border border-zinc-200 p-6 shadow-sm">
@@ -152,15 +191,19 @@
                         </div>
                         <div><label class="block text-sm font-semibold text-zinc-700 mb-1">Subject *</label><select id="contact-subject" required class="w-full rounded-xl border-zinc-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 px-4 py-2.5 bg-white">
                             <option value="">-- Select a topic --</option>
-                            <option value="account">Account & Login Issues</option><option value="billing">Billing & Payments</option><option value="loop">Loop / Engagement Problems</option>
-                            <option value="feature">Feature Request</option><option value="report">Report a Member / Violation</option><option value="other">Other</option>
+                            <option value="account">Account & Login Issues</option>
+                            <option value="billing">Billing & Payments</option>
+                            <option value="loop">Loop / Engagement Problems</option>
+                            <option value="feature">Feature Request</option>
+                            <option value="report">Report a Member / Violation</option>
+                            <option value="other">Other</option>
                         </select></div>
                         <div><label class="block text-sm font-semibold text-zinc-700 mb-1">Message *</label><textarea id="contact-message" rows="5" required placeholder="Please provide as much detail as possible (e.g., your username, issue description, screenshots if applicable)..." class="w-full rounded-xl border-zinc-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 px-4 py-2.5"></textarea></div>
                         <div class="flex items-center gap-2"><input type="checkbox" id="contact-urgency" class="rounded border-zinc-300 text-blue-600 focus:ring-blue-500"><label class="text-sm text-zinc-600">This is urgent (response within 12 hours)</label></div>
-                        <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-xl transition shadow-md flex items-center gap-2">Send Message <span class="material-symbols-outlined text-lg">send</span></button>
+                        <button type="submit" id="submitBtn" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-xl transition shadow-md flex items-center gap-2">Send Message <span class="material-symbols-outlined text-lg">send</span></button>
                         <p class="text-xs text-zinc-400 mt-3">By submitting, you agree to our <a href="privacy.html" class="text-blue-600 hover:underline">Privacy Policy</a>. We never share your information.</p>
                     </form>
-                    <div id="form-success" class="hidden mt-6 p-4 bg-green-50 border border-green-200 rounded-xl text-green-700 text-sm">✓ Thank you! Your message has been sent. Our team will respond within 24 hours (or faster for urgent requests).</div>
+                    <div id="form-success" class="hidden mt-6 p-4 bg-green-50 border border-green-200 rounded-xl text-green-700 text-sm">✅ Thank you! Your message has been sent. Our team will respond within 24 hours (or faster for urgent requests).</div>
                     <div id="form-error" class="hidden mt-6 p-4 bg-red-50 border border-red-200 rounded-xl text-red-700 text-sm">⚠️ Sorry, there was an error sending your message. Please try again or email us directly at support@creatorcooptechnologies.com</div>
                 </div>
                 <div class="mt-6 bg-blue-50/40 rounded-xl p-4 border border-blue-100">
@@ -174,6 +217,7 @@
                 <div class="flex items-center gap-1"><span class="material-symbols-outlined text-green-600 text-base">schedule</span> Response within 24h (weekdays)</div>
                 <div class="flex items-center gap-1"><span class="material-symbols-outlined text-blue-600 text-base">verified</span> All messages are confidential</div>
                 <div class="flex items-center gap-1"><span class="material-symbols-outlined text-amber-600 text-base">support_agent</span> Real humans, no bots</div>
+                <div class="flex items-center gap-1"><span class="material-symbols-outlined text-blue-600 text-base">groups</span> 🇳🇬 🇬🇧 🇨🇦</div>
             </div>
         </div>
     </main>
@@ -182,17 +226,34 @@
         <div class="max-w-7xl mx-auto px-6 flex flex-wrap items-center justify-between text-xs text-zinc-500 gap-4">
             <div class="flex flex-wrap gap-x-6 gap-y-2">
                 <a href="about.html" class="hover:text-blue-600 transition">About Us</a>
+                <a href="benefits.html" class="hover:text-blue-600 transition">Benefits</a>
                 <a href="privacy.html" class="hover:text-blue-600 transition">Privacy Policy</a>
                 <a href="terms.html" class="hover:text-blue-600 transition">Terms of Service</a>
                 <a href="help.html" class="hover:text-blue-600 transition">Help Center</a>
                 <a href="contact.html" class="text-blue-600 font-medium hover:underline">Contact Support</a>
             </div>
-            <div class="flex items-center gap-1"><span class="material-symbols-outlined text-sm text-zinc-400">copyright</span><span>Meta © 2026 • Creator Co-Op Engine • All engagements organic</span></div>
+            <div class="flex items-center gap-2">
+                <span>🇳🇬 🇬🇧 🇨🇦</span>
+                <span class="material-symbols-outlined text-sm text-zinc-400">copyright</span>
+                <span>Meta © 2026 • Creator Co-Op Engine • All engagements organic</span>
+            </div>
         </div>
-        <div class="text-center text-[11px] text-zinc-400 mt-4 max-w-7xl mx-auto px-6">*Referrer cloaking active • No artificial metrics • Built for West African independent creators</div>
+        <div class="text-center text-[11px] text-zinc-400 mt-4 max-w-7xl mx-auto px-6">
+            *Referrer cloaking active • No artificial metrics • Built for Nigerians in Nigeria, UK & Canada
+        </div>
     </footer>
 
     <script>
+        // ============================================================
+        // API Base - matches your existing backend
+        // ============================================================
+        const API_BASE = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+            ? 'http://localhost:5000/api'
+            : 'https://creator-coop-backend.onrender.com/api';
+
+        // ============================================================
+        // Mobile Nav Toggle
+        // ============================================================
         const menuBtn = document.getElementById('mobileMenuBtn');
         const mobileNav = document.getElementById('mobileNav');
         if (menuBtn && mobileNav) {
@@ -205,39 +266,115 @@
                 });
             });
         }
-        
+
+        // ============================================================
+        // Contact Form - Now ACTUALLY sends email via backend API
+        // ============================================================
         const contactForm = document.getElementById('contact-form');
         const successDiv = document.getElementById('form-success');
         const errorDiv = document.getElementById('form-error');
+        const submitBtn = document.getElementById('submitBtn');
+
         contactForm.addEventListener('submit', async (e) => {
             e.preventDefault();
+            
+            // Get form values
             const name = document.getElementById('contact-name').value.trim();
             const email = document.getElementById('contact-email').value.trim();
             const subject = document.getElementById('contact-subject').value;
             const message = document.getElementById('contact-message').value.trim();
-            if (!name || !email || !subject || !message) { alert('Please fill in all required fields.'); return; }
+            const isUrgent = document.getElementById('contact-urgency').checked;
+
+            // Validation
+            if (!name || !email || !subject || !message) {
+                alert('Please fill in all required fields.');
+                return;
+            }
+            
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(email)) { alert('Please enter a valid email address.'); return; }
-            const submitBtn = contactForm.querySelector('button[type="submit"]');
+            if (!emailRegex.test(email)) {
+                alert('Please enter a valid email address.');
+                return;
+            }
+
+            // Map subject value to label
+            const subjectMap = {
+                'account': 'Account & Login Issues',
+                'billing': 'Billing & Payments',
+                'loop': 'Loop / Engagement Problems',
+                'feature': 'Feature Request',
+                'report': 'Report a Member / Violation',
+                'other': 'Other'
+            };
+
+            // Prepare payload
+            const payload = {
+                name: name,
+                email: email,
+                subject: subjectMap[subject] || subject,
+                message: message,
+                isUrgent: isUrgent
+            };
+
+            // Show loading state
             const originalText = submitBtn.innerHTML;
             submitBtn.disabled = true;
             submitBtn.innerHTML = '<span class="material-symbols-outlined text-lg animate-spin">progress_activity</span> Sending...';
-            setTimeout(() => {
-                successDiv.classList.remove('hidden');
-                errorDiv.classList.add('hidden');
-                contactForm.reset();
+
+            // Hide previous messages
+            successDiv.classList.add('hidden');
+            errorDiv.classList.add('hidden');
+
+            try {
+                // ACTUAL API CALL to your existing backend
+                const response = await fetch(`${API_BASE}/contact`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    // Success - show message
+                    successDiv.classList.remove('hidden');
+                    contactForm.reset();
+                    successDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    
+                    // Auto-hide after 10 seconds
+                    setTimeout(() => {
+                        successDiv.classList.add('hidden');
+                    }, 10000);
+                } else {
+                    // API returned error
+                    errorDiv.innerHTML = `⚠️ ${data.error || 'Sorry, there was an error sending your message. Please try again or email us directly at support@creatorcooptechnologies.com'}`;
+                    errorDiv.classList.remove('hidden');
+                }
+            } catch (err) {
+                // Network or server error
+                console.error('Contact form error:', err);
+                errorDiv.innerHTML = '⚠️ Cannot connect to server. Please email us directly at support@creatorcooptechnologies.com';
+                errorDiv.classList.remove('hidden');
+            } finally {
+                // Restore button
                 submitBtn.disabled = false;
                 submitBtn.innerHTML = originalText;
-                successDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                setTimeout(() => successDiv.classList.add('hidden'), 6000);
-            }, 800);
+            }
         });
-        
+
+        // ============================================================
+        // Service Worker
+        // ============================================================
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/sw.js').then(reg => console.log('Service Worker registered:', reg.scope)).catch(err => console.error('Service Worker registration failed:', err));
+                navigator.serviceWorker.register('/sw.js')
+                    .then(reg => console.log('Service Worker registered:', reg.scope))
+                    .catch(err => console.error('Service Worker registration failed:', err));
             });
         }
     </script>
+
 </body>
 </html>
