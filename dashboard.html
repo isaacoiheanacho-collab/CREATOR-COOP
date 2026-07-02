@@ -465,12 +465,11 @@
     let socket = null;
     let notificationCount = 0;
     let toastTimeout = null;
+    let notificationIds = [];
 
     function playNotificationSound() {
       try {
-        // Use Web Audio API for a clean notification sound
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        // Double beep like WhatsApp
         const notes = [880, 1100];
         notes.forEach((freq, index) => {
           const oscillator = audioCtx.createOscillator();
@@ -486,13 +485,11 @@
           oscillator.stop(startTime + 0.2);
         });
       } catch (e) {
-        // Silent fallback - just log
         console.log('Sound play failed:', e);
       }
     }
 
     function updateNotificationBadge(count) {
-      // Update sidebar badge (desktop)
       const sidebarBadge = document.getElementById('sidebarNotifBadge');
       if (sidebarBadge) {
         if (count > 0) {
@@ -503,7 +500,6 @@
         }
       }
       
-      // Update mobile badge
       const mobileBadge = document.getElementById('mobileNotifBadge');
       if (mobileBadge) {
         if (count > 0) {
@@ -521,10 +517,7 @@
       toastMessage.innerText = message;
       toast.classList.remove('hidden');
       
-      // Clear existing timeout
       if (toastTimeout) clearTimeout(toastTimeout);
-      
-      // Auto-hide after 5 seconds
       toastTimeout = setTimeout(() => {
         toast.classList.add('hidden');
       }, 5000);
@@ -534,6 +527,54 @@
       const toast = document.getElementById('toast');
       toast.classList.add('hidden');
       if (toastTimeout) clearTimeout(toastTimeout);
+    }
+
+    // ============================================================
+    // PERSISTENT NOTIFICATIONS (Load from Database)
+    // ============================================================
+    async function loadNotifications() {
+      try {
+        const data = await (await authFetch('/links/notifications')).json();
+        
+        if (data.count > 0) {
+          notificationCount = data.count;
+          notificationIds = data.notifications.map(n => n.id);
+          updateNotificationBadge(notificationCount);
+          
+          // Show toast for each notification with stagger
+          data.notifications.forEach((n, index) => {
+            setTimeout(() => {
+              playNotificationSound();
+              showToast(n.message);
+            }, index * 800);
+          });
+          
+          console.log(`📬 Loaded ${data.count} unread notifications from database`);
+        }
+      } catch (e) {
+        console.error('Failed to load notifications:', e);
+      }
+    }
+
+    // ============================================================
+    // MARK NOTIFICATIONS AS READ
+    // ============================================================
+    async function markNotificationsRead() {
+      if (notificationIds.length === 0) return;
+      
+      try {
+        // Mark all as read
+        await authFetch('/links/notifications/read-all', {
+          method: 'POST'
+        });
+        
+        notificationCount = 0;
+        notificationIds = [];
+        updateNotificationBadge(0);
+        console.log('✅ All notifications marked as read');
+      } catch (e) {
+        console.error('Failed to mark notifications read:', e);
+      }
     }
 
     function connectSocket() {
@@ -555,25 +596,16 @@
           if (user.id) {
             socket.emit('register-user', user.id);
           }
-          // Reset notification count on reconnect
-          notificationCount = 0;
-          updateNotificationBadge(0);
         });
 
         socket.on('new-boost', (data) => {
           console.log('📢 New boost notification:', data);
           
-          // Play WhatsApp-style sound
           playNotificationSound();
-          
-          // Increment notification count
           notificationCount++;
           updateNotificationBadge(notificationCount);
-          
-          // Show toast notification
           showToast(data.message);
           
-          // Browser notification (if permission granted)
           if (Notification.permission === 'granted') {
             new Notification('🚀 New Boost Alert!', {
               body: data.message,
@@ -586,7 +618,6 @@
           console.log('🔗 Socket disconnected');
         });
 
-        // Request notification permission
         if ('Notification' in window && Notification.permission === 'default') {
           Notification.requestPermission();
         }
@@ -612,7 +643,19 @@
       if(!getToken()) location.href='landing.html'; 
       await loadStats(); 
       await loadMyBoosts(); 
-      connectSocket(); 
+      
+      // Load persistent notifications from database (like WhatsApp)
+      await loadNotifications();
+      
+      // Connect socket for real-time notifications
+      connectSocket();
+      
+      // Mark notifications as read when user clicks on Queue
+      document.getElementById('sidebarQueueLink')?.addEventListener('click', markNotificationsRead);
+      document.getElementById('mobileQueueLink')?.addEventListener('click', markNotificationsRead);
+      
+      // Also mark as read when user visits queue page
+      // This will happen on page navigation
     })();
   </script>
 </body>
