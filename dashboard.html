@@ -27,7 +27,6 @@
     .status-queued { background: rgba(251, 191, 36, 0.2); color: #fbbf24; }
     .status-completed { background: rgba(107, 114, 128, 0.2); color: #9ca3af; }
 
-    /* Safe area & header */
     .app-header {
       position: fixed;
       top: 0;
@@ -59,9 +58,35 @@
       align-items: center;
       gap: 2px;
       transition: color 0.2s;
+      position: relative;
+      text-decoration: none;
+      color: #6b7280;
     }
+    .tab-item:hover { color: #e5e7eb; }
+    .tab-item.active { color: #2fd9f4; }
     .tab-item span:first-child { font-size: 24px; }
     .tab-item span:last-child { font-size: 10px; font-weight: 500; }
+
+    /* Notification badge */
+    .notif-badge {
+      position: absolute;
+      top: -6px;
+      right: -10px;
+      background: #ef4444;
+      color: white;
+      font-size: 10px;
+      font-weight: 700;
+      min-width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 4px;
+      border: 2px solid #0a0a0c;
+    }
+    .notif-badge.hidden { display: none; }
+
     @media (max-width: 767px) {
       .bottom-tab-bar { display: flex; }
       .desktop-sidebar { display: none; }
@@ -70,13 +95,29 @@
     @media (min-width: 768px) {
       .desktop-sidebar { display: flex; flex-direction: column; width: 260px; background: #0a0a0c; border-right: 1px solid #2d2d33; position: fixed; top: calc(env(safe-area-inset-top, 0) + 64px); left: 0; bottom: 0; z-index: 40; }
       main { margin-left: 260px; margin-top: calc(env(safe-area-inset-top, 0) + 64px); padding: 1.5rem; }
+      .sidebar-notif-badge {
+        position: absolute;
+        right: 16px;
+        background: #ef4444;
+        color: white;
+        font-size: 10px;
+        font-weight: 700;
+        min-width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0 4px;
+      }
+      .sidebar-notif-badge.hidden { display: none; }
+      .sidebar-item { position: relative; }
     }
     table { width: 100%; border-collapse: collapse; }
     th, td { padding: 1rem; text-align: left; border-bottom: 1px solid #2d2d33; }
     th { color: #9ca3af; font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
     td { color: #e5e7eb; }
 
-    /* Platform engagement chips */
     .platform-chip {
       display: inline-flex;
       align-items: center;
@@ -104,11 +145,36 @@
       gap: 8px;
       margin-top: 6px;
     }
+    .toast {
+      position: fixed;
+      top: 80px;
+      right: 20px;
+      background: #1a1a1e;
+      border: 1px solid #2d2d33;
+      border-left: 4px solid #2fd9f4;
+      border-radius: 12px;
+      padding: 14px 20px;
+      z-index: 100;
+      max-width: 350px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+      animation: slideIn 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .toast.hidden { display: none; }
+    .toast .icon { font-size: 24px; }
+    .toast .text { font-size: 14px; }
+    .toast .text strong { color: #2fd9f4; }
+    @keyframes slideIn {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
   </style>
 </head>
 <body>
 
-  <!-- HEADER with safe area -->
+  <!-- HEADER -->
   <header class="app-header">
     <div class="flex justify-between items-center px-4 h-14">
       <div class="flex items-center gap-2">
@@ -122,7 +188,7 @@
     </div>
   </header>
 
-  <!-- DESKTOP SIDEBAR (hidden on mobile) -->
+  <!-- DESKTOP SIDEBAR -->
   <aside class="desktop-sidebar">
     <nav class="flex-1 py-6 space-y-1">
       <a href="dashboard.html" class="sidebar-active flex items-center gap-3 px-6 py-3 text-primary border-l-4 border-primary bg-gray-800/50">
@@ -131,8 +197,9 @@
       <a href="profile.html" class="sidebar-item flex items-center gap-3 px-6 py-3 text-gray-400 hover:text-primary transition">
         <span class="material-symbols-outlined">person</span><span>Profile</span>
       </a>
-      <a href="queue.html" class="sidebar-item flex items-center gap-3 px-6 py-3 text-gray-400 hover:text-primary transition">
+      <a href="queue.html" class="sidebar-item flex items-center gap-3 px-6 py-3 text-gray-400 hover:text-primary transition" id="sidebarQueueLink">
         <span class="material-symbols-outlined">dynamic_feed</span><span>Boost Queue</span>
+        <span id="sidebarNotifBadge" class="sidebar-notif-badge hidden">0</span>
       </a>
       <a href="settings.html" class="sidebar-item flex items-center gap-3 px-6 py-3 text-gray-400 hover:text-primary transition">
         <span class="material-symbols-outlined">settings</span><span>Settings</span>
@@ -217,13 +284,28 @@
 
   <!-- BOTTOM TAB BAR (mobile only) -->
   <div class="bottom-tab-bar">
-    <a href="dashboard.html" class="tab-item text-cyan-400"><span class="material-symbols-outlined">dashboard</span><span>Home</span></a>
-    <a href="profile.html" class="tab-item text-gray-500"><span class="material-symbols-outlined">person</span><span>Profile</span></a>
-    <a href="queue.html" class="tab-item text-gray-500"><span class="material-symbols-outlined">dynamic_feed</span><span>Queue</span></a>
-    <a href="settings.html" class="tab-item text-gray-500"><span class="material-symbols-outlined">settings</span><span>Settings</span></a>
-    <a href="new-project.html" class="tab-item text-gray-500"><span class="material-symbols-outlined">add_circle</span><span>Boost</span></a>
+    <a href="dashboard.html" class="tab-item active"><span class="material-symbols-outlined">dashboard</span><span>Home</span></a>
+    <a href="profile.html" class="tab-item"><span class="material-symbols-outlined">person</span><span>Profile</span></a>
+    <a href="queue.html" class="tab-item" id="mobileQueueLink">
+      <span class="material-symbols-outlined">dynamic_feed</span>
+      <span id="mobileNotifBadge" class="notif-badge hidden">0</span>
+      <span>Queue</span>
+    </a>
+    <a href="settings.html" class="tab-item"><span class="material-symbols-outlined">settings</span><span>Settings</span></a>
+    <a href="new-project.html" class="tab-item"><span class="material-symbols-outlined">add_circle</span><span>Boost</span></a>
   </div>
 
+  <!-- Toast Notification -->
+  <div id="toast" class="toast hidden">
+    <span class="icon">🚀</span>
+    <div class="text">
+      <strong id="toastTitle">New Boost!</strong>
+      <span id="toastMessage">Someone shared a boost</span>
+    </div>
+    <button onclick="closeToast()" style="background:none;border:none;color:#6b7280;cursor:pointer;font-size:18px;">✕</button>
+  </div>
+
+  <script src="https://cdn.socket.io/4.8.1/socket.io.min.js"></script>
   <script>
     const API_BASE = location.hostname === 'localhost' ? 'http://localhost:5000/api' : 'https://creator-coop-backend.onrender.com/api';
     
@@ -264,24 +346,6 @@
         if (domain.includes('linkedin')) {
           return { platform: 'LinkedIn', icon: '💼' };
         }
-        if (domain.includes('snapchat')) {
-          return { platform: 'Snapchat', icon: '👻' };
-        }
-        if (domain.includes('pinterest')) {
-          return { platform: 'Pinterest', icon: '📌' };
-        }
-        if (domain.includes('reddit')) {
-          return { platform: 'Reddit', icon: '🤖' };
-        }
-        if (domain.includes('twitch')) {
-          return { platform: 'Twitch', icon: '🎮' };
-        }
-        if (domain.includes('discord') || domain.includes('discord.com')) {
-          return { platform: 'Discord', icon: '💬' };
-        }
-        if (domain.includes('whatsapp')) {
-          return { platform: 'WhatsApp', icon: '💚' };
-        }
         return { platform: 'Other', icon: '🔗' };
       } catch (e) {
         return { platform: 'Other', icon: '🔗' };
@@ -290,7 +354,6 @@
 
     function getPlatformEngagements(boosts) {
       const platformMap = {};
-      
       (boosts || []).forEach(boost => {
         const { platform, icon } = getPlatformFromUrl(boost.original_url);
         if (!platformMap[platform]) {
@@ -299,7 +362,6 @@
         platformMap[platform].count += (boost.engagement_count || 0);
         platformMap[platform].boosts += 1;
       });
-      
       return platformMap;
     }
 
@@ -309,22 +371,16 @@
     async function loadPlatformEngagements() {
       const container = document.getElementById('platformEngagementContainer');
       container.innerHTML = '<span class="text-gray-500 text-sm">Loading...</span>';
-      
       try {
         const data = await (await authFetch('/boosts?limit=100')).json();
         const boosts = data.boosts || [];
         const platformData = getPlatformEngagements(boosts);
-        
         const platforms = Object.keys(platformData);
-        
         if (platforms.length === 0) {
           container.innerHTML = '<span class="text-gray-500 text-sm">No boosts submitted yet. Create your first boost!</span>';
           return;
         }
-
-        // Sort by count descending
         const sorted = platforms.sort((a, b) => platformData[b].count - platformData[a].count);
-        
         let html = '';
         sorted.forEach(platform => {
           const data = platformData[platform];
@@ -336,7 +392,6 @@
             </span>
           `;
         });
-        
         container.innerHTML = html;
       } catch (e) {
         console.error(e);
@@ -357,26 +412,19 @@
         
         const boosts = await (await authFetch('/boosts?limit=100')).json();
         const boostList = boosts.boosts || [];
-        
-        // Total boosts count
         document.getElementById('totalBoostsCount').innerText = boostList.length;
         
-        // Total engagements (sum across all boosts) - keep for score calculation
         const totalEng = boostList.reduce((s, b) => s + (b.engagement_count || 0), 0);
-        
-        // Engagement score based on total engagements
         const score = Math.min(100, Math.floor(totalEng / 10));
         document.getElementById('engagementScore').innerText = score;
         document.getElementById('scoreChange').innerText = `+${Math.floor(score / 5)}%`;
         
-        // Boosts used (1 per 24h)
         const last = await (await authFetch('/links/last-post')).json();
         const canPost = !last.lastPost || (new Date() - new Date(last.lastPost)) >= 86400000;
         document.getElementById('boostsUsed').innerHTML = canPost ? '0' : '1';
         document.getElementById('boostsProgress').style.width = canPost ? '0%' : '100%';
         document.getElementById('nextBoostTime').innerHTML = canPost ? 'Ready' : `${Math.ceil(24 - (new Date() - new Date(last.lastPost)) / 3600000)} hour(s)`;
         
-        // Also load platform engagements
         await loadPlatformEngagements();
       } catch(e){ console.error(e); }
     }
@@ -412,9 +460,150 @@
     }
 
     // ============================================================
+    // SOCKET.IO NOTIFICATIONS (WhatsApp-style)
+    // ============================================================
+    let socket = null;
+    let notificationCount = 0;
+    let toastTimeout = null;
+
+    function playNotificationSound() {
+      try {
+        // Use Web Audio API for a clean notification sound
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        // Double beep like WhatsApp
+        const notes = [880, 1100];
+        notes.forEach((freq, index) => {
+          const oscillator = audioCtx.createOscillator();
+          const gainNode = audioCtx.createGain();
+          oscillator.connect(gainNode);
+          gainNode.connect(audioCtx.destination);
+          oscillator.frequency.value = freq;
+          oscillator.type = 'sine';
+          const startTime = audioCtx.currentTime + (index * 0.2);
+          gainNode.gain.setValueAtTime(0.3, startTime);
+          gainNode.gain.exponentialRampToValueAtTime(0.01, startTime + 0.2);
+          oscillator.start(startTime);
+          oscillator.stop(startTime + 0.2);
+        });
+      } catch (e) {
+        // Silent fallback - just log
+        console.log('Sound play failed:', e);
+      }
+    }
+
+    function updateNotificationBadge(count) {
+      // Update sidebar badge (desktop)
+      const sidebarBadge = document.getElementById('sidebarNotifBadge');
+      if (sidebarBadge) {
+        if (count > 0) {
+          sidebarBadge.classList.remove('hidden');
+          sidebarBadge.innerText = count > 99 ? '99+' : count;
+        } else {
+          sidebarBadge.classList.add('hidden');
+        }
+      }
+      
+      // Update mobile badge
+      const mobileBadge = document.getElementById('mobileNotifBadge');
+      if (mobileBadge) {
+        if (count > 0) {
+          mobileBadge.classList.remove('hidden');
+          mobileBadge.innerText = count > 99 ? '99+' : count;
+        } else {
+          mobileBadge.classList.add('hidden');
+        }
+      }
+    }
+
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      const toastMessage = document.getElementById('toastMessage');
+      toastMessage.innerText = message;
+      toast.classList.remove('hidden');
+      
+      // Clear existing timeout
+      if (toastTimeout) clearTimeout(toastTimeout);
+      
+      // Auto-hide after 5 seconds
+      toastTimeout = setTimeout(() => {
+        toast.classList.add('hidden');
+      }, 5000);
+    }
+
+    function closeToast() {
+      const toast = document.getElementById('toast');
+      toast.classList.add('hidden');
+      if (toastTimeout) clearTimeout(toastTimeout);
+    }
+
+    function connectSocket() {
+      const token = getToken();
+      if (!token) return;
+
+      try {
+        const socketUrl = location.hostname === 'localhost' 
+          ? 'http://localhost:5000' 
+          : 'https://creator-coop-backend.onrender.com';
+
+        socket = io(socketUrl, {
+          transports: ['websocket', 'polling']
+        });
+
+        socket.on('connect', () => {
+          console.log('🔗 Socket connected');
+          const user = JSON.parse(localStorage.getItem('coop_user') || '{}');
+          if (user.id) {
+            socket.emit('register-user', user.id);
+          }
+          // Reset notification count on reconnect
+          notificationCount = 0;
+          updateNotificationBadge(0);
+        });
+
+        socket.on('new-boost', (data) => {
+          console.log('📢 New boost notification:', data);
+          
+          // Play WhatsApp-style sound
+          playNotificationSound();
+          
+          // Increment notification count
+          notificationCount++;
+          updateNotificationBadge(notificationCount);
+          
+          // Show toast notification
+          showToast(data.message);
+          
+          // Browser notification (if permission granted)
+          if (Notification.permission === 'granted') {
+            new Notification('🚀 New Boost Alert!', {
+              body: data.message,
+              icon: '/icons/icon-150.png'
+            });
+          }
+        });
+
+        socket.on('disconnect', () => {
+          console.log('🔗 Socket disconnected');
+        });
+
+        // Request notification permission
+        if ('Notification' in window && Notification.permission === 'default') {
+          Notification.requestPermission();
+        }
+
+      } catch (err) {
+        console.error('Socket connection error:', err);
+      }
+    }
+
+    // ============================================================
     // LOGOUT
     // ============================================================
-    document.getElementById('logoutBtn').onclick = () => { localStorage.clear(); location.href='landing.html'; };
+    document.getElementById('logoutBtn').onclick = () => {
+      if (socket) socket.disconnect();
+      localStorage.clear();
+      location.href = 'landing.html';
+    };
 
     // ============================================================
     // INIT
@@ -423,6 +612,7 @@
       if(!getToken()) location.href='landing.html'; 
       await loadStats(); 
       await loadMyBoosts(); 
+      connectSocket(); 
     })();
   </script>
 </body>
