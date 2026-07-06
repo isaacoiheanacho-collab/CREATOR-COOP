@@ -563,7 +563,6 @@
       if (notificationIds.length === 0) return;
       
       try {
-        // Mark all as read
         await authFetch('/links/notifications/read-all', {
           method: 'POST'
         });
@@ -577,6 +576,80 @@
       }
     }
 
+    // ============================================================
+    // PUSH NOTIFICATION SUBSCRIPTION (Web Push for closed browsers)
+    // ============================================================
+    async function subscribeToPushNotifications() {
+      try {
+        // Check if browser supports push notifications
+        if (!('serviceWorker' in navigator) || !('PushManager' in window)) {
+          console.log('📱 Push notifications not supported in this browser');
+          return;
+        }
+
+        // Check notification permission
+        if (Notification.permission === 'denied') {
+          console.log('📱 Push notifications denied by user');
+          return;
+        }
+
+        // Request permission if not decided
+        if (Notification.permission === 'default') {
+          const permission = await Notification.requestPermission();
+          if (permission !== 'granted') {
+            console.log('📱 Push notification permission denied');
+            return;
+          }
+        }
+
+        // Get service worker registration
+        const registration = await navigator.serviceWorker.ready;
+        
+        // Get VAPID public key from server
+        const response = await fetch('/api/notifications/vapid-public-key');
+        const data = await response.json();
+        
+        if (!data.publicKey) {
+          console.error('📱 VAPID public key not available');
+          return;
+        }
+
+        // Convert base64 to Uint8Array
+        const applicationServerKey = urlBase64ToUint8Array(data.publicKey);
+        
+        // Subscribe to push notifications
+        const subscription = await registration.pushManager.subscribe({
+          userVisibleOnly: true,
+          applicationServerKey: applicationServerKey
+        });
+
+        // Send subscription to server
+        await fetch('/api/notifications/subscribe', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(subscription)
+        });
+
+        console.log('✅ Subscribed to push notifications');
+      } catch (err) {
+        console.error('Push subscription failed:', err);
+      }
+    }
+
+    function urlBase64ToUint8Array(base64String) {
+      const padding = '='.repeat((4 - base64String.length % 4) % 4);
+      const base64 = (base64String + padding).replace(/-/g, '+').replace(/_/g, '/');
+      const rawData = window.atob(base64);
+      const outputArray = new Uint8Array(rawData.length);
+      for (let i = 0; i < rawData.length; ++i) {
+        outputArray[i] = rawData.charCodeAt(i);
+      }
+      return outputArray;
+    }
+
+    // ============================================================
+    // SOCKET CONNECTION
+    // ============================================================
     function connectSocket() {
       const token = getToken();
       if (!token) return;
@@ -644,8 +717,11 @@
       await loadStats(); 
       await loadMyBoosts(); 
       
-      // Load persistent notifications from database (like WhatsApp)
+      // Load persistent notifications from database
       await loadNotifications();
+      
+      // Subscribe to push notifications (for closed browsers)
+      await subscribeToPushNotifications();
       
       // Connect socket for real-time notifications
       connectSocket();
@@ -653,9 +729,6 @@
       // Mark notifications as read when user clicks on Queue
       document.getElementById('sidebarQueueLink')?.addEventListener('click', markNotificationsRead);
       document.getElementById('mobileQueueLink')?.addEventListener('click', markNotificationsRead);
-      
-      // Also mark as read when user visits queue page
-      // This will happen on page navigation
     })();
   </script>
 </body>
