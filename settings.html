@@ -19,6 +19,7 @@
     .sidebar-item:hover { background: #1e293b; color: #2fd9f4; }
     .sidebar-active { border-left-color: #2fd9f4; background: rgba(47, 217, 244, 0.1); color: #2fd9f4; }
     .btn-primary { background: #2fd9f4; color: #0a0a0c; font-weight: 800; transition: all 0.2s; }
+    .btn-primary:hover { background: #22d3ee; transform: scale(1.02); }
     .app-header {
       position: fixed;
       top: 0;
@@ -50,7 +51,11 @@
       align-items: center;
       gap: 2px;
       transition: color 0.2s;
+      text-decoration: none;
+      color: #6b7280;
     }
+    .tab-item:hover { color: #e5e7eb; }
+    .tab-item.active { color: #2fd9f4; }
     .tab-item span:first-child { font-size: 24px; }
     .tab-item span:last-child { font-size: 10px; font-weight: 500; }
     @media (max-width: 767px) {
@@ -65,6 +70,22 @@
     .toggle-checkbox { right: 0; transition: all 0.3s; z-index: 1; border-color: #4b5563; cursor: pointer; }
     .toggle-checkbox:checked { right: 1rem; border-color: #2fd9f4; background-color: #2fd9f4; }
     .toggle-label { transition: background-color 0.2s; cursor: pointer; }
+    .status-badge {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      border-radius: 2rem;
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+    .status-active { background: rgba(74, 222, 128, 0.2); color: #4ade80; }
+    .status-inactive { background: rgba(239, 68, 68, 0.2); color: #ef4444; }
+    .plan-card {
+      background: rgba(47, 217, 244, 0.05);
+      border: 1px solid rgba(47, 217, 244, 0.15);
+      border-radius: 12px;
+      padding: 16px 20px;
+    }
   </style>
 </head>
 <body>
@@ -89,48 +110,262 @@
   <main>
     <div class="max-w-4xl mx-auto space-y-6">
       <div><h1 class="text-2xl md:text-3xl font-bold">Account Management</h1><p class="text-gray-400 text-sm">Configure identity, subscription, and security.</p></div>
-      <div class="flex gap-2 border-b border-gray-800"><button data-tab="general" class="tab-btn active text-gray-300 hover:text-white">GENERAL</button><button data-tab="billing" class="tab-btn text-gray-500 hover:text-gray-300">BILLING</button><button data-tab="security" class="tab-btn text-gray-500 hover:text-gray-300">SECURITY</button></div>
-      <div id="generalTab" class="tab-content space-y-6"><div class="glass-card rounded-xl p-6"><h2 class="text-xl font-bold mb-4">Preference Module</h2><div class="space-y-6"><div><h3 class="font-semibold text-gray-200 mb-2">Profile Appearance</h3><div class="flex items-center justify-between"><span class="text-gray-400">Obsidian Dark Theme</span><span class="text-xs text-green-400">High contrast enabled</span></div></div><div><h3 class="font-semibold text-gray-200 mb-2">Communication</h3><div class="space-y-3"><label class="flex items-center justify-between cursor-pointer"><span class="text-gray-400">Email Notifications</span><div class="relative inline-block w-10 mr-2 align-middle"><input type="checkbox" id="emailNotif" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer"><label for="emailNotif" class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-700 cursor-pointer"></label></div></label><label class="flex items-center justify-between cursor-pointer"><span class="text-gray-400">Push Alerts</span><div class="relative inline-block w-10 mr-2 align-middle"><input type="checkbox" id="pushNotif" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer"><label for="pushNotif" class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-700 cursor-pointer"></label></div></label></div></div><button id="savePrefsBtn" class="btn-primary px-4 py-2 rounded-lg text-sm">Save Preferences</button><div id="prefsMessage" class="text-sm hidden"></div></div></div></div>
-      <div id="billingTab" class="tab-content hidden space-y-6"><div class="glass-card rounded-xl p-6"><h2 class="text-xl font-bold mb-4">Financial Terminal</h2><p class="text-sm text-gray-400 mb-4">Managed via Paystack Secure Layer</p><div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6"><div><p class="text-gray-400 text-sm">CURRENT PLAN</p><p class="text-2xl font-bold text-white" id="currentPlan">—</p></div><div><p class="text-gray-400 text-sm">ANNUAL COST</p><p class="text-2xl font-bold text-primary">₦5,000</p></div><div><p class="text-gray-400 text-sm">EXPIRY DATE</p><p class="text-lg font-semibold text-white" id="expiryDate">—</p></div></div><button id="renewBtn" class="btn-primary px-6 py-2 rounded-lg mb-6 flex items-center gap-2"><span class="material-symbols-outlined">payments</span> Renew Membership</button><h3 class="font-semibold text-gray-200 mb-3">Recent Ledger</h3><div class="overflow-x-auto"><table class="w-full text-sm"><thead class="text-gray-500 border-b border-gray-700"><tr><th class="text-left py-2">Identifier</th><th class="text-left py-2">Date</th><th class="text-left py-2">Amount</th><th class="text-left py-2">Status</th></tr></thead><tbody id="paymentHistory" class="text-gray-300"><tr><td colspan="4" class="py-4 text-center">Loading...</td></tr></tbody></table></div></div></div>
-      <div id="securityTab" class="tab-content hidden space-y-6"><div class="glass-card rounded-xl p-6"><h2 class="text-xl font-bold mb-4">Security Protocols</h2><p class="text-sm text-gray-400 mb-4">Manage access keys and authentication.</p><form id="passwordForm" class="space-y-4 max-w-md"><div><label class="block text-gray-400 text-sm mb-1">Current Password</label><input type="password" id="currentPass" class="w-full bg-gray-900 border border-gray-700 rounded-lg p-2 text-white"></div><div><label class="block text-gray-400 text-sm mb-1">New Password</label><input type="password" id="newPass" class="w-full bg-gray-900 border border-gray-700 rounded-lg p-2 text-white"></div><div><label class="block text-gray-400 text-sm mb-1">Confirm New Password</label><input type="password" id="confirmPass" class="w-full bg-gray-900 border border-gray-700 rounded-lg p-2 text-white"></div><button type="submit" class="btn-primary px-4 py-2 rounded-lg">Update Credentials</button><div id="passwordMessage" class="text-sm"></div></form></div><div class="glass-card rounded-xl p-6"><div class="flex justify-between items-center"><div><h3 class="font-semibold text-white">Two‑Factor Authentication</h3><p class="text-sm text-gray-400">Highly Recommended Security</p></div><button id="configure2faBtn" class="bg-gray-800 hover:bg-gray-700 text-white px-4 py-2 rounded-lg">CONFIGURE</button></div></div></div>
+      <div class="flex gap-2 border-b border-gray-800">
+        <button data-tab="general" class="tab-btn active text-gray-300 hover:text-white px-3 py-2 text-sm font-bold uppercase tracking-wider">GENERAL</button>
+        <button data-tab="billing" class="tab-btn text-gray-500 hover:text-gray-300 px-3 py-2 text-sm font-bold uppercase tracking-wider">BILLING</button>
+        <button data-tab="security" class="tab-btn text-gray-500 hover:text-gray-300 px-3 py-2 text-sm font-bold uppercase tracking-wider">SECURITY</button>
+      </div>
+
+      <!-- GENERAL TAB -->
+      <div id="generalTab" class="tab-content space-y-6">
+        <div class="glass-card rounded-xl p-6">
+          <h2 class="text-xl font-bold mb-4">Preference Module</h2>
+          <div class="space-y-6">
+            <div>
+              <h3 class="font-semibold text-gray-200 mb-2">Profile Appearance</h3>
+              <div class="flex items-center justify-between">
+                <span class="text-gray-400">Obsidian Dark Theme</span>
+                <span class="text-xs text-green-400">High contrast enabled</span>
+              </div>
+            </div>
+            <div>
+              <h3 class="font-semibold text-gray-200 mb-2">Communication</h3>
+              <div class="space-y-3">
+                <label class="flex items-center justify-between cursor-pointer">
+                  <span class="text-gray-400">Email Notifications</span>
+                  <div class="relative inline-block w-10 mr-2 align-middle">
+                    <input type="checkbox" id="emailNotif" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer">
+                    <label for="emailNotif" class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-700 cursor-pointer"></label>
+                  </div>
+                </label>
+                <label class="flex items-center justify-between cursor-pointer">
+                  <span class="text-gray-400">Push Alerts</span>
+                  <div class="relative inline-block w-10 mr-2 align-middle">
+                    <input type="checkbox" id="pushNotif" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer">
+                    <label for="pushNotif" class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-700 cursor-pointer"></label>
+                  </div>
+                </label>
+              </div>
+            </div>
+            <button id="savePrefsBtn" class="btn-primary px-4 py-2 rounded-lg text-sm">Save Preferences</button>
+            <div id="prefsMessage" class="text-sm hidden"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- BILLING TAB -->
+      <div id="billingTab" class="tab-content hidden space-y-6">
+        <div class="glass-card rounded-xl p-6">
+          <h2 class="text-xl font-bold mb-4">Financial Terminal</h2>
+          <p class="text-sm text-gray-400 mb-6">Managed via Paystack Secure Layer</p>
+
+          <!-- Subscription Status -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+            <div class="plan-card">
+              <p class="text-gray-400 text-xs font-bold uppercase tracking-wider">CURRENT PLAN</p>
+              <p class="text-2xl font-bold text-white" id="currentPlan">—</p>
+              <span id="planStatusBadge" class="status-badge status-inactive text-xs mt-1 inline-block">INACTIVE</span>
+            </div>
+            <div class="plan-card">
+              <p class="text-gray-400 text-xs font-bold uppercase tracking-wider">MONTHLY COST</p>
+              <p class="text-2xl font-bold text-primary">₦200</p>
+              <p class="text-xs text-gray-500 mt-1">Billed monthly</p>
+            </div>
+            <div class="plan-card">
+              <p class="text-gray-400 text-xs font-bold uppercase tracking-wider">EXPIRY DATE</p>
+              <p class="text-lg font-semibold text-white" id="expiryDate">—</p>
+              <p class="text-xs text-gray-500 mt-1" id="daysRemaining"></p>
+            </div>
+          </div>
+
+          <!-- Boost Limit Info -->
+          <div class="bg-gray-800/30 rounded-lg p-4 mb-6 border border-gray-700/50">
+            <div class="flex items-center gap-3">
+              <span class="material-symbols-outlined text-cyan-400">rocket_launch</span>
+              <div>
+                <p class="text-sm font-semibold text-white">1 Boost per 24 Hours</p>
+                <p class="text-xs text-gray-400">30 boosts per month • 365 boosts per year</p>
+              </div>
+            </div>
+          </div>
+
+          <button id="renewBtn" class="btn-primary px-6 py-3 rounded-lg mb-6 flex items-center gap-2 text-base">
+            <span class="material-symbols-outlined">payments</span>
+            Subscribe Now — ₦200/month
+          </button>
+
+          <h3 class="font-semibold text-gray-200 mb-3">Recent Ledger</h3>
+          <div class="overflow-x-auto">
+            <table class="w-full text-sm">
+              <thead class="text-gray-500 border-b border-gray-700">
+                <tr>
+                  <th class="text-left py-2">Identifier</th>
+                  <th class="text-left py-2">Date</th>
+                  <th class="text-left py-2">Amount</th>
+                  <th class="text-left py-2">Status</th>
+                </tr>
+              </thead>
+              <tbody id="paymentHistory" class="text-gray-300">
+                <tr><td colspan="4" class="py-4 text-center">Loading...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECURITY TAB -->
+      <div id="securityTab" class="tab-content hidden space-y-6">
+        <div class="glass-card rounded-xl p-6">
+          <h2 class="text-xl font-bold mb-4">Security Protocols</h2>
+          <p class="text-sm text-gray-400 mb-4">Manage access keys and authentication.</p>
+          <form id="passwordForm" class="space-y-4 max-w-md">
+            <div>
+              <label class="block text-gray-400 text-sm mb-1">Current Password</label>
+              <input type="password" id="currentPass" class="w-full bg-gray-900 border border-gray-700 rounded-lg p-2 text-white focus:outline-none focus:border-primary">
+            </div>
+            <div>
+              <label class="block text-gray-400 text-sm mb-1">New Password</label>
+              <input type="password" id="newPass" class="w-full bg-gray-900 border border-gray-700 rounded-lg p-2 text-white focus:outline-none focus:border-primary">
+            </div>
+            <div>
+              <label class="block text-gray-400 text-sm mb-1">Confirm New Password</label>
+              <input type="password" id="confirmPass" class="w-full bg-gray-900 border border-gray-700 rounded-lg p-2 text-white focus:outline-none focus:border-primary">
+            </div>
+            <button type="submit" class="btn-primary px-4 py-2 rounded-lg">Update Credentials</button>
+            <div id="passwordMessage" class="text-sm"></div>
+          </form>
+        </div>
+        <div class="glass-card rounded-xl p-6">
+          <div class="flex justify-between items-center">
+            <div>
+              <h3 class="font-semibold text-white">Two‑Factor Authentication</h3>
+              <p class="text-sm text-gray-400">Highly Recommended Security</p>
+            </div>
+            <button id="configure2faBtn" class="bg-gray-800 hover:bg-gray-700 text-white px-4 py-2 rounded-lg">CONFIGURE</button>
+          </div>
+        </div>
+      </div>
     </div>
   </main>
 
   <div class="bottom-tab-bar">
-    <a href="dashboard.html" class="tab-item text-gray-500"><span class="material-symbols-outlined">dashboard</span><span>Home</span></a>
-    <a href="profile.html" class="tab-item text-gray-500"><span class="material-symbols-outlined">person</span><span>Profile</span></a>
-    <a href="queue.html" class="tab-item text-gray-500"><span class="material-symbols-outlined">dynamic_feed</span><span>Queue</span></a>
-    <a href="settings.html" class="tab-item text-cyan-400"><span class="material-symbols-outlined">settings</span><span>Settings</span></a>
-    <a href="new-project.html" class="tab-item text-gray-500"><span class="material-symbols-outlined">add_circle</span><span>Boost</span></a>
+    <a href="dashboard.html" class="tab-item"><span class="material-symbols-outlined">dashboard</span><span>Home</span></a>
+    <a href="profile.html" class="tab-item"><span class="material-symbols-outlined">person</span><span>Profile</span></a>
+    <a href="queue.html" class="tab-item"><span class="material-symbols-outlined">dynamic_feed</span><span>Queue</span></a>
+    <a href="settings.html" class="tab-item active"><span class="material-symbols-outlined">settings</span><span>Settings</span></a>
+    <a href="new-project.html" class="tab-item"><span class="material-symbols-outlined">add_circle</span><span>Boost</span></a>
   </div>
 
   <script>
     const API_BASE = location.hostname === 'localhost' ? 'http://localhost:5000/api' : 'https://creator-coop-backend.onrender.com/api';
+    
     function getToken() { return localStorage.getItem('coop_token'); }
+    
     async function authFetch(endpoint, opts={}) {
       const token = getToken();
       if (!token) throw new Error('No token');
-      const res = await fetch(`${API_BASE}${endpoint}`, { ...opts, headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}`, ...opts.headers } });
-      if (res.status === 401) { localStorage.clear(); location.href = 'landing.html'; throw new Error('Session expired'); }
+      const res = await fetch(`${API_BASE}${endpoint}`, { 
+        ...opts, 
+        headers: { 
+          'Content-Type': 'application/json', 
+          'Authorization': `Bearer ${token}`, 
+          ...opts.headers 
+        } 
+      });
+      if (res.status === 401) { 
+        localStorage.clear(); 
+        location.href = 'landing.html'; 
+        throw new Error('Session expired'); 
+      }
       return res;
     }
+
+    function getDaysRemaining(expiryDate) {
+      if (!expiryDate) return null;
+      const now = new Date();
+      const expiry = new Date(expiryDate);
+      const diff = Math.ceil((expiry - now) / (1000 * 60 * 60 * 24));
+      return diff;
+    }
+
     async function loadUserData() {
       try {
         const me = await (await authFetch('/auth/me')).json();
         document.getElementById('topbarAvatar').src = `https://ui-avatars.com/api/?background=2fd9f4&color=000&name=${encodeURIComponent(me.user.username)}`;
-        document.getElementById('expiryDate').innerText = me.subscription_active ? new Date(me.subscription_expiry).toLocaleDateString() : 'Not active';
-        document.getElementById('currentPlan').innerText = me.subscription_active ? 'Elite Tier' : 'Inactive';
+        
+        const isActive = me.subscription_active;
+        const expiry = me.subscription_expiry;
+        
+        // Update plan display
+        document.getElementById('currentPlan').innerText = isActive ? 'Active Member' : 'Inactive';
+        
+        // Update status badge
+        const badge = document.getElementById('planStatusBadge');
+        if (isActive) {
+          badge.className = 'status-badge status-active text-xs mt-1 inline-block';
+          badge.innerText = 'ACTIVE';
+        } else {
+          badge.className = 'status-badge status-inactive text-xs mt-1 inline-block';
+          badge.innerText = 'INACTIVE';
+        }
+        
+        // Update expiry date
+        document.getElementById('expiryDate').innerText = isActive ? new Date(expiry).toLocaleDateString() : 'Not active';
+        
+        // Update days remaining
+        const daysRemainingEl = document.getElementById('daysRemaining');
+        if (isActive && expiry) {
+          const days = getDaysRemaining(expiry);
+          if (days !== null) {
+            if (days > 0) {
+              daysRemainingEl.innerText = `${days} days remaining`;
+              daysRemainingEl.className = 'text-xs text-green-400';
+            } else if (days === 0) {
+              daysRemainingEl.innerText = 'Expires today';
+              daysRemainingEl.className = 'text-xs text-yellow-400';
+            } else {
+              daysRemainingEl.innerText = 'Expired';
+              daysRemainingEl.className = 'text-xs text-red-400';
+            }
+          }
+        } else {
+          daysRemainingEl.innerText = 'No active subscription';
+          daysRemainingEl.className = 'text-xs text-gray-500';
+        }
+
+        // Update renew button text
+        const renewBtn = document.getElementById('renewBtn');
+        if (isActive) {
+          renewBtn.innerHTML = '<span class="material-symbols-outlined">payments</span> Renew Subscription — ₦200/month';
+        } else {
+          renewBtn.innerHTML = '<span class="material-symbols-outlined">payments</span> Subscribe Now — ₦200/month';
+        }
+
       } catch(e){ console.error(e); }
     }
+
     async function loadPaymentHistory() {
       const tbody = document.getElementById('paymentHistory');
-      tbody.innerHTML = '<tr><td colspan="4" class="py-4 text-center">Loading...</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="4" class="py-4 text-center text-gray-500">Loading...</td></tr>';
       try {
         const invoices = await (await authFetch('/payments/history')).json();
-        if(invoices && invoices.length) { tbody.innerHTML = invoices.map(inv => `<tr><td>${inv.id}</td><td>${new Date(inv.date).toLocaleDateString()}</td><td>₦${inv.amount/100}</td><td class="text-green-400">SUCCESS</td></tr>`).join(''); }
-        else { tbody.innerHTML = '<tr><td colspan="4" class="py-4 text-center">No payment history found.</td></tr>'; }
-      } catch(e){ tbody.innerHTML = '<tr><td colspan="4" class="py-4 text-center">Payment history not available.</td></tr>'; }
+        if(invoices && invoices.length) { 
+          tbody.innerHTML = invoices.map(inv => `
+            <tr>
+              <td class="text-xs font-mono">${inv.id}</td>
+              <td>${new Date(inv.date).toLocaleDateString()}</td>
+              <td>₦${(inv.amount / 100).toFixed(2)}</td>
+              <td class="text-green-400">SUCCESS</td>
+            </tr>
+          `).join(''); 
+        } else { 
+          tbody.innerHTML = '<tr><td colspan="4" class="py-4 text-center text-gray-500">No payment history found.</td></tr>'; 
+        }
+      } catch(e){ 
+        tbody.innerHTML = '<tr><td colspan="4" class="py-4 text-center text-gray-500">Payment history not available.</td></tr>'; 
+      }
     }
+
     document.getElementById('renewBtn').addEventListener('click', async () => {
       try {
         const res = await authFetch('/payments/initiate', { method: 'POST' });
@@ -139,42 +374,101 @@
         else alert('Payment initiation failed');
       } catch(err){ alert('Payment error: '+err.message); }
     });
+
     async function loadNotifPrefs() {
       try {
         const profile = await (await authFetch('/profile')).json();
         const prefs = profile.profile?.notification_preferences || { email: true, push: true };
         document.getElementById('emailNotif').checked = prefs.email !== false;
         document.getElementById('pushNotif').checked = prefs.push !== false;
-      } catch(e){ const saved = localStorage.getItem('notif_prefs'); if(saved){ const p=JSON.parse(saved); document.getElementById('emailNotif').checked=p.email; document.getElementById('pushNotif').checked=p.push; } }
+      } catch(e){ 
+        const saved = localStorage.getItem('notif_prefs'); 
+        if(saved){ 
+          const p = JSON.parse(saved); 
+          document.getElementById('emailNotif').checked = p.email; 
+          document.getElementById('pushNotif').checked = p.push; 
+        } 
+      }
     }
+
     document.getElementById('savePrefsBtn').addEventListener('click', async () => {
       const email = document.getElementById('emailNotif').checked;
       const push = document.getElementById('pushNotif').checked;
       const msgDiv = document.getElementById('prefsMessage');
       try {
-        await authFetch('/profile', { method: 'POST', body: JSON.stringify({ notification_preferences: { email, push } }) });
-        msgDiv.innerHTML = '<span class="text-green-400">Preferences saved</span>'; msgDiv.classList.remove('hidden'); setTimeout(()=>msgDiv.classList.add('hidden'),3000);
-      } catch(e){ localStorage.setItem('notif_prefs', JSON.stringify({ email, push })); msgDiv.innerHTML = '<span class="text-yellow-400">Saved locally</span>'; msgDiv.classList.remove('hidden'); setTimeout(()=>msgDiv.classList.add('hidden'),3000); }
+        await authFetch('/profile', { 
+          method: 'POST', 
+          body: JSON.stringify({ notification_preferences: { email, push } }) 
+        });
+        msgDiv.innerHTML = '<span class="text-green-400">✓ Preferences saved</span>'; 
+        msgDiv.classList.remove('hidden'); 
+        setTimeout(()=>msgDiv.classList.add('hidden'),3000);
+      } catch(e){ 
+        localStorage.setItem('notif_prefs', JSON.stringify({ email, push })); 
+        msgDiv.innerHTML = '<span class="text-yellow-400">⚠ Saved locally</span>'; 
+        msgDiv.classList.remove('hidden'); 
+        setTimeout(()=>msgDiv.classList.add('hidden'),3000); 
+      }
     });
+
     document.getElementById('passwordForm').addEventListener('submit', async (e) => {
       e.preventDefault();
       const current = document.getElementById('currentPass').value;
       const newPass = document.getElementById('newPass').value;
       const confirm = document.getElementById('confirmPass').value;
       const msgDiv = document.getElementById('passwordMessage');
-      if(newPass !== confirm) { msgDiv.innerHTML = '<span class="text-red-400">Passwords do not match</span>'; return; }
-      if(newPass.length < 6) { msgDiv.innerHTML = '<span class="text-red-400">Minimum 6 characters</span>'; return; }
+      
+      if(newPass !== confirm) { 
+        msgDiv.innerHTML = '<span class="text-red-400">✗ Passwords do not match</span>'; 
+        return; 
+      }
+      if(newPass.length < 6) { 
+        msgDiv.innerHTML = '<span class="text-red-400">✗ Minimum 6 characters</span>'; 
+        return; 
+      }
+      
       try {
-        await authFetch('/auth/change-password', { method: 'POST', body: JSON.stringify({ currentPassword: current, newPassword: newPass }) });
-        msgDiv.innerHTML = '<span class="text-green-400">Password updated</span>';
+        await authFetch('/auth/change-password', { 
+          method: 'POST', 
+          body: JSON.stringify({ currentPassword: current, newPassword: newPass }) 
+        });
+        msgDiv.innerHTML = '<span class="text-green-400">✓ Password updated</span>';
         document.getElementById('passwordForm').reset();
-      } catch(err){ msgDiv.innerHTML = `<span class="text-red-400">${err.message}</span>`; }
+      } catch(err){ 
+        msgDiv.innerHTML = `<span class="text-red-400">✗ ${err.message}</span>`; 
+      }
     });
+
     document.getElementById('configure2faBtn').addEventListener('click', () => alert('2FA coming soon.'));
-    function showTab(tabId) { document.querySelectorAll('.tab-content').forEach(el=>el.classList.add('hidden')); document.getElementById(`${tabId}Tab`).classList.remove('hidden'); document.querySelectorAll('.tab-btn').forEach(btn=>btn.classList.remove('active','text-primary')); document.querySelector(`[data-tab="${tabId}"]`).classList.add('active','text-primary'); }
-    document.querySelectorAll('.tab-btn').forEach(btn=>btn.addEventListener('click',()=>showTab(btn.getAttribute('data-tab'))));
-    document.getElementById('logoutBtn').onclick = () => { localStorage.clear(); location.href='landing.html'; };
-    (async()=>{ if(!getToken()) location.href='landing.html'; await loadUserData(); await loadNotifPrefs(); await loadPaymentHistory(); showTab('billing'); })();
+
+    function showTab(tabId) { 
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden')); 
+      document.getElementById(`${tabId}Tab`).classList.remove('hidden'); 
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active', 'text-gray-300')); 
+      document.querySelector(`[data-tab="${tabId}"]`).classList.add('active', 'text-gray-300'); 
+    }
+
+    document.querySelectorAll('.tab-btn').forEach(btn => btn.addEventListener('click', () => showTab(btn.getAttribute('data-tab'))));
+
+    document.getElementById('logoutBtn').onclick = () => { 
+      localStorage.clear(); 
+      location.href = 'landing.html'; 
+    };
+
+    // Update bottom tab bar active state
+    document.querySelectorAll('.bottom-tab-bar .tab-item').forEach(el => {
+      if (el.getAttribute('href') === 'settings.html') {
+        el.classList.add('active');
+      }
+    });
+
+    (async()=>{ 
+      if(!getToken()) location.href = 'landing.html'; 
+      await loadUserData(); 
+      await loadNotifPrefs(); 
+      await loadPaymentHistory(); 
+      showTab('billing'); 
+    })();
   </script>
 </body>
 </html>
