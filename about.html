@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Creator Co-Op | About – Zero-Waste Engagement Loop for Nigerians</title>
     
+    <!-- Cache Control - Force fresh load -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    
     <!-- PWA Meta Tags -->
     <meta name="theme-color" content="#2563EB">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -26,8 +31,8 @@
     <meta name="msapplication-TileColor" content="#2563EB">
     
     <!-- Tailwind + Fonts -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com?v=2"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0,1" />
     <style>
         body {
@@ -106,6 +111,16 @@
             border-radius: 20px;
             margin: 0.15rem;
         }
+        .pricing-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #dbeafe, #eff6ff);
+            color: #1d4ed8;
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 0.2rem 0.8rem;
+            border-radius: 20px;
+            border: 1px solid #bfdbfe;
+        }
     </style>
 </head>
 <body class="bg-[#f4f6f9] text-zinc-800 antialiased">
@@ -120,10 +135,10 @@
             
             <!-- Desktop navigation -->
             <nav class="desktop-nav text-sm font-medium">
-                <a href="landing.html" class="text-zinc-600 hover:text-blue-600 transition">Home</a>
-                <a href="about.html" class="text-blue-600 border-b-2 border-blue-500 pb-0.5">About</a>
-                <a href="benefits.html" class="text-zinc-600 hover:text-blue-600 transition">Benefits</a>
-                <a href="landing.html" class="bg-blue-50 text-blue-700 px-4 py-1.5 rounded-full text-sm font-semibold hover:bg-blue-100 transition">Login / Join</a>
+                <a href="landing.html?v=2" class="text-zinc-600 hover:text-blue-600 transition">Home</a>
+                <a href="about.html?v=2" class="text-blue-600 border-b-2 border-blue-500 pb-0.5">About</a>
+                <a href="benefits.html?v=2" class="text-zinc-600 hover:text-blue-600 transition">Benefits</a>
+                <a href="landing.html?v=2" class="bg-blue-50 text-blue-700 px-4 py-1.5 rounded-full text-sm font-semibold hover:bg-blue-100 transition">Login / Join</a>
             </nav>
             
             <!-- Mobile menu button -->
@@ -134,10 +149,10 @@
         
         <!-- Mobile navigation panel -->
         <div class="mobile-nav" id="mobileNav">
-            <a href="landing.html">Home</a>
-            <a href="about.html" class="text-blue-600 font-semibold">About</a>
-            <a href="benefits.html">Benefits</a>
-            <a href="landing.html" class="bg-blue-50 text-blue-700 px-4 py-2 rounded-full text-center">Login / Join</a>
+            <a href="landing.html?v=2">Home</a>
+            <a href="about.html?v=2" class="text-blue-600 font-semibold">About</a>
+            <a href="benefits.html?v=2">Benefits</a>
+            <a href="landing.html?v=2" class="bg-blue-50 text-blue-700 px-4 py-2 rounded-full text-center">Login / Join</a>
         </div>
     </header>
 
@@ -247,7 +262,7 @@
                     <span class="material-symbols-outlined text-2xl">monetization_on</span>
                 </div>
                 <h3 class="text-xl font-bold mb-2">Absolute Skin in the Game</h3>
-                <p class="text-zinc-600 text-sm leading-relaxed">We enforce a hard financial gatekeeper barrier. By charging a flat, accessible annual membership fee (₦5,000) and completely eliminating free tiers, we make it unprofitable for malicious bot farms or casual trolls to underutilize the system, thereby eliminating waste. Every member you interact with has financially committed to the health of the loop.</p>
+                <p class="text-zinc-600 text-sm leading-relaxed">We enforce a hard financial gatekeeper barrier. By charging a flat, accessible monthly membership fee (₦200/month) and completely eliminating free tiers, we make it unprofitable for malicious bot farms or casual trolls to underutilize the system, thereby eliminating waste. Every member you interact with has financially committed to the health of the loop.</p>
                 <div class="mt-4 text-blue-600 text-xs font-medium flex items-center gap-1"><span class="material-symbols-outlined text-sm">done_all</span> No freeloaders / No spam rings</div>
             </div>
             <div class="bg-white rounded-2xl p-6 shadow-sm border border-zinc-200 card-hover">
@@ -334,15 +349,16 @@
             <div class="grid md:grid-cols-3">
                 <div class="md:col-span-2 p-8 md:p-10">
                     <h2 class="text-2xl md:text-3xl font-bold">Become part of the <span class="text-blue-600">zero-waste creator economy</span> for Nigerians</h2>
-                    <p class="text-zinc-600 mt-3 mb-6 max-w-lg">Take control of your organic reach. For less than ₦420/month, access a high-trust network that guarantees engagement reciprocity, privacy-first cloaking, and algorithmic amplification across all platforms.</p>
+                    <p class="text-zinc-600 mt-3 mb-6 max-w-lg">Take control of your organic reach. For just ₦200/month, access a high-trust network that guarantees engagement reciprocity, privacy-first cloaking, and algorithmic amplification across all platforms.</p>
                     <div class="flex flex-wrap gap-4 items-center">
-                        <a href="landing.html" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-3 rounded-xl transition shadow-md flex items-center gap-2">Join the Loop <span class="material-symbols-outlined text-lg">arrow_forward</span></a>
-                        <a href="landing.html" class="border border-zinc-300 bg-zinc-50 hover:bg-zinc-100 px-6 py-3 rounded-xl font-medium text-zinc-700 transition">Login to dashboard</a>
+                        <a href="landing.html?v=2" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-3 rounded-xl transition shadow-md flex items-center gap-2">Join the Loop <span class="material-symbols-outlined text-lg">arrow_forward</span></a>
+                        <a href="landing.html?v=2" class="border border-zinc-300 bg-zinc-50 hover:bg-zinc-100 px-6 py-3 rounded-xl font-medium text-zinc-700 transition">Login to dashboard</a>
                     </div>
-                    <div class="mt-6 flex gap-3 text-xs text-zinc-400">
-                        <span>✅ ₦5,000 annual token</span>
+                    <div class="mt-6 flex flex-wrap gap-3 text-xs text-zinc-400">
+                        <span>✅ ₦200/month</span>
+                        <span>✅ 1 boost per 24h</span>
+                        <span>✅ 30 boosts/month</span>
                         <span>✅ 7-day money-back guarantee*</span>
-                        <span>✅ Cancel anytime</span>
                         <span>✅ 🇳🇬 🇬🇧 🇨🇦</span>
                     </div>
                 </div>
@@ -376,8 +392,8 @@
     <footer class="w-full bg-white border-t border-zinc-200 py-8 mt-6">
         <div class="max-w-7xl mx-auto px-6 flex flex-wrap items-center justify-between text-xs text-zinc-500 gap-4">
             <div class="flex flex-wrap gap-x-6 gap-y-2">
-                <a href="about.html" class="hover:text-blue-600 transition">About Us</a>
-                <a href="benefits.html" class="hover:text-blue-600 transition">Benefits</a>
+                <a href="about.html?v=2" class="hover:text-blue-600 transition">About Us</a>
+                <a href="benefits.html?v=2" class="hover:text-blue-600 transition">Benefits</a>
                 <a href="privacy.html" class="hover:text-blue-600 transition">Privacy Policy</a>
                 <a href="terms.html" class="hover:text-blue-600 transition">Terms of Service</a>
                 <a href="help.html" class="hover:text-blue-600 transition">Help Center</a>
@@ -409,8 +425,9 @@
         }
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/sw.js').then(reg => {
+                navigator.serviceWorker.register('/sw.js?v=2').then(reg => {
                     console.log('Service Worker registered:', reg.scope);
+                    reg.update();
                 }).catch(err => {
                     console.error('Service Worker registration failed:', err);
                 });
