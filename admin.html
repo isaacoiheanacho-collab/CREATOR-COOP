@@ -120,6 +120,8 @@
     .btn-warning:hover { background: rgba(251, 191, 36, 0.3); }
     .btn-primary-sm { background: rgba(47, 217, 244, 0.2); color: #2fd9f4; border: 1px solid rgba(47, 217, 244, 0.3); }
     .btn-primary-sm:hover { background: rgba(47, 217, 244, 0.3); }
+    .btn-primary { background: rgba(47, 217, 244, 0.2); color: #2fd9f4; border: 1px solid rgba(47, 217, 244, 0.3); padding: 8px 20px; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+    .btn-primary:hover { background: rgba(47, 217, 244, 0.3); }
     .modal-overlay {
       position: fixed;
       inset: 0;
@@ -148,6 +150,40 @@
     .detail-row .label { color: #9ca3af; width: 140px; flex-shrink: 0; }
     .detail-row .value { color: #e5e7eb; }
     .hidden { display: none; }
+
+    /* Digest button styles */
+    .digest-btn {
+      background: linear-gradient(135deg, #2fd9f4, #2563eb);
+      color: white;
+      border: none;
+      padding: 12px 28px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .digest-btn:hover:not(:disabled) {
+      transform: scale(1.03);
+      box-shadow: 0 0 30px rgba(47, 217, 244, 0.3);
+    }
+    .digest-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+    .digest-btn .spinner {
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    .result-success { background: rgba(74, 222, 128, 0.1); border: 1px solid rgba(74, 222, 128, 0.3); border-radius: 12px; padding: 16px; color: #4ade80; }
+    .result-error { background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 12px; padding: 16px; color: #ef4444; }
   </style>
 </head>
 <body>
@@ -226,6 +262,8 @@
         <h2 class="text-2xl md:text-3xl font-bold">Admin Overview</h2>
         <p class="text-gray-400 text-sm">Platform statistics at a glance.</p>
       </div>
+
+      <!-- Stats Grid -->
       <div id="statsGrid" class="grid grid-cols-2 md:grid-cols-4 gap-4">
         <div class="stat-card"><p class="text-gray-400 text-[11px] font-bold uppercase">Total Users</p><p class="text-2xl font-black" id="statUsers">0</p></div>
         <div class="stat-card"><p class="text-gray-400 text-[11px] font-bold uppercase">Active Sessions</p><p class="text-2xl font-black" id="statSessions">0</p></div>
@@ -235,6 +273,26 @@
         <div class="stat-card"><p class="text-gray-400 text-[11px] font-bold uppercase">Active Subscriptions</p><p class="text-2xl font-black text-blue-400" id="statSubscriptions">0</p></div>
         <div class="stat-card"><p class="text-gray-400 text-[11px] font-bold uppercase">Active Boosts</p><p class="text-2xl font-black text-yellow-400" id="statActiveBoosts">0</p></div>
         <div class="stat-card"><p class="text-gray-400 text-[11px] font-bold uppercase">Admins</p><p class="text-2xl font-black text-yellow-500" id="statAdmins">0</p></div>
+      </div>
+
+      <!-- ============================================================
+      SEND DIGEST BUTTON - NEW
+      ============================================================ -->
+      <div class="glass-card rounded-xl p-6">
+        <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+          <div>
+            <h3 class="text-lg font-bold text-white flex items-center gap-2">
+              <span class="material-symbols-outlined text-cyan-400">notifications_active</span>
+              Send Daily Digest
+            </h3>
+            <p class="text-gray-400 text-sm">Manually trigger the daily reminder notification to all users with unengaged feeds.</p>
+          </div>
+          <button id="sendDigestBtn" onclick="sendDigest()" class="digest-btn">
+            <span class="material-symbols-outlined">send</span>
+            Send Digest Now
+          </button>
+        </div>
+        <div id="digestResult" class="mt-4 hidden"></div>
       </div>
     </div>
 
@@ -524,6 +582,65 @@
         }
       } catch(e) {
         tbody.innerHTML = '<tr><td colspan="6" class="text-center py-8 text-red-400">Failed to load boosts.</td></tr>';
+      }
+    }
+
+    // ============================================================
+    // SEND DIGEST - NEW FUNCTION
+    // ============================================================
+    async function sendDigest() {
+      const btn = document.getElementById('sendDigestBtn');
+      const resultDiv = document.getElementById('digestResult');
+      
+      btn.disabled = true;
+      btn.innerHTML = '<span class="material-symbols-outlined spinner">progress_activity</span> Sending...';
+      resultDiv.classList.add('hidden');
+      
+      try {
+        const res = await authFetch('/admin/trigger-digest', { method: 'POST' });
+        const data = await res.json();
+        
+        resultDiv.classList.remove('hidden');
+        
+        if (data.success) {
+          let cohortsHtml = '';
+          if (data.cohorts && data.cohorts.length > 0) {
+            cohortsHtml = data.cohorts.map(c => 
+              `<p class="text-xs text-gray-400">Cohort ${c.cohort}: ${c.users} users, ${c.unengaged_links} links</p>`
+            ).join('');
+          }
+          
+          resultDiv.innerHTML = `
+            <div class="result-success">
+              <p class="font-bold">✅ Digest Sent Successfully!</p>
+              <p class="text-sm mt-1">📊 ${data.users_notified} users notified across ${data.total_cohorts} cohort(s)</p>
+              <p class="text-sm">📬 ${data.total_unengaged_links} total unengaged links</p>
+              <p class="text-xs text-gray-500 mt-2">${data.timestamp}</p>
+              ${cohortsHtml}
+              ${data.push_sent ? '<p class="text-xs text-green-400 mt-1">📱 Push notification sent</p>' : '<p class="text-xs text-yellow-400 mt-1">⚠️ No push sent (no subscriptions or no users)</p>'}
+            </div>
+          `;
+          // Refresh stats
+          loadStats();
+        } else {
+          resultDiv.innerHTML = `
+            <div class="result-error">
+              <p class="font-bold">❌ Failed to send digest</p>
+              <p class="text-sm">${data.error || 'Unknown error'}</p>
+            </div>
+          `;
+        }
+      } catch (err) {
+        resultDiv.classList.remove('hidden');
+        resultDiv.innerHTML = `
+          <div class="result-error">
+            <p class="font-bold">❌ Error</p>
+            <p class="text-sm">${err.message}</p>
+          </div>
+        `;
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = '<span class="material-symbols-outlined">send</span> Send Digest Now';
       }
     }
 
