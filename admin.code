@@ -122,8 +122,6 @@
     .btn-primary-sm:hover { background: rgba(47, 217, 244, 0.3); }
     .btn-primary { background: rgba(47, 217, 244, 0.2); color: #2fd9f4; border: 1px solid rgba(47, 217, 244, 0.3); padding: 8px 20px; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
     .btn-primary:hover { background: rgba(47, 217, 244, 0.3); }
-    .btn-remove { background: rgba(239, 68, 68, 0.2); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.3); padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 600; cursor: pointer; transition: all 0.2s; }
-    .btn-remove:hover { background: rgba(239, 68, 68, 0.3); }
     .modal-overlay {
       position: fixed;
       inset: 0;
@@ -186,40 +184,6 @@
     }
     .result-success { background: rgba(74, 222, 128, 0.1); border: 1px solid rgba(74, 222, 128, 0.3); border-radius: 12px; padding: 16px; color: #4ade80; }
     .result-error { background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 12px; padding: 16px; color: #ef4444; }
-    .toast {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      z-index: 1000;
-      padding: 16px 24px;
-      border-radius: 12px;
-      font-weight: 600;
-      animation: slideIn 0.3s ease;
-      max-width: 400px;
-    }
-    .toast-success { background: #065f46; color: #a7f3d0; border: 1px solid #34d399; }
-    .toast-error { background: #7f1d1d; color: #fca5a5; border: 1px solid #ef4444; }
-    .toast-hidden { display: none; }
-    @keyframes slideIn {
-      from { transform: translateX(100%); opacity: 0; }
-      to { transform: translateX(0); opacity: 1; }
-    }
-
-    /* URL truncation */
-    .url-cell {
-      max-width: 250px;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      display: inline-block;
-    }
-    .url-cell a {
-      color: #60a5fa;
-      text-decoration: none;
-    }
-    .url-cell a:hover {
-      text-decoration: underline;
-    }
   </style>
 </head>
 <body>
@@ -312,7 +276,7 @@
       </div>
 
       <!-- ============================================================
-      SEND DIGEST BUTTON
+      SEND DIGEST BUTTON - NEW
       ============================================================ -->
       <div class="glass-card rounded-xl p-6">
         <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
@@ -364,26 +328,14 @@
       </div>
     </div>
 
-    <!-- BOOSTS TAB - UPDATED WITH ACTUAL BOOST LINKS -->
+    <!-- BOOSTS TAB -->
     <div id="boostsTab" class="hidden space-y-6">
-      <div><h2 class="text-2xl md:text-3xl font-bold">All Boosts</h2><p class="text-gray-400 text-sm">Monitor and manage all boost activity.</p></div>
+      <div><h2 class="text-2xl md:text-3xl font-bold">All Boosts</h2><p class="text-gray-400 text-sm">Monitor all boost activity.</p></div>
       <div class="glass-card rounded-xl overflow-hidden p-4">
         <div class="overflow-x-auto">
           <table>
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>User</th>
-                <th>Boost URL</th>
-                <th>Engagements</th>
-                <th>Status</th>
-                <th>Created</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody id="boostsTableBody">
-              <tr><td colspan="7" class="text-center py-8 text-gray-500">Loading...</td></tr>
-            </tbody>
+            <thead><tr><th>ID</th><th>User</th><th>URL</th><th>Engagements</th><th>Status</th><th>Created</th></tr></thead>
+            <tbody id="boostsTableBody"><tr><td colspan="6" class="text-center py-8 text-gray-500">Loading...</td></tr></tbody>
           </table>
         </div>
       </div>
@@ -398,9 +350,6 @@
       <div id="userDetailContent">Loading...</div>
     </div>
   </div>
-
-  <!-- TOAST NOTIFICATION -->
-  <div id="toast" class="toast toast-hidden"></div>
 
   <script>
     const API_BASE = location.hostname === 'localhost' ? 'http://localhost:5000/api' : 'https://creator-coop-backend.onrender.com/api';
@@ -419,27 +368,20 @@
       return res;
     }
 
-    function showToast(message, type = 'success') {
-      const toast = document.getElementById('toast');
-      toast.textContent = message;
-      toast.className = `toast toast-${type}`;
-      toast.classList.remove('toast-hidden');
-      setTimeout(() => {
-        toast.classList.add('toast-hidden');
-      }, 4000);
-    }
-
     let currentTab = 'overview';
 
     function showTab(tab) {
       currentTab = tab;
       
+      // Hide all tab contents
       document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
       document.querySelectorAll('#overviewTab, #usersTab, #sessionsTab, #boostsTab').forEach(el => el.classList.add('hidden'));
       
+      // Show selected tab content
       const tabMap = { overview: 'overviewTab', users: 'usersTab', sessions: 'sessionsTab', boosts: 'boostsTab' };
       document.getElementById(tabMap[tab]).classList.remove('hidden');
       
+      // Update desktop sidebar
       document.querySelectorAll('.sidebar-item').forEach(el => {
         el.classList.remove('sidebar-active', 'border-l-4', 'border-primary', 'bg-gray-800/50', 'text-primary');
         el.classList.add('text-gray-400');
@@ -450,10 +392,12 @@
         link.classList.remove('text-gray-400');
       }
       
+      // Update mobile bottom bar
       document.querySelectorAll('.tab-item').forEach(el => el.classList.remove('active'));
       const mobileLink = document.querySelector(`[data-mobile-tab="${tab}"]`);
       if (mobileLink) mobileLink.classList.add('active');
 
+      // Load data
       if (tab === 'overview') loadStats();
       if (tab === 'users') loadUsers();
       if (tab === 'sessions') loadSessions();
@@ -538,8 +482,7 @@
               ${data.boosts.length === 0 ? '<p class="text-gray-500 text-sm">No boosts.</p>' : 
                 data.boosts.map(b => `
                   <div class="detail-row text-sm"><span class="label">${new Date(b.created_at).toLocaleDateString()}</span>
-                  <span class="value"><a href="${b.link_url}" target="_blank" class="text-cyan-400 hover:underline">${b.link_url}</a></span>
-                  <span class="value text-xs">${b.clicks_received || 0} engagements</span>
+                  <span class="value">${b.clicks_received || 0} engagements</span>
                   <span class="value text-xs ${b.is_expired ? 'text-gray-500' : 'text-green-400'}">${b.is_expired ? 'Expired' : 'Active'}</span></div>
                 `).join('')}
             </div>
@@ -569,9 +512,9 @@
       if (!confirm('Force logout this user from all devices?')) return;
       try {
         await authFetch(`/admin/user/${userId}/force-logout`, { method: 'POST' });
-        showToast('User logged out successfully.', 'success');
+        alert('User logged out successfully.');
         loadUsers();
-      } catch(e) { showToast('Failed to force logout.', 'error'); }
+      } catch(e) { alert('Failed to force logout.'); }
     }
 
     // ==================== TOGGLE ADMIN ====================
@@ -580,9 +523,9 @@
       try {
         const res = await authFetch(`/admin/user/${userId}/toggle-admin`, { method: 'POST' });
         const data = await res.json();
-        showToast(`Admin status updated: ${data.is_admin ? 'Admin ✅' : 'Admin ❌'}`, 'success');
+        alert(`Admin status updated: ${data.is_admin ? 'Admin ✅' : 'Admin ❌'}`);
         loadUsers();
-      } catch(e) { showToast('Failed to toggle admin.', 'error'); }
+      } catch(e) { alert('Failed to toggle admin.'); }
     }
 
     // ==================== LOAD SESSIONS ====================
@@ -617,67 +560,33 @@
       }
     }
 
-    // ==================== LOAD ALL BOOSTS - FIXED ====================
+    // ==================== LOAD ALL BOOSTS ====================
     async function loadAllBoosts() {
       const tbody = document.getElementById('boostsTableBody');
-      tbody.innerHTML = '<tr><td colspan="7" class="text-center py-8 text-gray-500">Loading...</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="6" class="text-center py-8 text-gray-500">Loading...</td></tr>';
       try {
-        // Fetch all boosts from the admin endpoint that returns boost_links data
-        const res = await authFetch('/admin/boosts/all');
-        const data = await res.json();
-        const boosts = data.boosts || [];
-        
-        if (boosts.length === 0) {
-          tbody.innerHTML = '<tr><td colspan="7" class="text-center py-8 text-gray-500">No boosts found.</td></tr>';
-          return;
-        }
-        
-        tbody.innerHTML = boosts.map(b => `
+        const data = await (await authFetch('/admin/users')).json();
+        const users = data.users || [];
+        tbody.innerHTML = users.map(u => `
           <tr>
-            <td>${b.link_id}</td>
-            <td class="font-medium">${b.username || 'Unknown'}</td>
-            <td>
-              <span class="url-cell">
-                <a href="${b.link_url}" target="_blank" title="${b.link_url}">
-                  ${b.link_url.length > 60 ? b.link_url.substring(0, 60) + '...' : b.link_url}
-                </a>
-              </span>
-            </td>
-            <td>${b.clicks_received || 0}</td>
-            <td>${b.is_expired ? '<span class="badge-inactive px-2 py-0.5 rounded text-xs">Expired</span>' : '<span class="badge-active px-2 py-0.5 rounded text-xs">Active</span>'}</td>
-            <td class="text-sm text-gray-400">${b.created_at ? new Date(b.created_at).toLocaleDateString() : '—'}</td>
-            <td>
-              <button onclick="removeBoost(${b.link_id})" class="btn-remove" title="Remove this boost">
-                <span class="material-symbols-outlined text-sm">delete</span> Remove
-              </button>
-            </td>
+            <td>${u.user_id}</td>
+            <td>${u.username}</td>
+            <td class="text-sm text-gray-400">${u.total_boosts || 0} boosts</td>
+            <td>${u.total_engagements || 0}</td>
+            <td>${u.total_boosts > 0 ? '<span class="badge-active px-2 py-0.5 rounded text-xs">Active</span>' : '<span class="text-gray-500">—</span>'}</td>
+            <td class="text-sm text-gray-400">${u.created_at ? new Date(u.created_at).toLocaleDateString() : '—'}</td>
           </tr>
         `).join('');
+        if (users.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="6" class="text-center py-8 text-gray-500">No boosts found.</td></tr>';
+        }
       } catch(e) {
-        console.error('Load boosts error:', e);
-        tbody.innerHTML = '<tr><td colspan="7" class="text-center py-8 text-red-400">Failed to load boosts. ' + e.message + '</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="6" class="text-center py-8 text-red-400">Failed to load boosts.</td></tr>';
       }
     }
 
     // ============================================================
-    // REMOVE BOOST
-    // ============================================================
-    async function removeBoost(boostId) {
-      if (!confirm('Are you sure you want to remove this boost? This action cannot be undone.')) return;
-      
-      try {
-        const res = await authFetch(`/admin/boost/${boostId}`, { method: 'DELETE' });
-        const data = await res.json();
-        showToast(`✅ Boost removed successfully!`, 'success');
-        loadAllBoosts();
-        loadStats();
-      } catch (err) {
-        showToast(`❌ Failed to remove boost: ${err.message}`, 'error');
-      }
-    }
-
-    // ============================================================
-    // SEND DIGEST
+    // SEND DIGEST - NEW FUNCTION
     // ============================================================
     async function sendDigest() {
       const btn = document.getElementById('sendDigestBtn');
@@ -711,6 +620,7 @@
               ${data.push_sent ? '<p class="text-xs text-green-400 mt-1">📱 Push notification sent</p>' : '<p class="text-xs text-yellow-400 mt-1">⚠️ No push sent (no subscriptions or no users)</p>'}
             </div>
           `;
+          // Refresh stats
           loadStats();
         } else {
           resultDiv.innerHTML = `
